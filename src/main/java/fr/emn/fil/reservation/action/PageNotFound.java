@@ -10,6 +10,7 @@ public class PageNotFound extends Action {
 
     @Override
     protected String handle(HttpServletRequest request) {
+        request.setAttribute("status", 404);
         return "not-found.jsp";
     }
 }

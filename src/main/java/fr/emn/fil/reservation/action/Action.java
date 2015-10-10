@@ -32,6 +32,12 @@ public abstract class Action {
     public void execute(String endpoint, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String page = handle(request);
         request.setAttribute("page", page);
+
+        // Get the page status if given
+        Integer status = (Integer) request.getAttribute("status");
+        // Set the correct status to the response
+        if(status != null) response.setStatus(status);
+
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(endpoint);
         requestDispatcher.forward(request, response);
     }
