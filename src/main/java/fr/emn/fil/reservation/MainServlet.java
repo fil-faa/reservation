@@ -27,6 +27,7 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+
         Map<String, Action> routes = new HashMap<String, Action>();
 
         System.out.println("Connection received, route : " + req.getPathInfo());
