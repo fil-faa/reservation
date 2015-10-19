@@ -1,0 +1,1 @@
+<p>Dashboard, welcome ${sessionScope.user.username}</p>
