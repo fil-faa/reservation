@@ -40,7 +40,7 @@ public class MainServlet extends HttpServlet {
         Action toExecute = routes.get(req.getPathInfo());
 
         if(toExecute == null) toExecute = new PageNotFound();
-        else if(!this.isConnected(req)) toExecute = new Connection();
+//        else if(!this.isConnected(req)) toExecute = new Connection();
 
         toExecute.execute("/WEB-INF/index.jsp", req, resp);
 

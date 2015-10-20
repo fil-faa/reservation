@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+    <persistence-unit name="persistenceUnit" transaction-type="RESOURCE_LOCAL">
+        <!--<class>fr.emn.fil.reservation.entities.Reservation</class>-->
+        <!--<class>fr.emn.fil.reservation.entities.Ressource</class>-->
+        <!--<class>fr.emn.fil.reservation.entities.TypeRessource</class>-->
+        <!--<class>fr.emn.fil.reservation.entities.User</class>-->
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <properties>
+            <property name="hibernate.connection.url"
+                      value="jdbc:h2:/Users/arthur/Documents/FIL/FILA2/JEE/TP_RESERVATION/reservation/database/reservation"/>
+            <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
+            <property name="hibernate.connection.username" value="root"/>
+            <property name="hibernate.connection.password" value="password"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+            <!-- Configuration Hibernate -->
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.show_sql" value="false" />
+        </properties>
+    </persistence-unit>
+</persistence>
