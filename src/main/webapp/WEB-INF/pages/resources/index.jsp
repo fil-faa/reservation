@@ -1,10 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:if test="${isAdmin}">
 <div>
-    <c:import url="/WEB-INF/pages/ressources/partials/addForm.jsp"></c:import>
+    <c:import url="/WEB-INF/pages/resources/partials/addForm.jsp"></c:import>
 </div>
+</c:if>
 <div class="side-box">
-    <c:import url="/WEB-INF/pages/ressources/partials/searchForm.jsp"></c:import>
+    <c:import url="/WEB-INF/pages/resources/partials/searchForm.jsp"></c:import>
     </form>
 </div>
 <div class="body-box">

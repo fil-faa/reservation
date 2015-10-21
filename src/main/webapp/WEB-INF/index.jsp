@@ -23,8 +23,13 @@
     <%@include file="jspf/menu.jspf"%>
 
     <c:if test="${error}">
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-warning" role="alert">
                 ${error.label}
+        </div>
+    </c:if>
+    <c:if test="${success}">
+        <div class="alert alert-success" role="alert">
+                ${success.label}
         </div>
     </c:if>
 
