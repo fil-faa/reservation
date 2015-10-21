@@ -38,10 +38,10 @@ public class MainServlet extends HttpServlet {
             }
         }
 
-        if(toExecute == null) toExecute = new PageNotFoundController();
+        if(toExecute == null) toExecute = new PageNotFoundController(req, resp);
 
 
-        toExecute.execute("/WEB-INF/index.jsp", subRoute, req, resp);
+        toExecute.execute("/WEB-INF/index.jsp", subRoute);
     }
 
     @Override

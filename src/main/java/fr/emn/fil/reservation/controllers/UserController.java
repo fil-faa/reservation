@@ -46,7 +46,22 @@ public class UserController extends Controller {
     }
 
     public Response addUser() {
-        throw new UnsupportedOperationException();
+        try {
+            String mail = request.getParameter("mail");
+            String password = request.getParameter("password");
+            String phone = request.getParameter("phone");
+            String firstName = request.getParameter("firstName");
+            String lastName = request.getParameter("lastName");
+
+
+            User user = new UserService().create(mail, password, firstName, lastName, phone);
+            request.setAttribute("user", user);
+            return new Response("/reservations/", Response.Type.REDIRECT);
+
+        } catch(fr.emn.fil.reservation.model.exceptions.Error e) {
+            request.setAttribute("error", e);
+            return new Response("/users/add", Response.Type.FORWARD);
+        }
     }
 
     public Response getUsers() {
@@ -57,6 +72,6 @@ public class UserController extends Controller {
 
     public Response addUserForm() {
 
-        return  new Response("addUser.jsp", Response.Type.FORWARD);
+        return  new Response("/users/add.jsp", Response.Type.FORWARD);
     }
 }
