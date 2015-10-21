@@ -1,7 +1,9 @@
 package fr.emn.fil.reservation;
 
-import fr.emn.fil.reservation.action.*;
-import fr.emn.fil.reservation.dto.UserDTO;
+import fr.emn.fil.reservation.controllers.Controller;
+import fr.emn.fil.reservation.controllers.PageNotFoundController;
+import fr.emn.fil.reservation.controllers.UserController;
+import fr.emn.fil.reservation.model.entities.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,42 +21,37 @@ import java.util.Map;
 public class MainServlet extends HttpServlet {
 
 
-    public void handleAction(HttpServletRequest req, HttpServletResponse resp, RequestType type) throws ServletException, IOException {
+    public void handleAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Map<String, Action> getRoutes = new HashMap<String, Action>();
-        Map<String, Action> postRoutes = new HashMap<String, Action>();
+        Map<String, Controller> routes = new HashMap<String, Controller>();
 
-        // HTTP GET method routes
-        getRoutes.put("/connect", new Connection());
-        getRoutes.put("/dashboard", new Dashboard());
+        routes.put("/users", new UserController(req, resp));
 
-        // HTTP POST method routes
-        postRoutes.put("/connect", new Connection());
-        postRoutes.put("/users", new AddUser()); // TODO
+        Controller toExecute = null;
 
-        Action toExecute = null;
-
-        switch(type) {
-            case GET:
-                toExecute = getRoutes.get(req.getPathInfo());
-            case POST:
-                toExecute = getRoutes.get(req.getPathInfo());
+        String subRoute = "";
+        for(String route : routes.keySet() ) {
+            if(req.getPathInfo().startsWith(route)) {
+                toExecute = routes.get(route);
+                subRoute = req.getPathInfo().substring(route.length());
+                break;
+            }
         }
 
-        if(toExecute == null) toExecute = new PageNotFound();
-        else if(!this.isConnected(req)) toExecute = new Connection();
+        if(toExecute == null) toExecute = new PageNotFoundController();
 
-        toExecute.execute("/WEB-INF/index.jsp", req, resp);
+
+        toExecute.execute("/WEB-INF/index.jsp", subRoute, req, resp);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.handleAction(req, resp, RequestType.GET);
+        this.handleAction(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.handleAction(req, resp, RequestType.POST);
+        this.handleAction(req, resp);
     }
 
     /**
@@ -66,7 +63,7 @@ public class MainServlet extends HttpServlet {
         // We get the current session. If no session exists, we do not create it
         HttpSession session = request.getSession(false);
 
-        if(session != null && session.getAttribute("user") instanceof UserDTO)
+        if(session != null && session.getAttribute("user") instanceof User)
             return true;
         return false;
 

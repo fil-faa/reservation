@@ -7,10 +7,10 @@
 
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-        <class>fr.emn.fil.reservation.entities.Reservation</class>
-        <class>fr.emn.fil.reservation.entities.TypeRessource</class>
-        <class>fr.emn.fil.reservation.entities.User</class>
-        <class>fr.emn.fil.reservation.entities.Ressource</class>
+        <class>fr.emn.fil.reservation.model.entities.Reservation</class>
+        <class>fr.emn.fil.reservation.model.entities.TypeRessource</class>
+        <class>fr.emn.fil.reservation.model.entities.User</class>
+        <class>fr.emn.fil.reservation.model.entities.Ressource</class>
 
         <properties>
             <property name="hibernate.connection.url"
