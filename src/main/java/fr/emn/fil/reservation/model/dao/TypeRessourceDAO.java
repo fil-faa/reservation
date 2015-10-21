@@ -1,6 +1,6 @@
 package fr.emn.fil.reservation.model.dao;
 
-import fr.emn.fil.reservation.model.entities.TypeRessource;
+import fr.emn.fil.reservation.model.entities.ResourceType;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface TypeRessourceDAO {
 
-    List<TypeRessource> findAll();
+    List<ResourceType> findAll();
 
-    void save(TypeRessource toSave);
+    void save(ResourceType toSave);
 
-    void update(TypeRessource toUpdate);
+    void update(ResourceType toUpdate);
 
-    void delete(TypeRessource toDelete);
+    void delete(ResourceType toDelete);
 }

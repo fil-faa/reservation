@@ -1,7 +1,7 @@
 package fr.emn.fil.reservation.model.services;
 
 import fr.emn.fil.reservation.model.dao.DAOFactory;
-import fr.emn.fil.reservation.model.entities.Ressource;
+import fr.emn.fil.reservation.model.entities.Resource;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class ResourceService {
 
-    public List<Ressource> findAll() {
+    public List<Resource> findAll() {
         return  DAOFactory.ressourceDAO().findAll();
     }
 

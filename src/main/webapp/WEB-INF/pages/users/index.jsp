@@ -1,11 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div>
-    <c:import url="/WEB-INF/pages/users/partials/addForm.jsp"></c:import>
+
+    <%@include file="partials/addForm.jsp"%>
 </div>
 <div class="side-box">
-    <c:import url="/WEB-INF/pages/users/partials/searchForm.jsp"></c:import>
-    </form>
+    <%@include file="partials/searchForm.jsp"%>
+
 </div>
 <div class="body-box">
         <h2>Liste des utilisateurs</h2>
@@ -21,8 +22,8 @@
         <tbody>
         <c:forEach var="user" items="${users}">
             <tr>
-                <td>${user.nom}</td>
-                <td>${user.prenom}</td>
+                <td>${user.firstName}</td>
+                <td>${user.lastName}</td>
                 <td>${user.mail}</td>
                 <td>${user.telephone}</td>
             </tr>

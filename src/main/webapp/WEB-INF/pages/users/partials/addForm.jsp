@@ -1,12 +1,12 @@
 <h1>Ajouter un utilisateur</h1>
-<form>
+<form method="POST">
     <div class="form-group">
-        <label for="lastname">Nom</label>
-        <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Dupont">
+        <label for="lastName">Nom</label>
+        <input type="text" class="form-control" id="lastname" name="lastName" placeholder="Dupont">
     </div>
     <div class="form-group">
-        <label for="firstname">Prénom</label>
-        <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Laurent">
+        <label for="firstName">Prénom</label>
+        <input type="text" class="form-control" id="firstname" name="firstName" placeholder="Laurent">
     </div>
     <div class="form-group">
         <label for="mail">Mail</label>

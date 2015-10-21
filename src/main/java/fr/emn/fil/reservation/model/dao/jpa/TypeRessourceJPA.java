@@ -1,7 +1,7 @@
 package fr.emn.fil.reservation.model.dao.jpa;
 
 import fr.emn.fil.reservation.model.dao.TypeRessourceDAO;
-import fr.emn.fil.reservation.model.entities.TypeRessource;
+import fr.emn.fil.reservation.model.entities.ResourceType;
 
 import javax.persistence.Query;
 import java.util.List;
@@ -9,15 +9,15 @@ import java.util.List;
 /**
  * Created by Alexandre on 20/10/2015.
  */
-public class TypeRessourceJPA extends AbstractJpaDAO<TypeRessource> implements TypeRessourceDAO {
+public class TypeRessourceJPA extends AbstractJpaDAO<ResourceType> implements TypeRessourceDAO {
 
     public TypeRessourceJPA() {
-        super(TypeRessource.class);
+        super(ResourceType.class);
     }
 
-    public List<TypeRessource> findAll() {
-        Query q = jpaManager.getEm().createNamedQuery("typeRessource.findAll");
-        List<TypeRessource> types = q.getResultList();
+    public List<ResourceType> findAll() {
+        Query q = jpaManager.getEm().createNamedQuery("resourceType.findAll");
+        List<ResourceType> types = q.getResultList();
         return types;
     }
 

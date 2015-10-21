@@ -1,6 +1,8 @@
 package fr.emn.fil.reservation.model.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @NamedQueries({
@@ -8,47 +10,75 @@ import javax.persistence.*;
         @NamedQuery(name = "user.byMail", query = "SELECT u FROM User u WHERE u.mail = :mail")
 })
 public class User {
-    private int id;
-    private String nom;
-    private String prenom;
-    private String mail;
-    private String password;
-    private String telephone;
-    private boolean isadmin;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
-    public int getId() {
+    private Long id;
+
+    @Basic(optional = false)
+    @Column(name = "NOM")
+    private @NotNull String firstName;
+
+    @Basic(optional = false)
+    @Column(name = "PRENOM")
+    private @NotNull String lastName;
+
+    @Basic(optional = false)
+    @Column(name = "MAIL")
+    private @NotNull String mail;
+
+    @Basic(optional = false)
+    @Column(name = "PASSWORD")
+    private @NotNull String password;
+
+    @Basic
+    @Column(name = "TELEPHONE")
+    private String telephone;
+
+    @Basic(optional = false)
+    @Column(name = "ADMIN")
+    private boolean admin;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
+
+    public User() {
+    }
+
+    public User(String firstName, String lastName, String mail, String password, String phone, boolean admin) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.mail = mail;
+        this.password = password;
+        this.telephone = phone;
+        this.admin = admin;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "NOM")
-    public String getNom() {
-        return nom;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    @Basic
-    @Column(name = "PRENOM")
-    public String getPrenom() {
-        return prenom;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    @Basic
-    @Column(name = "MAIL")
     public String getMail() {
         return mail;
     }
@@ -57,8 +87,6 @@ public class User {
         this.mail = mail;
     }
 
-    @Basic
-    @Column(name = "PASSWORD")
     public String getPassword() {
         return password;
     }
@@ -67,8 +95,6 @@ public class User {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "TELEPHONE")
     public String getTelephone() {
         return telephone;
     }
@@ -77,24 +103,20 @@ public class User {
         this.telephone = telephone;
     }
 
-    public boolean getIsadmin() {
-        return isadmin;
+    public boolean isAdmin() {
+        return admin;
     }
 
-    public void setIsadmin(boolean isadmin) {
-        this.isadmin = isadmin;
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 
-    public User() {
+    public List<Reservation> getReservations() {
+        return reservations;
     }
 
-    public User(String nom, String prenom, String mail, String password, String telephone, boolean isadmin) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.mail = mail;
-        this.password = password;
-        this.telephone = telephone;
-        this.isadmin = isadmin;
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
     @Override
@@ -104,33 +126,25 @@ public class User {
 
         User user = (User) o;
 
-        if (id != user.id) return false;
-        if (nom != null ? !nom.equals(user.nom) : user.nom != null) return false;
-        if (prenom != null ? !prenom.equals(user.prenom) : user.prenom != null) return false;
-        if (mail != null ? !mail.equals(user.mail) : user.mail != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        if (telephone != null ? !telephone.equals(user.telephone) : user.telephone != null) return false;
+        if (admin != user.admin) return false;
+        if (id != null ? !id.equals(user.id) : user.id != null) return false;
+        if (!firstName.equals(user.firstName)) return false;
+        if (!lastName.equals(user.lastName)) return false;
+        if (!mail.equals(user.mail)) return false;
+        if (!password.equals(user.password)) return false;
+        return !(telephone != null ? !telephone.equals(user.telephone) : user.telephone != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (nom != null ? nom.hashCode() : 0);
-        result = 31 * result + (prenom != null ? prenom.hashCode() : 0);
-        result = 31 * result + (mail != null ? mail.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + mail.hashCode();
+        result = 31 * result + password.hashCode();
         result = 31 * result + (telephone != null ? telephone.hashCode() : 0);
+        result = 31 * result + (admin ? 1 : 0);
         return result;
-    }
-
-    public static User getUser(int id)
-    {
-        EntityManager entityManager = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
-        entityManager.getTransaction().begin();
-        User foundUser = entityManager.find(User.class, id);
-        entityManager.close();
-        return foundUser;
     }
 }

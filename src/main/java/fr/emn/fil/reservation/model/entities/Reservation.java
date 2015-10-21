@@ -2,6 +2,7 @@ package fr.emn.fil.reservation.model.entities;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by arthur on 20/10/15.
@@ -10,61 +11,68 @@ import java.sql.Timestamp;
 @NamedQueries({
         @NamedQuery(name = "reservation.findAll", query = "SELECT r FROM Reservation r")
 })
+@Table(name = "RESERVATION")
 @Entity
 public class Reservation {
-    private int id;
-    private Timestamp datedebut;
-    private Timestamp datefin;
 
     @Id
     @Column(name = "ID")
-    public int getId() {
+    private Long id;
+
+
+    // TODO granularity of the dates ?
+    @Basic
+    @Temporal(TemporalType.DATE)
+    @Column(name = "DATEDEBUT")
+    private Date start;
+
+    @Basic
+    @Temporal(TemporalType.DATE)
+    @Column(name = "DATEFIN")
+    private Date end;
+
+
+    @ManyToOne
+    private User user;
+
+    public Reservation() {
+    }
+
+    public Reservation(Date start, Date end, User user) {
+        this.start = start;
+        this.end = end;
+        this.user = user;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "DATEDEBUT")
-    public Timestamp getDatedebut() {
-        return datedebut;
+    public Date getStart() {
+        return start;
     }
 
-    public void setDatedebut(Timestamp datedebut) {
-        this.datedebut = datedebut;
+    public void setStart(Date start) {
+        this.start = start;
     }
 
-    @Basic
-    @Column(name = "DATEFIN")
-    public Timestamp getDatefin() {
-        return datefin;
+    public Date getEnd() {
+        return end;
     }
 
-    public void setDatefin(Timestamp datefin) {
-        this.datefin = datefin;
+    public void setEnd(Date end) {
+        this.end = end;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Reservation that = (Reservation) o;
-
-        if (id != that.id) return false;
-        if (datedebut != null ? !datedebut.equals(that.datedebut) : that.datedebut != null) return false;
-        if (datefin != null ? !datefin.equals(that.datefin) : that.datefin != null) return false;
-
-        return true;
+    public User getUser() {
+        return user;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (datedebut != null ? datedebut.hashCode() : 0);
-        result = 31 * result + (datefin != null ? datefin.hashCode() : 0);
-        return result;
+    public void setUser(User type) {
+        this.user = user;
     }
 }

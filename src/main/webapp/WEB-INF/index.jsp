@@ -22,12 +22,12 @@
     </c:if>
     <%@include file="jspf/menu.jspf"%>
 
-    <c:if test="${error}">
+    <c:if test="${not empty error}">
         <div class="alert alert-warning" role="alert">
                 ${error.label}
         </div>
     </c:if>
-    <c:if test="${success}">
+    <c:if test="${not empty success}">
         <div class="alert alert-success" role="alert">
                 ${success.label}
         </div>

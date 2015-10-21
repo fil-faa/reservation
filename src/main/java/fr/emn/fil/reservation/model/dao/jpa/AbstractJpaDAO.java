@@ -21,6 +21,7 @@ public abstract class AbstractJpaDAO<T> {
 
     public void save(T toSave) {
         EntityTransaction tx = jpaManager.getTransaction();
+        tx.begin();
         jpaManager.getEm().persist(toSave);
         tx.commit();
     }
@@ -34,6 +35,7 @@ public abstract class AbstractJpaDAO<T> {
 
     public void delete(T toDelete) {
         EntityTransaction tx = jpaManager.getTransaction();
+        tx.begin();
         jpaManager.getEm().remove(toDelete);
         tx.commit();
     }

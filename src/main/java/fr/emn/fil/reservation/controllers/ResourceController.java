@@ -1,9 +1,11 @@
 package fr.emn.fil.reservation.controllers;
 
-import fr.emn.fil.reservation.model.entities.Ressource;
+import fr.emn.fil.reservation.model.entities.Resource;
 import fr.emn.fil.reservation.model.exceptions.ModelError;
 import fr.emn.fil.reservation.model.services.ResourceService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -11,13 +13,17 @@ import java.util.List;
  */
 public class ResourceController extends Controller {
 
+    public ResourceController(HttpServletRequest request, HttpServletResponse response) {
+        super(request, response);
+    }
+
     @Override
     protected Response handle(String subUrl) throws ModelError {
         Response response = null;
         if(request.getMethod().equals("GET")) {
 
-            if(url.equals("/"))
-                response = getUsers();
+            if(subUrl.equals("/"))
+                response = getResources();
 
         } else if(request.getMethod().equals("POST")) {
 
@@ -31,7 +37,7 @@ public class ResourceController extends Controller {
 
 
     public Response getResources() {
-        List<Ressource> resources = new ResourceService().findAll();
+        List<Resource> resources = new ResourceService().findAll();
         request.setAttribute("resources", resources);
         return new Response("resources/index.jsp", Response.Type.FORWARD);
     }

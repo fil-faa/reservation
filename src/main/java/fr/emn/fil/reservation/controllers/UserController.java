@@ -34,7 +34,7 @@ public class UserController extends Controller {
             if(url.equals("/login"))
                 response = login();
 
-            if(url.equals("/add"))
+            if(url.equals("/"))
                 response = addUser();
         }
 
@@ -88,7 +88,7 @@ public class UserController extends Controller {
 
         } catch(ModelError e) {
             request.setAttribute("error", e);
-            return new Response("/users/add", Response.Type.FORWARD);
+            return new Response("/users/index.jsp", Response.Type.FORWARD);
         }
     }
 
