@@ -7,12 +7,10 @@ import fr.emn.fil.reservation.action.PageNotFound;
 import fr.emn.fil.reservation.dto.UserDTO;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.registry.infomodel.User;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,31 +22,41 @@ import java.util.Map;
 public class MainServlet extends HttpServlet {
 
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void handleAction(HttpServletRequest req, HttpServletResponse resp, RequestType type) throws ServletException, IOException {
 
+        Map<String, Action> getRoutes = new HashMap<String, Action>();
+        Map<String, Action> postRoutes = new HashMap<String, Action>();
 
-        Map<String, Action> routes = new HashMap<String, Action>();
+        // HTTP GET method routes
+        getRoutes.put("/connect", new Connection());
+        getRoutes.put("/dashboard", new Dashboard());
 
-        System.out.println("Connection received, route : " + req.getPathInfo());
+        // HTTP POST method routes
+        postRoutes.put("/connect", new Connection());
 
-        // Add routes to the application...
-        // routes.put(_path_, _class_);
-        routes.put("/connect", new Connection());
-        routes.put("/dashboard", new Dashboard());
+        Action toExecute = null;
 
-        Action toExecute = routes.get(req.getPathInfo());
+        switch(type) {
+            case GET:
+                toExecute = getRoutes.get(req.getPathInfo());
+            case POST:
+                toExecute = getRoutes.get(req.getPathInfo());
+        }
 
         if(toExecute == null) toExecute = new PageNotFound();
-//        else if(!this.isConnected(req)) toExecute = new Connection();
+        else if(!this.isConnected(req)) toExecute = new Connection();
 
-        toExecute.execute("/WEB-INF/index.jsp", req, resp);
+        toExecute.executer("/WEB-INF/index.jsp", req, resp);
+    }
 
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        this.handleAction(req, resp, RequestType.GET);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        this.handleAction(req, resp, RequestType.POST);
     }
 
     /**

@@ -1,14 +1,14 @@
 package fr.emn.fil.reservation.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by arthur on 20/10/15.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "ressource.findAll", query = "SELECT r FROM Ressource r")
+})
 public class Ressource {
     private String nom;
     private String description;

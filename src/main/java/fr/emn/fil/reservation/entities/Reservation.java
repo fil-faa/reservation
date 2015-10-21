@@ -1,14 +1,15 @@
 package fr.emn.fil.reservation.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
  * Created by arthur on 20/10/15.
  */
+
+@NamedQueries({
+        @NamedQuery(name = "reservation.findAll", query = "SELECT r FROM Reservation r")
+})
 @Entity
 public class Reservation {
     private int id;

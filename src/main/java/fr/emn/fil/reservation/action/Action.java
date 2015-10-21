@@ -29,7 +29,7 @@ public abstract class Action {
      * @throws IOException
      * @throws ServletException Thrown when a servlet error occurs
      */
-    public void execute(String endpoint, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void executer(String endpoint, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String page = handle(request);
         request.setAttribute("page", page);
 

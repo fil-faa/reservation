@@ -6,7 +6,9 @@ import javax.persistence.*;
  * Created by arthur on 20/10/15.
  */
 @Entity
-@Table(name = "TYPE_RESSOURCE", schema = "PUBLIC", catalog = "RESERVATION")
+@NamedQueries({
+        @NamedQuery(name = "typeRessource.findAll", query = "SELECT r FROM TypeRessource r")
+})
 public class TypeRessource {
     private int id;
     private String nom;

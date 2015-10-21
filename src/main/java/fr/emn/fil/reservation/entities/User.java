@@ -3,6 +3,10 @@ package fr.emn.fil.reservation.entities;
 import javax.persistence.*;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "user.findAll", query = "SELECT u FROM User u"),
+        @NamedQuery(name = "user.byMail", query = "SELECT u FROM User u WHERE u.mail = :mail")
+})
 public class User {
     private int id;
     private String nom;
