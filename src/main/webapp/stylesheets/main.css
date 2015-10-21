@@ -2,12 +2,18 @@
 input.form-control {
     max-width: 500px;
 }
-.width-50
+.side-box
 {
-    width: 47.5%;
+    width: 25%;
     display: inline-block;
-    vertical-align: top;
-    margin-right: 1%;
+    vertical-align: top ;
+    margin-right: 3%;
+}
+.body-box
+{
+    width: 70%;
+    display: inline-block;
+    vertical-align: top
 }
 body {
     padding-top: 40px;
