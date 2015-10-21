@@ -26,9 +26,6 @@ public class UserController extends Controller {
             if(url.equals("/login"))
                 response = loginForm();
 
-            if(url.equals("/add"))
-                response = addUserForm();
-
             if(url.equals("/"))
                 response = getUsers();
 
@@ -101,8 +98,4 @@ public class UserController extends Controller {
         return new Response("/users/index.jsp", Response.Type.FORWARD);
     }
 
-    public Response addUserForm() {
-
-        return  new Response("/users/add.jsp", Response.Type.FORWARD);
-    }
 }
