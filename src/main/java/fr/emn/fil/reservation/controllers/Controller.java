@@ -1,6 +1,6 @@
 package fr.emn.fil.reservation.controllers;
 
-import sun.net.httpserver.HttpServerImpl;
+import fr.emn.fil.reservation.model.exceptions.ModelError;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,7 +28,7 @@ public abstract class Controller {
      * Abstract method permitting to define what needs to be done after action calling
      * @return URL of the page to display after execution
      */
-    protected abstract Response handle(String subUrl);
+    protected abstract Response handle(String subUrl) throws ModelError;
 
     /**
      * Executes the action, and then redirects to the correct page
@@ -37,7 +37,12 @@ public abstract class Controller {
      * @throws ServletException Thrown when a servlet error occurs
      */
     public void execute(String endpoint, String subRoute) throws IOException, ServletException {
-        Response result = handle(subRoute);
+        Response result = null;
+        try {
+            result = handle(subRoute);
+        } catch (ModelError modelError) {
+            request.setAttribute("error", modelError);
+        }
         request.setAttribute("page", result.getPage());
 
         // Get the page status if given

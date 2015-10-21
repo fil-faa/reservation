@@ -20,7 +20,6 @@ import java.util.Map;
  */
 public class MainServlet extends HttpServlet {
 
-
     public void handleAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         Map<String, Controller> routes = new HashMap<String, Controller>();

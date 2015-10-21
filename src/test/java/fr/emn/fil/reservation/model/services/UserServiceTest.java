@@ -1,7 +1,7 @@
 package fr.emn.fil.reservation.model.services;
 
 import fr.emn.fil.reservation.model.entities.User;
-import fr.emn.fil.reservation.model.exceptions.Error;
+import fr.emn.fil.reservation.model.exceptions.ModelError;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +15,7 @@ public class UserServiceTest {
 
 
     @Test
-    public void testCreate() throws Error {
+    public void testCreate() throws ModelError {
         String name = "Alexandre";
         String mail = "a@f.fr";
         String surname = "LEBRUN";
