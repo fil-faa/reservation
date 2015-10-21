@@ -14,9 +14,13 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Accueil</a></li>
-                <li><a href="#">Élement 1</a></li>
-                <li><a href="#">Élement 2</a></li>
+                <li><a href="./reservation/">Mes réservations</a></li>
+                <li><a href="./ressources/">Ressources</a></li>
+                <li>${isAdmin}</li>
+                <c:if test="${isAdmin}">
+                    <li><a href="#">Utilisateurs</a></li>
+                    <li><a href="#">Réservation</a></li>
+                </c:if>
             </ul>
         </div><!--/.nav-collapse -->
     </div><!--/.container-fluid -->

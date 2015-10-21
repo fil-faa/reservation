@@ -2,6 +2,7 @@
 
 <c:set var="appName" value="FIL FAA - Application web de r&eacute;servations"></c:set>
 <c:set var="appPath" value="${pageContext.request.contextPath}"></c:set>
+<c:set var="isAdmin" value="${sessionScope.user.isadmin}"></c:set>
 
 
 <c:set var="connected" value="${sessionScope.user != null}"></c:set>

@@ -20,7 +20,13 @@
     <c:if test="${connected}">
         <%@include file="jspf/menu.jspf"%>
     </c:if>
+    <%@include file="jspf/menu.jspf"%>
 
+    <c:if test="${error}">
+        <div class="alert alert-success" role="alert">
+                ${error.label}
+        </div>
+    </c:if>
 
     <jsp:include page="pages/${page}"/>
 
