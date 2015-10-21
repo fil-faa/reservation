@@ -3,7 +3,7 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 
-    <persistence-unit label="reservationUnit" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="reservationUnit" transaction-type="RESOURCE_LOCAL">
 
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
 
@@ -13,15 +13,15 @@
         <class>fr.emn.fil.reservation.model.entities.Ressource</class>
 
         <properties>
-            <property label="hibernate.connection.url"
-                      value="jdbc:h2:file:C:/Users/Alexandre/IdeaProjects/reservation/src/main/ressources/database/reservation"/>
-            <property label="hibernate.connection.driver_class" value="org.h2.Driver"/>
-            <property label="hibernate.connection.username" value="root"/>
-            <property label="hibernate.connection.password" value="password"/>
-            <property label="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+            <property name="hibernate.connection.url"
+                      value="jdbc:h2:file:C:\Users\f.chiheb.UPERF\IdeaProjects\reservation\src\main\ressources\database\reservation"/>
+            <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
+            <property name="hibernate.connection.username" value="root"/>
+            <property name="hibernate.connection.password" value="password"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
             <!-- Configuration Hibernate -->
-            <property label="hibernate.hbm2ddl.auto" value="update" />
-            <property label="hibernate.show_sql" value="false" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.show_sql" value="false" />
         </properties>
     </persistence-unit>
 </persistence>
