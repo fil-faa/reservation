@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 public class PageNotFound extends Action {
 
     @Override
-    protected String handle(HttpServletRequest request) {
+    protected Response handle(HttpServletRequest request) {
         request.setAttribute("status", 404);
-        return "not-found.jsp";
+        return new Response("not-found.jsp", Response.Type.FORWARD);
     }
 }

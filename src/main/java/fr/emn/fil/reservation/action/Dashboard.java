@@ -10,11 +10,7 @@ import static fr.emn.fil.reservation.entities.User.getUser;
 public class Dashboard extends Action {
 
     @Override
-    protected String handle(HttpServletRequest request) {
-
-//        User user1 = getUser(1);
-        request.setAttribute("test",getUser(1));
-//        System.out.println();
-        return "dashboard.jsp";
+    protected Response handle(HttpServletRequest request) {
+        return new Response("dashboard.jsp", Response.Type.FORWARD);
     }
 }

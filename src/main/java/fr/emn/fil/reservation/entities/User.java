@@ -84,6 +84,15 @@ public class User {
         this.isadmin = isadmin;
     }
 
+    public User(String nom, String prenom, String mail, String password, String telephone, boolean isadmin) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.mail = mail;
+        this.password = password;
+        this.telephone = telephone;
+        this.isadmin = isadmin;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

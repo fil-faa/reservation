@@ -11,10 +11,10 @@ public class CryptUtils {
 
     /**
      * Encrypts the given string in SHA-256
-     * @param base The password to encrypt
+     * @param base The password to hash
      * @return Formatted password, in sha 256
      */
-    public static String encrypt(String base) {
+    public static String hash(String base) {
         try{
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(base.getBytes("UTF-8"));

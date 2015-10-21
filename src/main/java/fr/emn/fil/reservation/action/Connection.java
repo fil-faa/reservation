@@ -14,18 +14,18 @@ import java.util.List;
 public class Connection extends Action {
 
     @Override
-    protected String handle(HttpServletRequest request) {
+    protected Response handle(HttpServletRequest request) {
         String userName = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if(userName == null || password == null) return "connect.jsp";
+        if(userName == null || password == null) return new Response("connect.jsp", Response.Type.FORWARD);
 
         User user = new UserService().connect(userName, password);
         if(user == null)
-            return "connect.jsp";
+            return new Response("connect.jsp", Response.Type.FORWARD);
 
         request.setAttribute("user", user);
-        return "dashboard.jsp";
+        return new Response("dashboard.jsp", Response.Type.FORWARD);
     }
 
 }

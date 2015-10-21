@@ -1,9 +1,6 @@
 package fr.emn.fil.reservation;
 
-import fr.emn.fil.reservation.action.Action;
-import fr.emn.fil.reservation.action.Connection;
-import fr.emn.fil.reservation.action.Dashboard;
-import fr.emn.fil.reservation.action.PageNotFound;
+import fr.emn.fil.reservation.action.*;
 import fr.emn.fil.reservation.dto.UserDTO;
 
 import javax.servlet.ServletException;
@@ -33,6 +30,7 @@ public class MainServlet extends HttpServlet {
 
         // HTTP POST method routes
         postRoutes.put("/connect", new Connection());
+        postRoutes.put("/users", new AddUser()); // TODO
 
         Action toExecute = null;
 
@@ -46,7 +44,7 @@ public class MainServlet extends HttpServlet {
         if(toExecute == null) toExecute = new PageNotFound();
         else if(!this.isConnected(req)) toExecute = new Connection();
 
-        toExecute.executer("/WEB-INF/index.jsp", req, resp);
+        toExecute.execute("/WEB-INF/index.jsp", req, resp);
     }
 
     @Override

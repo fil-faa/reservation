@@ -19,7 +19,7 @@ public abstract class Action {
      * @param request HTTP arguments of the request
      * @return URL of the page to display after execution
      */
-    protected abstract String handle(HttpServletRequest request);
+    protected abstract Response handle(HttpServletRequest request);
 
     /**
      * Executes the action, and then redirects to the correct page
@@ -29,17 +29,21 @@ public abstract class Action {
      * @throws IOException
      * @throws ServletException Thrown when a servlet error occurs
      */
-    public void executer(String endpoint, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String page = handle(request);
-        request.setAttribute("page", page);
+    public void execute(String endpoint, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        Response result = handle(request);
+        request.setAttribute("page", result.getPage());
 
         // Get the page status if given
         Integer status = (Integer) request.getAttribute("status");
         // Set the correct status to the response
         if(status != null) response.setStatus(status);
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(endpoint);
-        requestDispatcher.forward(request, response);
+        if(result.getType() == Response.Type.FORWARD) {
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(endpoint);
+            requestDispatcher.forward(request, response);
+        } else if(result.getType() == Response.Type.REDIRECT) {
+            response.sendRedirect(result.getPage());
+        }
     }
 
 
