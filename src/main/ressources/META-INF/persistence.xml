@@ -14,7 +14,7 @@
 
         <properties>
             <property name="hibernate.connection.url"
-                      value="jdbc:h2:file:C:/Users/Alexandre/IdeaProjects/reservation/src/main/ressources/database/reservation"/>
+                      value="jdbc:h2:file:C:\Users\f.chiheb.UPERF\IdeaProjects\reservation\src\main\ressources\database\reservation"/>
             <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
             <property name="hibernate.connection.username" value="root"/>
             <property name="hibernate.connection.password" value="password"/>

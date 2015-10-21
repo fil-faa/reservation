@@ -2,9 +2,13 @@
 input.form-control {
     max-width: 500px;
 }
-
-
-
+.width-50
+{
+    width: 47.5%;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 1%;
+}
 body {
     padding-top: 40px;
     padding-bottom: 40px;
