@@ -6,9 +6,6 @@ import fr.emn.fil.reservation.model.entities.ResourceType;
 
 import java.util.List;
 
-/**
- * Created by Alexandre on 22/10/2015.
- */
 public class ResourceTypeService {
 
     private ResourceTypeDAO resourceTypeDAO;

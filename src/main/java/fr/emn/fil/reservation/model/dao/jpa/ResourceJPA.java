@@ -6,12 +6,9 @@ import fr.emn.fil.reservation.model.entities.Resource;
 import javax.persistence.Query;
 import java.util.List;
 
-/**
- * Created by Alexandre on 20/10/2015.
- */
-public class RessourceJPA extends AbstractJpaDAO<Resource> implements ResourceDAO {
+public class ResourceJPA extends AbstractJpaDAO<Resource> implements ResourceDAO {
 
-    public RessourceJPA() {
+    public ResourceJPA() {
         super(Resource.class);
     }
 
@@ -21,5 +18,10 @@ public class RessourceJPA extends AbstractJpaDAO<Resource> implements ResourceDA
         return ressources;
     }
 
-
+    public Resource byId(Long resourceId) {
+        Query q = jpaManager.getEm().createNamedQuery("resource.byId");
+        q.setParameter("id", resourceId);
+        Resource resource = (Resource)q.getSingleResult();
+        return resource;
+    }
 }

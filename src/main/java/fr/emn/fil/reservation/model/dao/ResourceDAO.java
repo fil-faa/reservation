@@ -4,9 +4,6 @@ import fr.emn.fil.reservation.model.entities.Resource;
 
 import java.util.List;
 
-/**
- * Created by Alexandre on 20/10/2015.
- */
 public interface ResourceDAO {
 
     List<Resource> findAll();
@@ -17,4 +14,5 @@ public interface ResourceDAO {
 
     void delete(Resource toDelete);
 
+    Resource byId(Long resourceId);
 }

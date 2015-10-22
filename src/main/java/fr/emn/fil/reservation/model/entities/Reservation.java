@@ -43,9 +43,10 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(Date start, Date end, User user) {
+    public Reservation(Date start, Date end, Resource resource, User user) {
         this.start = start;
         this.end = end;
+        this.resource = resource;
         this.user = user;
     }
 
