@@ -28,6 +28,14 @@ public class UserService {
         return user;
     }
 
+    public void delete(Long id) throws ModelError {
+        User user = userDAO.byId(id);
+        if(user == null)
+            throw new ModelError("L'utilisateur que vous voulez supprimer n'existe pas");
+
+        userDAO.delete(user);
+    }
+
     public User create(String mail, String password, String firstName, String lastName, String phone) throws ModelError {
         String hashed = CryptUtils.hash(password);
 

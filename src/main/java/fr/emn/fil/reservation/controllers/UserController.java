@@ -27,6 +27,9 @@ public class UserController extends Controller {
             if(url.equals("/login"))
                 response = loginForm();
 
+            if(url.equals("/delete"))
+                response = deleteUser();
+
             if(url.equals("/"))
                 response = getUsers();
 
@@ -72,7 +75,7 @@ public class UserController extends Controller {
         } catch(NumberFormatException e) {
             throw new ModelError("Cet utilisateur ne peut être supprimé : erreur système");
         }
-       /* try
+       try
         {
             new UserService().delete(userId);
         }
@@ -80,7 +83,7 @@ public class UserController extends Controller {
         {
             request.setAttribute("error", e);
             return getUsers();
-        }*/
+        }
         return getUsers();
     }
     public Response addUser() {

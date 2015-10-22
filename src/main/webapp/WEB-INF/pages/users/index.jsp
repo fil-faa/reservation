@@ -29,7 +29,7 @@
                 <td>${user.telephone}</td>
                     <td>
                         <a href="${appName}/users/${user.id}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        <a href="${appName}/resources/delete?id=${user.id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                        <a href="${appName}/reservations/users/delete?id=${user.id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                     </td>
             </tr>
         </c:forEach>
