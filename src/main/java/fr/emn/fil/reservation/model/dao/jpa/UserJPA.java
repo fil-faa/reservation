@@ -27,4 +27,11 @@ public class UserJPA extends AbstractJpaDAO<User> implements UserDAO {
         List<User> users = q.getResultList();
         return users.size() > 0 ? users.get(0) : null;
     }
+
+    public User byId(Long userId) {
+        Query q = jpaManager.getEm().createNamedQuery("user.byId");
+        q.setParameter("id", userId);
+        User user = (User)q.getSingleResult();
+        return user;
+    }
 }

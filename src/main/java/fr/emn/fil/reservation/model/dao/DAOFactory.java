@@ -1,21 +1,18 @@
 package fr.emn.fil.reservation.model.dao;
 
 import fr.emn.fil.reservation.model.dao.jpa.ReservationJPA;
-import fr.emn.fil.reservation.model.dao.jpa.RessourceJPA;
+import fr.emn.fil.reservation.model.dao.jpa.ResourceJPA;
 import fr.emn.fil.reservation.model.dao.jpa.ResourceTypeJPA;
 import fr.emn.fil.reservation.model.dao.jpa.UserJPA;
 
-/**
- * Created by Alexandre on 20/10/2015.
- */
 public class DAOFactory {
 
     public static ReservationDAO reversationDAO() {
         return new ReservationJPA();
     }
 
-    public static ResourceDAO ressourceDAO() {
-        return new RessourceJPA();
+    public static ResourceDAO resourceDAO() {
+        return new ResourceJPA();
     }
 
     public static UserDAO userDAO() {
@@ -26,4 +23,7 @@ public class DAOFactory {
         return new ResourceTypeJPA();
     }
 
+    public static ReservationDAO reservationDAO() {
+        return new ReservationJPA();
+    }
 }
