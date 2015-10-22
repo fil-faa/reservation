@@ -9,7 +9,6 @@
 
 <%@include file="jspf/constants.jspf"%>
 
-
 <%@include file="jspf/header.jspf"%>
 
 
@@ -20,7 +19,6 @@
     <c:if test="${connected}">
         <%@include file="jspf/menu.jspf"%>
     </c:if>
-    <%@include file="jspf/menu.jspf"%>
 
     <c:if test="${not empty error}">
         <div class="alert alert-warning" role="alert">

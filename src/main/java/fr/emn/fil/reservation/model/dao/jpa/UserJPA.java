@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Alexandre on 20/10/2015.
  */
-public class UserJPA extends AbstractJpaDAO<User> implements UserDAO {
+public class UserJPA extends AbstractJpaDAO<User,Long> implements UserDAO {
 
     public UserJPA() {
         super(User.class);
@@ -28,7 +28,4 @@ public class UserJPA extends AbstractJpaDAO<User> implements UserDAO {
         return users.size() > 0 ? users.get(0) : null;
     }
 
-    public User byId(Long userId) {
-        return super.byId(userId);
-    }
 }

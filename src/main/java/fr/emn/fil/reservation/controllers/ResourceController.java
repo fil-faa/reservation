@@ -18,7 +18,7 @@ public class ResourceController extends Controller {
     }
 
     @Override
-    protected Response handle(String subUrl) throws GenericError {
+    protected Response handle(String subUrl)  {
         Response response = null;
         if(request.getMethod().equals("GET")) {
 

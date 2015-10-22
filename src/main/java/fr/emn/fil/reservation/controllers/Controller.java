@@ -28,7 +28,7 @@ public abstract class Controller {
      * Abstract method permitting to define what needs to be done after action calling
      * @return URL of the page to display after execution
      */
-    protected abstract Response handle(String subUrl) throws GenericError;
+    protected abstract Response handle(String subUrl);
 
     /**
      * Executes the action, and then redirects to the correct page
@@ -38,11 +38,7 @@ public abstract class Controller {
      */
     public void execute(String endpoint, String subRoute) throws IOException, ServletException {
         Response result = null;
-        try {
-            result = handle(subRoute);
-        } catch (GenericError genericError) {
-            request.setAttribute("error", genericError);
-        }
+        result = handle(subRoute);
         request.setAttribute("page", result.getPage());
 
         // Get the page status if given

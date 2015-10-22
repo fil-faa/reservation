@@ -8,7 +8,7 @@ import javax.persistence.Query;
 import java.util.Date;
 import java.util.List;
 
-public class ReservationJPA extends AbstractJpaDAO<Reservation> implements ReservationDAO {
+public class ReservationJPA extends AbstractJpaDAO<Reservation,Long> implements ReservationDAO {
 
     public ReservationJPA() {
         super(Reservation.class);
@@ -17,10 +17,6 @@ public class ReservationJPA extends AbstractJpaDAO<Reservation> implements Reser
     public List<Reservation> findAll() {
         Query q = jpaManager.getEm().createNamedQuery("reservation.findAll");
         return q.getResultList();
-    }
-
-    public Reservation byId(Long reservationId) {
-        return super.byId(reservationId);
     }
 
     public List<Reservation> byUser(Long userId) {

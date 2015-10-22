@@ -19,7 +19,7 @@ public class MyReservationsController extends Controller {
     }
 
     @Override
-    protected Response handle(String url) throws GenericError {
+    protected Response handle(String url) {
 
         Response response = null;
         if (request.getMethod().equals("GET")) {

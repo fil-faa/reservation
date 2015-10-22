@@ -7,8 +7,12 @@ import java.util.List;
  * Created by Alexandre on 20/10/2015.
  */
 
-
-public abstract class AbstractJpaDAO<T> {
+/**
+ * Abstract class handling general CRUD operations on the JPA entities
+ * @param <T> Entity class which we want to query
+ * @param <I> ID column type
+ */
+public abstract class AbstractJpaDAO<T,I> {
 
     protected JPAManager jpaManager;
 
@@ -40,7 +44,7 @@ public abstract class AbstractJpaDAO<T> {
         tx.commit();
     }
 
-    public T byId(Object id) {
+    public T byId(I id) {
         T found = jpaManager.getEm().find(className, id);
         return found;
     }

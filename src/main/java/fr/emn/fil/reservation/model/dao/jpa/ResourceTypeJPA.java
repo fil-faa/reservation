@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Alexandre on 20/10/2015.
  */
-public class ResourceTypeJPA extends AbstractJpaDAO<ResourceType> implements ResourceTypeDAO {
+public class ResourceTypeJPA extends AbstractJpaDAO<ResourceType,Long> implements ResourceTypeDAO {
 
     public ResourceTypeJPA() {
         super(ResourceType.class);

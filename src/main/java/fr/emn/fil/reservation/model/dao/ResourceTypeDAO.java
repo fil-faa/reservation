@@ -16,4 +16,7 @@ public interface ResourceTypeDAO {
     void update(ResourceType toUpdate);
 
     void delete(ResourceType toDelete);
+
+    ResourceType byId(Long id);
+
 }

@@ -19,33 +19,38 @@ public class UserController extends Controller {
     }
 
     @Override
-    protected Response handle(String url) throws GenericError {
+    protected Response handle(String url) {
 
         Response response = null;
-        if(request.getMethod().equals("GET")) {
+        try {
+            if (request.getMethod().equals("GET")) {
 
-            if(url.equals("/login"))
-                response = loginForm();
+                if (url.equals("/login"))
+                    response = loginForm();
 
-            if(url.equals("/delete"))
-                response = deleteUser();
+                if (url.equals("/delete"))
+                    response = deleteUser();
 
-            if(url.equals("/"))
-                response = getUsers();
+                if (url.equals("/"))
+                    response = getUsers();
 
-        } else if(request.getMethod().equals("POST")) {
+            } else if (request.getMethod().equals("POST")) {
 
-            if(url.equals("/login"))
-                response = login();
+                if (url.equals("/login"))
+                    response = login();
 
-            if(url.equals("/"))
-                response = addUser();
+                if (url.equals("/"))
+                    response = addUser();
+            }
+
+            if (response == null)
+                response = new Response("not-found.jsp", Response.Type.FORWARD);
+
+            return response;
+
+        } catch (GenericError e) {
+            return this.getUsers();
         }
-
-        if(response == null)
-            response = new Response("not-found.jsp", Response.Type.FORWARD);
-
-        return response;
     }
 
 
@@ -55,12 +60,12 @@ public class UserController extends Controller {
 
         try {
             User user = new UserService().connect(mail, password);
-            request.setAttribute("user", user);
+            request.getSession().setAttribute("user", user);
         } catch(GenericError e) {
             request.setAttribute("error", e);
-            return new Response("users/connect.jsp", Response.Type.FORWARD);
+            return this.loginForm();
         }
-        return new Response("/reservations/reservations", Response.Type.REDIRECT);
+        return new Response("/reservations/reservations/", Response.Type.REDIRECT);
     }
 
     public Response loginForm() {

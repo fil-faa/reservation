@@ -14,7 +14,7 @@
     <thead>
     <tr>
       <th>Nom</th>
-      <c:if test="${isAdmin}">
+      <c:if test="${admin}">
       <th>Actions</th>
       </c:if>
     </tr>
@@ -22,11 +22,11 @@
     <tbody>
     <c:forEach var="ressourceType" items="${ressourceTypes}">
       <tr>
-        <td><a href="${appName}/resources/?id_type=${ressourceType.id}">${ressourceType.name}</a></td>
-        <c:if test="${isAdmin}">
+        <td><a href="${appPath}?id_type=${ressourceType.id}">${ressourceType.name}</a></td>
+        <c:if test="${admin}">
           <td>
-            <a href="${appName}/resourceTypes/${ressourceType.id}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-            <a href="${appName}/resourceTypes/delete?id=${ressourceType.id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+            <a href="${appPath}/resourceTypes/${ressourceType.id}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+            <a href="${appPath}/resourceTypes/delete?id=${ressourceType.id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
           </td>
         </c:if>
       </tr>

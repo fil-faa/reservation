@@ -6,7 +6,7 @@ import fr.emn.fil.reservation.model.entities.Resource;
 import javax.persistence.Query;
 import java.util.List;
 
-public class ResourceJPA extends AbstractJpaDAO<Resource> implements ResourceDAO {
+public class ResourceJPA extends AbstractJpaDAO<Resource,Long> implements ResourceDAO {
 
     public ResourceJPA() {
         super(Resource.class);
@@ -18,7 +18,4 @@ public class ResourceJPA extends AbstractJpaDAO<Resource> implements ResourceDAO
         return ressources;
     }
 
-    public Resource byId(Long resourceId) {
-        return super.byId(resourceId);
-    }
 }

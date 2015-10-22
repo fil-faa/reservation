@@ -1,6 +1,7 @@
 package fr.emn.fil.reservation.model.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public class Resource {
     @Column(name = "PLACE")
     private String place;
 
-    @OneToMany(mappedBy = "resource")
+    @OneToMany(mappedBy = "resource", cascade = { CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Reservation> reservations;
 
     @ManyToOne
@@ -38,10 +39,12 @@ public class Resource {
     private ResourceType type;
 
     public Resource() {
+        this.reservations = new ArrayList<Reservation>();
     }
 
-    public Resource(String name, String description, String place) {
+    public Resource(String name, ResourceType type, String description, String place) {
         this.name = name;
+        this.type = type;
         this.description = description;
         this.place = place;
     }
@@ -76,6 +79,14 @@ public class Resource {
 
     public void setPlace(String place) {
         this.place = place;
+    }
+
+    public ResourceType getType() {
+        return type;
+    }
+
+    public void setType(ResourceType type) {
+        this.type = type;
     }
 
     public List<Reservation> getReservations() {

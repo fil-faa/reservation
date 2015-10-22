@@ -4,6 +4,7 @@ package fr.emn.fil.reservation.controllers;
 import fr.emn.fil.reservation.controllers.validation.StringValidator;
 import fr.emn.fil.reservation.model.entities.ResourceType;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
+import fr.emn.fil.reservation.model.exceptions.ValidationError;
 import fr.emn.fil.reservation.model.services.ResourceTypeService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,30 +13,41 @@ import java.util.List;
 
 public class ResourceTypeController extends Controller {
 
+    private ResourceTypeService typeService;
+
     public ResourceTypeController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
+        typeService = new ResourceTypeService();
     }
 
     @Override
-    protected Response handle(String url) throws GenericError {
-
+    protected Response handle(String url)  {
         Response response = null;
-        if (request.getMethod().equals("GET")) {
+        try {
+
+            if (request.getMethod().equals("GET")) {
 
 
-            if (url.equals("/"))
-                response = getResourceTypes();
+                if (url.equals("/"))
+                    response = getResourceTypes();
 
-        } else if (request.getMethod().equals("POST")) {
+                if (url.equals("/delete"))
+                    response = deleteResourceType();
 
-            if (url.equals("/"))
-                response = addResourceType();
+            } else if (request.getMethod().equals("POST")) {
+
+                if (url.equals("/"))
+                    response = addResourceType();
+            }
+
+            if (response == null)
+                response = new Response("not-found.jsp", Response.Type.FORWARD);
+
+            return response;
+
+        } catch(GenericError e) {
+            return this.getResourceTypes();
         }
-
-        if (response == null)
-            response = new Response("not-found.jsp", Response.Type.FORWARD);
-
-        return response;
     }
 
     public Response addResourceType() {
@@ -43,7 +55,7 @@ public class ResourceTypeController extends Controller {
             String name = request.getParameter("name");
             new StringValidator(name, "nom de la ressource").notEmpty();
 
-            ResourceType ressourceType = new ResourceTypeService().create(name);
+            ResourceType ressourceType = typeService.create(name);
             request.setAttribute("ressourceType", ressourceType);
             return this.getResourceTypes();
 
@@ -54,9 +66,24 @@ public class ResourceTypeController extends Controller {
     }
 
     public Response getResourceTypes() {
-        List<ResourceType> ressourceTypes = new ResourceTypeService().findAll();
+        List<ResourceType> ressourceTypes = typeService.findAll();
         request.setAttribute("ressourceTypes", ressourceTypes);
         return new Response("/ressourceType/index.jsp", Response.Type.FORWARD);
+    }
+
+    public Response deleteResourceType() throws GenericError {
+        Long typeId = null;
+        try {
+            typeId = Long.parseLong(request.getParameter("id"));
+        } catch(NumberFormatException e) {
+            typeId = null;
+        }
+        if(typeId == null) {
+            throw new ValidationError("Le type que vous voulez supprimer n'existe pas ou est corrompu");
+        }
+
+        typeService.delete(typeId);
+        return this.getResourceTypes();
     }
 
 }

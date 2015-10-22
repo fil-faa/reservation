@@ -16,7 +16,7 @@ public class PageNotFoundController extends Controller {
     }
 
     @Override
-    protected Response handle(String subUrl) throws GenericError {
+    protected Response handle(String subUrl) {
         request.setAttribute("status", 404);
         return new Response("not-found.jsp", Response.Type.FORWARD);
     }

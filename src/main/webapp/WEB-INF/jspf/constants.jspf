@@ -1,9 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:set var="appName" value="FIL FAA - Application web de r&eacute;servations"></c:set>
-<c:set var="appPath" value="${pageContext.request.contextPath}/reservations"></c:set>
-<% //<c:set var="isAdmin" value="${sessionScope.user.isAdmin}"></c:set>%>
-<c:set var="isAdmin" value="${true}"></c:set>
+<c:set var="appName" value="FIL FAA - Application web de r&eacute;servations" scope="request"></c:set>
+<c:set var="appPath" value="${pageContext.request.contextPath}/reservations" scope="request"></c:set>
 
+<c:set var="connected" value="${sessionScope.user != null}" scope="request"></c:set>
 
-<c:set var="connected" value="${sessionScope.user != null}"></c:set>
+<c:if test="${connected}">
+    <c:set var="admin" value="${sessionScope.user.admin}" scope="request"></c:set>
+</c:if>
