@@ -34,6 +34,12 @@ public class ReservationService {
         return reservation;
     }
 
+    public void cancel(Long id) throws ModelError{
+        Reservation reservation = reservationDAO.byId(id);
+        if(reservation == null) throw new ModelError("La réservation que vous voulez supprimer n'existe plus");
+        reservationDAO.delete(reservation);
+    }
+
     public void delete(Reservation reservation) {
         reservationDAO.delete(reservation);
     }
