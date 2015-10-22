@@ -4,6 +4,7 @@ import fr.emn.fil.reservation.model.entities.User;
 import fr.emn.fil.reservation.model.exceptions.ModelError;
 import fr.emn.fil.reservation.model.services.UserService;
 
+import javax.enterprise.inject.Model;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -57,13 +58,31 @@ public class UserController extends Controller {
             return new Response("users/connect.jsp", Response.Type.FORWARD);
         }
         return new Response("/reservations/reservations", Response.Type.REDIRECT);
-
     }
 
     public Response loginForm() {
         return new Response("users/connect.jsp", Response.Type.FORWARD);
     }
-
+    public Response deleteUser() throws ModelError
+    {
+        Long userId=null;
+        try {
+            userId = Long.parseLong(request.getParameter("id"));
+            if(userId == null) throw new NumberFormatException();
+        } catch(NumberFormatException e) {
+            throw new ModelError("Cet utilisateur ne peut être supprimé : erreur système");
+        }
+       /* try
+        {
+            new UserService().delete(userId);
+        }
+        catch (ModelError e)
+        {
+            request.setAttribute("error", e);
+            return getUsers();
+        }*/
+        return getUsers();
+    }
     public Response addUser() {
         try {
             String mail = request.getParameter("mail");
@@ -88,7 +107,7 @@ public class UserController extends Controller {
 
         } catch(ModelError e) {
             request.setAttribute("error", e);
-            return new Response("/users/index.jsp", Response.Type.FORWARD);
+            return getUsers();
         }
     }
 

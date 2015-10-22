@@ -19,4 +19,6 @@ public interface UserDAO {
 
     User byMail(String mail);
 
+    User byId(Long id);
+
 }
