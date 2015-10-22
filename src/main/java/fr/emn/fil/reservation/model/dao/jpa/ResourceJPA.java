@@ -19,9 +19,6 @@ public class ResourceJPA extends AbstractJpaDAO<Resource> implements ResourceDAO
     }
 
     public Resource byId(Long resourceId) {
-        Query q = jpaManager.getEm().createNamedQuery("resource.byId");
-        q.setParameter("id", resourceId);
-        Resource resource = (Resource)q.getSingleResult();
-        return resource;
+        return super.byId(resourceId);
     }
 }

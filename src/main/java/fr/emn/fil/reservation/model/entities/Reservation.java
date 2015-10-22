@@ -9,7 +9,10 @@ import java.util.Date;
  */
 
 @NamedQueries({
-        @NamedQuery(name = "reservation.findAll", query = "SELECT r FROM Reservation r")
+        @NamedQuery(name = "reservation.findAll", query = "SELECT r FROM Reservation r"),
+        @NamedQuery(name = "reservation.byUser", query = "SELECT r FROM Reservation r WHERE r.user = :user"),
+        @NamedQuery(name = "reservation.during", query = "SELECT r FROM Reservation r WHERE r.resource = :resource " +
+                "AND r.start < :endDate AND r.end > :startDate")
 })
 @Table(name = "RESERVATION")
 @Entity
