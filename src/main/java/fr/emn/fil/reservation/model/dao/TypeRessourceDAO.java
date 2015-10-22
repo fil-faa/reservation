@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface TypeRessourceDAO {
 
-    List<ResourceType> findAll();
+    List<RessourceType> findAll();
 
-    void save(ResourceType toSave);
+    void save(RessourceType toSave);
 
-    void update(ResourceType toUpdate);
+    void update(RessourceType toUpdate);
 
-    void delete(ResourceType toDelete);
+    void delete(RessourceType toDelete);
 }
