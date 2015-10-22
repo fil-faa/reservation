@@ -6,10 +6,6 @@ import fr.emn.fil.reservation.model.entities.Reservation;
 import javax.persistence.Query;
 import java.util.List;
 
-/**
- * Created by Alexandre on 20/10/2015.
- */
-
 public class ReservationJPA extends AbstractJpaDAO<Reservation> implements ReservationDAO {
 
     public ReservationJPA() {
@@ -20,6 +16,13 @@ public class ReservationJPA extends AbstractJpaDAO<Reservation> implements Reser
         Query q = jpaManager.getEm().createNamedQuery("reservation.findAll");
         List<Reservation> reservations = q.getResultList();
         return reservations;
+    }
+
+    public Reservation byId(Long reservationId) {
+        Query q = jpaManager.getEm().createNamedQuery("reservation.byId");
+        q.setParameter("id", reservationId);
+        Reservation reservation = (Reservation) q.getSingleResult();
+        return reservation;
     }
 
 }

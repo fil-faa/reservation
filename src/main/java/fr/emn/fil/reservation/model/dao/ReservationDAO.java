@@ -19,4 +19,5 @@ public interface ReservationDAO {
     void delete(Reservation toDelete);
 
 
+    Reservation byId(Long reservationId);
 }

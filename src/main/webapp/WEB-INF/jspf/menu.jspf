@@ -15,10 +15,10 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="${appPath}/reservation/">Mes réservations</a></li>
-                <li><a href="${appPath}/ressources/">Ressources</a></li>
+                <li><a href="${appPath}/resources/">Ressources</a></li>
                 <c:if test="${isAdmin}">
                     <li><a href="${appPath}/users/">Utilisateurs</a></li>
-                    <li><a href="${appPath}/reservations/">Réservation</a></li>
+                    <li><a href="${appPath}/reservations/">Réservations</a></li>
                 </c:if>
             </ul>
         </div><!--/.nav-collapse -->

@@ -1,9 +1,6 @@
 package fr.emn.fil.reservation;
 
-import fr.emn.fil.reservation.controllers.Controller;
-import fr.emn.fil.reservation.controllers.PageNotFoundController;
-import fr.emn.fil.reservation.controllers.ResourceController;
-import fr.emn.fil.reservation.controllers.UserController;
+import fr.emn.fil.reservation.controllers.*;
 import fr.emn.fil.reservation.model.entities.User;
 
 import javax.servlet.ServletException;
@@ -27,7 +24,8 @@ public class MainServlet extends HttpServlet {
 
         routes.put("/resources", new ResourceController(req, resp));
         routes.put("/users", new UserController(req, resp));
-
+        routes.put("/reservations", new ReservationController(req, resp));
+        routes.put("/reservation", new MyReservationsController(req, resp));
 
         Controller toExecute = null;
 

@@ -26,4 +26,8 @@ public class ReservationService {
         reservationDAO.save(reservation);
         return reservation;
     }
+
+    public void delete(Reservation reservation) {
+        reservationDAO.delete(reservation);
+    }
 }
