@@ -5,7 +5,7 @@ import fr.emn.fil.reservation.model.dao.ReservationDAO;
 import fr.emn.fil.reservation.model.entities.Reservation;
 import fr.emn.fil.reservation.model.entities.Resource;
 import fr.emn.fil.reservation.model.entities.User;
-import fr.emn.fil.reservation.model.exceptions.ModelError;
+import fr.emn.fil.reservation.model.exceptions.GenericError;
 
 import java.util.Date;
 import java.util.List;
@@ -22,21 +22,21 @@ public class ReservationService {
         return reservationDAO.findAll();
     }
 
-    public Reservation create(Date startDate, Date endDate, Resource resource, User user) throws ModelError {
+    public Reservation create(Date startDate, Date endDate, Resource resource, User user) throws GenericError {
 
         // We must avoid ubiquity for the resources
         List<Reservation> existing = reservationDAO.during(resource, startDate, endDate);
         if(existing.size() > 0)
-            throw new ModelError("Cette ressource est déjà réservée");
+            throw new GenericError("Cette ressource est déjà réservée");
 
         Reservation reservation = new Reservation(startDate, endDate, resource, user);
         reservationDAO.save(reservation);
         return reservation;
     }
 
-    public void cancel(Long id) throws ModelError{
+    public void cancel(Long id) throws GenericError {
         Reservation reservation = reservationDAO.byId(id);
-        if(reservation == null) throw new ModelError("La réservation que vous voulez supprimer n'existe plus");
+        if(reservation == null) throw new GenericError("La réservation que vous voulez supprimer n'existe plus");
         reservationDAO.delete(reservation);
     }
 

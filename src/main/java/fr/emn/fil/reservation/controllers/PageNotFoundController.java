@@ -1,6 +1,6 @@
 package fr.emn.fil.reservation.controllers;
 
-import fr.emn.fil.reservation.model.exceptions.ModelError;
+import fr.emn.fil.reservation.model.exceptions.GenericError;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +16,7 @@ public class PageNotFoundController extends Controller {
     }
 
     @Override
-    protected Response handle(String subUrl) throws ModelError {
+    protected Response handle(String subUrl) throws GenericError {
         request.setAttribute("status", 404);
         return new Response("not-found.jsp", Response.Type.FORWARD);
     }

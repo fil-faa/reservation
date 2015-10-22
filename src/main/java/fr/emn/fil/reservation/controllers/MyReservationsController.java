@@ -4,16 +4,12 @@ import fr.emn.fil.reservation.model.dao.DAOFactory;
 import fr.emn.fil.reservation.model.entities.Reservation;
 import fr.emn.fil.reservation.model.entities.Resource;
 import fr.emn.fil.reservation.model.entities.User;
-import fr.emn.fil.reservation.model.exceptions.ModelError;
+import fr.emn.fil.reservation.model.exceptions.GenericError;
 import fr.emn.fil.reservation.model.services.ReservationService;
 import fr.emn.fil.reservation.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class MyReservationsController extends Controller {
@@ -23,7 +19,7 @@ public class MyReservationsController extends Controller {
     }
 
     @Override
-    protected Response handle(String url) throws ModelError {
+    protected Response handle(String url) throws GenericError {
 
         Response response = null;
         if (request.getMethod().equals("GET")) {
@@ -63,7 +59,7 @@ public class MyReservationsController extends Controller {
         try {
             User user = new UserService().connect(mail, password);
             request.setAttribute("user", user);
-        } catch (ModelError e) {
+        } catch (GenericError e) {
             request.setAttribute("error", e);
             return new Response("users/connect.jsp", Response.Type.FORWARD);
         }

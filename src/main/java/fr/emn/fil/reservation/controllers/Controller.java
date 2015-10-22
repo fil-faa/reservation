@@ -1,6 +1,6 @@
 package fr.emn.fil.reservation.controllers;
 
-import fr.emn.fil.reservation.model.exceptions.ModelError;
+import fr.emn.fil.reservation.model.exceptions.GenericError;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,7 +28,7 @@ public abstract class Controller {
      * Abstract method permitting to define what needs to be done after action calling
      * @return URL of the page to display after execution
      */
-    protected abstract Response handle(String subUrl) throws ModelError;
+    protected abstract Response handle(String subUrl) throws GenericError;
 
     /**
      * Executes the action, and then redirects to the correct page
@@ -40,8 +40,8 @@ public abstract class Controller {
         Response result = null;
         try {
             result = handle(subRoute);
-        } catch (ModelError modelError) {
-            request.setAttribute("error", modelError);
+        } catch (GenericError genericError) {
+            request.setAttribute("error", genericError);
         }
         request.setAttribute("page", result.getPage());
 

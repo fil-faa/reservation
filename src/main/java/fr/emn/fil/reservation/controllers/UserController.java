@@ -1,10 +1,10 @@
 package fr.emn.fil.reservation.controllers;
 
+import fr.emn.fil.reservation.controllers.validation.StringValidator;
 import fr.emn.fil.reservation.model.entities.User;
-import fr.emn.fil.reservation.model.exceptions.ModelError;
+import fr.emn.fil.reservation.model.exceptions.GenericError;
 import fr.emn.fil.reservation.model.services.UserService;
 
-import javax.enterprise.inject.Model;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -19,7 +19,7 @@ public class UserController extends Controller {
     }
 
     @Override
-    protected Response handle(String url) throws ModelError {
+    protected Response handle(String url) throws GenericError {
 
         Response response = null;
         if(request.getMethod().equals("GET")) {
@@ -56,7 +56,7 @@ public class UserController extends Controller {
         try {
             User user = new UserService().connect(mail, password);
             request.setAttribute("user", user);
-        } catch(ModelError e) {
+        } catch(GenericError e) {
             request.setAttribute("error", e);
             return new Response("users/connect.jsp", Response.Type.FORWARD);
         }
@@ -66,20 +66,20 @@ public class UserController extends Controller {
     public Response loginForm() {
         return new Response("users/connect.jsp", Response.Type.FORWARD);
     }
-    public Response deleteUser() throws ModelError
+    public Response deleteUser() throws GenericError
     {
         Long userId=null;
         try {
             userId = Long.parseLong(request.getParameter("id"));
             if(userId == null) throw new NumberFormatException();
         } catch(NumberFormatException e) {
-            throw new ModelError("Cet utilisateur ne peut être supprimé : erreur système");
+            throw new GenericError("Cet utilisateur ne peut être supprimé : erreur système");
         }
        try
         {
             new UserService().delete(userId);
         }
-        catch (ModelError e)
+        catch (GenericError e)
         {
             request.setAttribute("error", e);
             return getUsers();
@@ -89,26 +89,25 @@ public class UserController extends Controller {
     public Response addUser() {
         try {
             String mail = request.getParameter("mail");
-            if(mail == null || mail.length() == 0   || !mail.contains("@"))
-                throw new ModelError("Veuillez fournir une adresse email valide");
+            new StringValidator(mail, "E-mail").notNull().mustContain("@");
+
             String password = request.getParameter("password");
-            if(password == null || password.length() < 8 )
-                throw new ModelError("Veuillez fournir un mot de passe d'une taille minimum de 8 caractères");
+            new StringValidator(password, "mot de passe").minLength(8).maxLength(250);
+
             String phone = request.getParameter("phone");
-            if(phone == null || phone.length() == 0)
-                throw new ModelError("Veuillez fournir un numéro de téléphone valide");
+            new StringValidator(phone, "téléphone").mustBeNumeric();
+
             String firstName = request.getParameter("firstName");
-            if(firstName == null || firstName.length() == 0)
-                throw new ModelError("Veuillez rentrer votre prénom");
+            new StringValidator(firstName, "prénom").notNull().minLength(0);
+
             String lastName = request.getParameter("lastName");
-            if(mail == null || mail.length() == 0)
-                throw new ModelError("Veuillez rentrer votre nom");
+            new StringValidator(firstName, "nom").notNull().minLength(0);
 
             User user = new UserService().create(mail, password, firstName, lastName, phone);
             request.setAttribute("user", user);
             return new Response(request.getContextPath() + "/reservations/users/", Response.Type.REDIRECT);
 
-        } catch(ModelError e) {
+        } catch(GenericError e) {
             request.setAttribute("error", e);
             return getUsers();
         }

@@ -1,11 +1,10 @@
 package fr.emn.fil.reservation.controllers;
 
 import fr.emn.fil.reservation.model.dao.DAOFactory;
-import fr.emn.fil.reservation.model.dao.UserDAO;
 import fr.emn.fil.reservation.model.entities.Reservation;
 import fr.emn.fil.reservation.model.entities.Resource;
 import fr.emn.fil.reservation.model.entities.User;
-import fr.emn.fil.reservation.model.exceptions.ModelError;
+import fr.emn.fil.reservation.model.exceptions.GenericError;
 import fr.emn.fil.reservation.model.services.ReservationService;
 import fr.emn.fil.reservation.model.services.UserService;
 
@@ -24,7 +23,7 @@ public class ReservationController extends Controller {
     }
 
     @Override
-    protected Response handle(String url) throws ModelError {
+    protected Response handle(String url) throws GenericError {
 
         Response response = null;
         if (request.getMethod().equals("GET")) {
@@ -64,7 +63,7 @@ public class ReservationController extends Controller {
         try {
             User user = new UserService().connect(mail, password);
             request.setAttribute("user", user);
-        } catch (ModelError e) {
+        } catch (GenericError e) {
             request.setAttribute("error", e);
             return new Response("users/connect.jsp", Response.Type.FORWARD);
         }
@@ -82,11 +81,11 @@ public class ReservationController extends Controller {
             DateFormat formatter = new SimpleDateFormat("MM/dd/yy");
             Date startDate = formatter.parse(strStartDate);
             if (startDate == null)
-                throw new ModelError("Veuillez fournir une date de début correcte");
+                throw new GenericError("Veuillez fournir une date de début correcte");
             String strEndDate = request.getParameter("endDate");
             Date endDate = formatter.parse(strEndDate);
             if (endDate == null)
-                throw new ModelError("Veuillez fournir une date de fin correcte");
+                throw new GenericError("Veuillez fournir une date de fin correcte");
             Long resourceId = Long.valueOf(request.getParameter("resourceId"));
             Resource resource = DAOFactory.resourceDAO().byId(resourceId);
             Long userId = Long.valueOf(request.getParameter("userId"));
@@ -96,7 +95,7 @@ public class ReservationController extends Controller {
             request.setAttribute("reservation", reservation);
             return new Response(request.getContextPath() + "/reservations/users/", Response.Type.REDIRECT);
 
-        } catch (ModelError e) {
+        } catch (GenericError e) {
             request.setAttribute("error", e);
             return new Response("/reservation/index.jsp", Response.Type.FORWARD);
         } catch (ParseException e) {

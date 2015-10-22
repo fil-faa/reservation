@@ -3,7 +3,7 @@ package fr.emn.fil.reservation.controllers;
 
 import fr.emn.fil.reservation.model.dao.jpa.ResourceTypeJPA;
 import fr.emn.fil.reservation.model.entities.ResourceType;
-import fr.emn.fil.reservation.model.exceptions.ModelError;
+import fr.emn.fil.reservation.model.exceptions.GenericError;
 import fr.emn.fil.reservation.model.services.ResourceTypeService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +17,7 @@ public class ResourceTypeController extends Controller {
     }
 
     @Override
-    protected Response handle(String url) throws ModelError {
+    protected Response handle(String url) throws GenericError {
 
         Response response = null;
         if (request.getMethod().equals("GET")) {
@@ -42,13 +42,13 @@ public class ResourceTypeController extends Controller {
         try {
             String name = request.getParameter("name");
             if (name == null || name.length() == 0)
-                throw new ModelError("Veuillez rentrer le nom du type de ressource");
+                throw new GenericError("Veuillez rentrer le nom du type de ressource");
 
             ResourceType ressourceType = new ResourceTypeService().create(name);
             request.setAttribute("ressourceType", ressourceType);
             return new Response("/reservations/", Response.Type.REDIRECT);
 
-        } catch (ModelError e) {
+        } catch (GenericError e) {
             request.setAttribute("error", e);
             return new Response("/resourceType/index.jsp", Response.Type.FORWARD);
         }

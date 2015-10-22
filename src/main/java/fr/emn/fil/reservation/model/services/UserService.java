@@ -5,7 +5,7 @@ import fr.emn.fil.reservation.model.dao.DAOFactory;
 import fr.emn.fil.reservation.model.dao.UserDAO;
 import fr.emn.fil.reservation.model.entities.User;
 import static fr.emn.fil.reservation.CryptUtils.hash;
-import fr.emn.fil.reservation.model.exceptions.ModelError;
+import fr.emn.fil.reservation.model.exceptions.GenericError;
 
 import java.util.List;
 
@@ -20,27 +20,27 @@ public class UserService {
         this.userDAO = DAOFactory.userDAO();
     }
 
-    public User connect(String mail, String password) throws ModelError {
+    public User connect(String mail, String password) throws GenericError {
         User user = userDAO.byMail(mail);
         if(user == null || !hash(password).equals(user.getPassword()))
-            throw new ModelError("Utilisateur non trouv?");
+            throw new GenericError("Utilisateur non trouv?");
 
         return user;
     }
 
-    public void delete(Long id) throws ModelError {
+    public void delete(Long id) throws GenericError {
         User user = userDAO.byId(id);
         if(user == null)
-            throw new ModelError("L'utilisateur que vous voulez supprimer n'existe pas");
+            throw new GenericError("L'utilisateur que vous voulez supprimer n'existe pas");
 
         userDAO.delete(user);
     }
 
-    public User create(String mail, String password, String firstName, String lastName, String phone) throws ModelError {
+    public User create(String mail, String password, String firstName, String lastName, String phone) throws GenericError {
         String hashed = CryptUtils.hash(password);
 
         if(userDAO.byMail(mail) != null)
-            throw new ModelError("Cette adresse email a d?j? ?t? prise");
+            throw new GenericError("Cette adresse email a d?j? ?t? prise");
 
         // We create the new user. It's not an admin (the admins are directly created in the database)
         User toCreate = new User(lastName, firstName, mail, hashed, phone, false);
