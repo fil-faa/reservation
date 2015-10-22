@@ -14,8 +14,14 @@ import java.util.List;
  */
 public class UserService {
 
+    private UserDAO userDAO;
+
+    public UserService() {
+        this.userDAO = DAOFactory.userDAO();
+    }
+
     public User connect(String mail, String password) throws ModelError {
-        User user = DAOFactory.userDAO().byMail(mail);
+        User user = userDAO.byMail(mail);
         if(user == null || !hash(password).equals(user.getPassword()))
             throw new ModelError("Utilisateur non trouvé");
 
@@ -25,13 +31,12 @@ public class UserService {
     public User create(String mail, String password, String firstName, String lastName, String phone) throws ModelError {
         String hashed = CryptUtils.hash(password);
 
-        UserDAO dao = DAOFactory.userDAO();
-        if(dao.byMail(mail) != null)
+        if(userDAO.byMail(mail) != null)
             throw new ModelError("Cette adresse email a déjà été prise");
 
         // We create the new user. It's not an admin (the admins are directly created in the database)
         User toCreate = new User(lastName, firstName, mail, hashed, phone, false);
-        dao.save(toCreate);
+        userDAO.save(toCreate);
 
         return toCreate;
     }

@@ -1,6 +1,7 @@
 package fr.emn.fil.reservation.model.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by arthur on 20/10/15.
@@ -26,8 +27,15 @@ public class Resource {
     private String description;
 
     @Basic
-    @Column(name = "LOCALISATION")
+    @Column(name = "PLACE")
     private String place;
+
+    @OneToMany(mappedBy = "resource")
+    private List<Reservation> reservations;
+
+    @ManyToOne
+    @JoinColumn(name = "TYPE_ID")
+    private ResourceType type;
 
     public Resource() {
     }
@@ -68,5 +76,13 @@ public class Resource {
 
     public void setPlace(String place) {
         this.place = place;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }

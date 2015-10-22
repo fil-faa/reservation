@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
+@Table(name = "USER")
 @NamedQueries({
         @NamedQuery(name = "user.findAll", query = "SELECT u FROM User u"),
         @NamedQuery(name = "user.byMail", query = "SELECT u FROM User u WHERE u.mail = :mail")
@@ -17,11 +18,11 @@ public class User {
     private Long id;
 
     @Basic(optional = false)
-    @Column(name = "NOM")
+    @Column(name = "FIRST_NAME")
     private @NotNull String firstName;
 
     @Basic(optional = false)
-    @Column(name = "PRENOM")
+    @Column(name = "LAST_NAME")
     private @NotNull String lastName;
 
     @Basic(optional = false)

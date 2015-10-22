@@ -84,7 +84,7 @@ public class UserController extends Controller {
 
             User user = new UserService().create(mail, password, firstName, lastName, phone);
             request.setAttribute("user", user);
-            return new Response("/reservations/", Response.Type.REDIRECT);
+            return new Response(request.getContextPath() + "/reservations/users/", Response.Type.REDIRECT);
 
         } catch(ModelError e) {
             request.setAttribute("error", e);

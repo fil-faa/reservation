@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Alexandre on 20/10/2015.
  */
-public interface RessourceDAO {
+public interface ResourceDAO {
 
     List<Resource> findAll();
 

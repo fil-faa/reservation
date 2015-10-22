@@ -23,17 +23,22 @@ public class Reservation {
     // TODO granularity of the dates ?
     @Basic
     @Temporal(TemporalType.DATE)
-    @Column(name = "DATEDEBUT")
+    @Column(name = "START")
     private Date start;
 
     @Basic
     @Temporal(TemporalType.DATE)
-    @Column(name = "DATEFIN")
+    @Column(name = "END")
     private Date end;
 
 
     @ManyToOne
+    @JoinColumn(name = "USER_ID")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "RESOURCE_ID")
+    private Resource resource;
 
     public Reservation() {
     }
@@ -66,6 +71,14 @@ public class Reservation {
 
     public void setEnd(Date end) {
         this.end = end;
+    }
+
+    public Resource getResource() {
+        return resource;
+    }
+
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 
     public User getUser() {
