@@ -19,6 +19,7 @@
             <th>Localisation</th>
             <th>Type</th>
             <th>Responsable</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -29,7 +30,15 @@
                 <td>${resource.localisation}</td>
                 <td>${resource.type.nom}</td>
                 <td>${resource.responsable.nom} ${resource.responsable.prenom}</td>
-
+                <td>
+                    <a href="${appName}/resources/${resource.id}"><span class="glyphicon glyphicon-cart" aria-hidden="true"></span></a>
+                </td>
+                <c:if test="${isAdmin}">
+                    <td>
+                        <a href="${appName}/resources/${resource.id}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                        <a href="${appName}/resources/delete?id=${resource.id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                    </td>
+                </c:if>
             </tr>
         </c:forEach>
 

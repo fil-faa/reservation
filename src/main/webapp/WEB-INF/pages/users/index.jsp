@@ -17,6 +17,7 @@
             <th>Pr&eacute;nom</th>
             <th>Mail</th>
             <th>T&eacute;l&eacute;phone</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -26,6 +27,10 @@
                 <td>${user.lastName}</td>
                 <td>${user.mail}</td>
                 <td>${user.telephone}</td>
+                    <td>
+                        <a href="${appName}/users/${user.id}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                        <a href="${appName}/resources/delete?id=${user.id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                    </td>
             </tr>
         </c:forEach>
 

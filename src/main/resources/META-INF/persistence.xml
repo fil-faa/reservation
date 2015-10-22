@@ -6,22 +6,20 @@
     <persistence-unit name="reservationUnit" transaction-type="RESOURCE_LOCAL">
 
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-
+<!--
         <class>fr.emn.fil.reservation.model.entities.Reservation</class>
         <class>fr.emn.fil.reservation.model.entities.ResourceType</class>
         <class>fr.emn.fil.reservation.model.entities.User</class>
         <class>fr.emn.fil.reservation.model.entities.Resource</class>
-
+-->
         <properties>
             <property name="hibernate.connection.url"
-                      value="jdbc:h2:file:./src/main/resources/database/reservation"/>
+                      value="jdbc:h2:mem:reservation;DB_CLOSE_DELAY=-1"/>
             <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
-            <property name="hibernate.connection.username" value="root"/>
-            <property name="hibernate.connection.password" value="password"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
             <!-- Configuration Hibernate -->
-            <property name="hibernate.hbm2ddl.auto" value="create" />
-            <property name="hibernate.show_sql" value="false" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.show_sql" value="true" />
         </properties>
     </persistence-unit>
 </persistence>

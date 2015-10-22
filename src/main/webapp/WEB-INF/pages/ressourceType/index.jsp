@@ -14,13 +14,23 @@
     <thead>
     <tr>
       <th>Nom</th>
+      <c:if test="${isAdmin}">
+      <th>Actions</th>
+      </c:if>
     </tr>
     </thead>
     <tbody>
     <c:forEach var="ressourceType" items="${ressourceTypes}">
       <tr>
-        <td>${ressourceType.name}</td>
+        <td><a href="${appName}/resources/?id_type=${ressourceType.id}">${ressourceType.name}</a></td>
+        <c:if test="${isAdmin}">
+          <td>
+            <a href="${appName}/resourceTypes/${ressourceType.id}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+            <a href="${appName}/resourceTypes/delete?id=${ressourceType.id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+          </td>
+        </c:if>
       </tr>
+
     </c:forEach>
 
     </tbody>

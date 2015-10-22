@@ -6,5 +6,5 @@
         <input type="text" class="form-control" id="name" name="name" placeholder="e.g. Voiture">
     </div>
 
-    <button type="submit" class="btn btn-default">Valider</button>
+    <button type="submit" class="btn btn-default">Ajouter</button>
 </form>
