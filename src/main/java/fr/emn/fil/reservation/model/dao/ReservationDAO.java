@@ -4,9 +4,6 @@ import fr.emn.fil.reservation.model.entities.Reservation;
 
 import java.util.List;
 
-/**
- * Created by Alexandre on 20/10/2015.
- */
 public interface ReservationDAO {
 
 
@@ -20,4 +17,6 @@ public interface ReservationDAO {
 
 
     Reservation byId(Long reservationId);
+
+    List<Reservation> findByUser(Long userId);
 }

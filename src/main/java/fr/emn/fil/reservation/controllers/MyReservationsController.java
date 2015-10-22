@@ -85,9 +85,10 @@ public class MyReservationsController extends Controller {
     }
 
     public Response getReservations() {
-        List<Reservation> reservations = new ReservationService().findAll();
+        User user = (User) request.getAttribute("user");
+        List<Reservation> reservations = new ReservationService().findByUser(user);
         request.setAttribute("reservations", reservations);
-        return new Response("/reservation/index.jsp", Response.Type.FORWARD);
+        return new Response("/myReservations/index.jsp", Response.Type.FORWARD);
     }
 
 }

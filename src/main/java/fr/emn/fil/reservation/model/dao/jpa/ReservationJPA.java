@@ -25,4 +25,11 @@ public class ReservationJPA extends AbstractJpaDAO<Reservation> implements Reser
         return reservation;
     }
 
+    public List<Reservation> findByUser(Long userId) {
+        Query q = jpaManager.getEm().createNamedQuery("reservation.byUser");
+        q.setParameter("user", userId);
+        List<Reservation> reservations = q.getResultList();
+        return reservations;
+    }
+
 }

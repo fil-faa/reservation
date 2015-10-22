@@ -30,4 +30,8 @@ public class ReservationService {
     public void delete(Reservation reservation) {
         reservationDAO.delete(reservation);
     }
+
+    public List<Reservation> findByUser(User user) {
+        return reservationDAO.findByUser(user.getId());
+    }
 }
