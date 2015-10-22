@@ -1,7 +1,7 @@
 package fr.emn.fil.reservation.controllers;
 
 
-import fr.emn.fil.reservation.model.dao.jpa.ResourceTypeJPA;
+import fr.emn.fil.reservation.controllers.validation.StringValidator;
 import fr.emn.fil.reservation.model.entities.ResourceType;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
 import fr.emn.fil.reservation.model.services.ResourceTypeService;
@@ -41,21 +41,20 @@ public class ResourceTypeController extends Controller {
     public Response addResourceType() {
         try {
             String name = request.getParameter("name");
-            if (name == null || name.length() == 0)
-                throw new GenericError("Veuillez rentrer le nom du type de ressource");
+            new StringValidator(name, "nom de la ressource").notEmpty();
 
             ResourceType ressourceType = new ResourceTypeService().create(name);
             request.setAttribute("ressourceType", ressourceType);
-            return new Response("/reservations/", Response.Type.REDIRECT);
+            return this.getResourceTypes();
 
         } catch (GenericError e) {
             request.setAttribute("error", e);
-            return new Response("/resourceType/index.jsp", Response.Type.FORWARD);
         }
+        return this.getResourceTypes();
     }
 
     public Response getResourceTypes() {
-        List<ResourceType> ressourceTypes = new ResourceTypeJPA().findAll();
+        List<ResourceType> ressourceTypes = new ResourceTypeService().findAll();
         request.setAttribute("ressourceTypes", ressourceTypes);
         return new Response("/ressourceType/index.jsp", Response.Type.FORWARD);
     }

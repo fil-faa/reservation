@@ -89,7 +89,7 @@ public class UserController extends Controller {
     public Response addUser() {
         try {
             String mail = request.getParameter("mail");
-            new StringValidator(mail, "E-mail").notNull().mustContain("@");
+            new StringValidator(mail, "E-mail").notEmpty().mustContain("@");
 
             String password = request.getParameter("password");
             new StringValidator(password, "mot de passe").minLength(8).maxLength(250);
@@ -98,10 +98,10 @@ public class UserController extends Controller {
             new StringValidator(phone, "téléphone").mustBeNumeric();
 
             String firstName = request.getParameter("firstName");
-            new StringValidator(firstName, "prénom").notNull().minLength(0);
+            new StringValidator(firstName, "prénom").notEmpty();
 
             String lastName = request.getParameter("lastName");
-            new StringValidator(firstName, "nom").notNull().minLength(0);
+            new StringValidator(firstName, "nom").notEmpty();
 
             User user = new UserService().create(mail, password, firstName, lastName, phone);
             request.setAttribute("user", user);

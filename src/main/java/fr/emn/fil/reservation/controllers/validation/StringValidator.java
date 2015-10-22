@@ -25,8 +25,8 @@ public class StringValidator {
         this.label = label;
     }
 
-    public StringValidator notNull() throws ValidationError {
-        if(toValidate == null)
+    public StringValidator notEmpty() throws ValidationError {
+        if(toValidate == null || toValidate.length() == 0)
             throw new ValidationError("Veuillez remplir le champ \"" + label + "\"");
         return this;
     }

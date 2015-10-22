@@ -26,6 +26,7 @@ public class MainServlet extends HttpServlet {
         routes.put("/users", new UserController(req, resp));
         routes.put("/reservations", new ReservationController(req, resp));
         routes.put("/reservation", new MyReservationsController(req, resp));
+        routes.put("/resourceTypes", new ResourceTypeController(req, resp));
 
         Controller toExecute = null;
 
