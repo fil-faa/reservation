@@ -20,19 +20,22 @@ public class Resource {
     private Long id;
 
     @Basic
-    @Column(name = "NOM")
+    @Column(name = "NOM", length = 255)
     private String name;
 
     @Basic
-    @Column(name = "DESCRIPTION")
+    @Column(name = "DESCRIPTION", length = 255)
     private String description;
 
     @Basic
-    @Column(name = "PLACE")
+    @Column(name = "PLACE", length = 100)
     private String place;
 
-    @OneToMany(mappedBy = "resource", cascade = { CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "resource", cascade = { CascadeType.PERSIST, CascadeType.MERGE})
     private List<Reservation> reservations;
+
+    @OneToOne(optional = false)
+    private User owner;
 
     @ManyToOne
     @JoinColumn(name = "TYPE_ID")
@@ -42,11 +45,21 @@ public class Resource {
         this.reservations = new ArrayList<Reservation>();
     }
 
-    public Resource(String name, ResourceType type, String description, String place) {
+    public Resource(String name, User owner, ResourceType type, String description, String place) {
         this.name = name;
         this.type = type;
+        this.reservations = new ArrayList<Reservation>();
+        this.owner = owner;
         this.description = description;
         this.place = place;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     public Long getId() {

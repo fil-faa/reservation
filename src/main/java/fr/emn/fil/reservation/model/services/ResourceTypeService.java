@@ -39,10 +39,13 @@ public class ResourceTypeService {
                     throw new ModelError("Suppression impossible : une réservation " +
                             "liée au type que vous voulez supprimée n'est pas encore terminée");
         }
-
-        type.setResources(null);
-        resourceTypeDAO.save(type);
         resourceTypeDAO.delete(type);
+    }
+
+    public ResourceType byId(Long id) throws ModelError {
+        ResourceType resourceType = resourceTypeDAO.byId(id);
+        if(resourceType == null) throw new ModelError("Type de ressource non trouvé pour l'id donné");
+        return resourceType;
     }
 
 }

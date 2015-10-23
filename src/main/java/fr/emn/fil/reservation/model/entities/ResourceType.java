@@ -23,8 +23,7 @@ public class ResourceType {
     @Column(name = "NAME")
     private String name;
 
-    @OneToMany(mappedBy = "type", cascade = {CascadeType.REMOVE, CascadeType.PERSIST},
-            fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
     private List<Resource> resources;
 
     public ResourceType() {
@@ -32,6 +31,7 @@ public class ResourceType {
     }
 
     public ResourceType(String nom) {
+        this.resources = new ArrayList<Resource>();
         this.name = nom;
     }
 

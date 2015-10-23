@@ -6,6 +6,7 @@ import fr.emn.fil.reservation.model.dao.UserDAO;
 import fr.emn.fil.reservation.model.entities.User;
 import static fr.emn.fil.reservation.CryptUtils.hash;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
+import fr.emn.fil.reservation.model.exceptions.ModelError;
 
 import java.util.List;
 
@@ -53,5 +54,10 @@ public class UserService {
         return DAOFactory.userDAO().findAll();
     }
 
+    public User byId(Long id) throws ModelError {
+        User user = userDAO.byId(id);
+        if(user == null) throw new ModelError("Utilisateur non trouvé pour l'identifiant donné");
+        return user;
+    }
 
 }

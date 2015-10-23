@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${isAdmin}">
+<c:if test="${admin}">
 <div>
     <c:import url="/WEB-INF/pages/resources/partials/addForm.jsp"></c:import>
 </div>
@@ -25,11 +25,11 @@
         <tbody>
         <c:forEach var="resource" items="${resources}">
             <tr>
-                <td>${resource.nom}</td>
+                <td>${resource.name}</td>
                 <td>${resource.description}</td>
-                <td>${resource.localisation}</td>
-                <td>${resource.type.nom}</td>
-                <td>${resource.responsable.nom} ${resource.responsable.prenom}</td>
+                <td>${resource.place}</td>
+                <td>${resource.type.name}</td>
+                <td>${resource.owner.firstName} ${resource.owner.lastName}</td>
                 <td>
                     <a href="${appName}/resources/${resource.id}"><span class="glyphicon glyphicon-cart" aria-hidden="true"></span></a>
                 </td>

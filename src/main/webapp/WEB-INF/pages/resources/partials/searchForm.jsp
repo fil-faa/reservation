@@ -5,8 +5,8 @@
     <div class="form-group">
         <label for="search_resourceType">Type de la ressource</label>
         <select class="form-control" id="search_resourceType" name="id_type" >
-            <c:forEach items="resourceTypes" var="type">
-                <option value="${type.id}" >${type.nom}</option>
+            <c:forEach var="type" items="${resourceTypes}">
+                <option value="${type.id}" >${type.name}</option>
             </c:forEach>
             </select>
     </div>
