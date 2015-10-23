@@ -5,6 +5,7 @@ import fr.emn.fil.reservation.model.entities.Resource;
 import fr.emn.fil.reservation.model.entities.ResourceType;
 import fr.emn.fil.reservation.model.entities.User;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
+import fr.emn.fil.reservation.model.exceptions.ModelError;
 import fr.emn.fil.reservation.model.exceptions.ValidationError;
 import fr.emn.fil.reservation.model.services.ResourceService;
 import fr.emn.fil.reservation.model.services.ResourceTypeService;
@@ -38,6 +39,9 @@ public class ResourceController extends Controller {
             if(subUrl.equals("/"))
                 response = getResources();
 
+            if(subUrl.equals("/delete"))
+                response = deleteResource();
+
         } else if(request.getMethod().equals("POST")) {
 
             if(subUrl.equals("/"))
@@ -57,6 +61,19 @@ public class ResourceController extends Controller {
         request.setAttribute("resources", resources);
         request.setAttribute("resourceTypes", new ResourceTypeService().findAll());
         return new Response("resources/index.jsp", Response.Type.FORWARD);
+    }
+
+    public Response deleteResource() {
+        Long resourceId = null;
+        try {
+            Resource resource = resourceService.byId(Long.parseLong(request.getParameter("id")));
+            resourceService.delete(resource);
+        } catch(ModelError e) {
+            request.setAttribute("error", e);
+        }
+        finally {
+            return getResources();
+        }
     }
 
     public Response createResource() {

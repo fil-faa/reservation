@@ -21,15 +21,17 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="user" items="${users}">
+        <c:forEach var="u" items="${users}">
             <tr>
-                <td>${user.firstName}</td>
-                <td>${user.lastName}</td>
-                <td>${user.mail}</td>
-                <td>${user.telephone}</td>
+                <td>${u.firstName}</td>
+                <td>${u.lastName}</td>
+                <td>${u.mail}</td>
+                <td>${u.telephone}</td>
                     <td>
-                        <a href="${appName}/users/${user.id}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        <a href="${appName}/reservations/users/delete?id=${user.id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                        <a href="${appPath}/users/${u.id}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                        <c:if test="${u.id != user.id}">
+                        <a href="${appPath}/users/delete?id=${u.id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                        </c:if>
                     </td>
             </tr>
         </c:forEach>

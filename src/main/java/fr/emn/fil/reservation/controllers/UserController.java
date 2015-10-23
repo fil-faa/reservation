@@ -78,7 +78,7 @@ public class UserController extends Controller {
             userId = Long.parseLong(request.getParameter("id"));
             if(userId == null) throw new NumberFormatException();
         } catch(NumberFormatException e) {
-            throw new GenericError("Cet utilisateur ne peut ?tre supprim? : erreur syst?me");
+            throw new GenericError("Cet utilisateur ne peut être supprimé : erreur système");
         }
        try
         {

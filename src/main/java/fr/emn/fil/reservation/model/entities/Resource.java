@@ -16,7 +16,7 @@ public class Resource {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Basic
@@ -31,10 +31,11 @@ public class Resource {
     @Column(name = "PLACE", length = 100)
     private String place;
 
-    @OneToMany(mappedBy = "resource", cascade = { CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
     private List<Reservation> reservations;
 
-    @OneToOne(optional = false)
+    @JoinColumn(name = "OWNER_ID")
+    @ManyToOne
     private User owner;
 
     @ManyToOne

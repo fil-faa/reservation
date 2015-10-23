@@ -14,38 +14,50 @@ import java.util.List;
  */
 public abstract class AbstractJpaDAO<T,I> {
 
-    protected JPAManager jpaManager;
-
     private final Class<T> className;
 
     public AbstractJpaDAO(Class<T> className) {
-        jpaManager = jpaManager.getInstance();
         this.className = className;
     }
 
     public void save(T toSave) {
-        EntityTransaction tx = jpaManager.getTransaction();
-        tx.begin();
-        jpaManager.getEm().persist(toSave);
-        tx.commit();
+        try {
+            EntityTransaction tx = JPAManager.getTransaction();
+            tx.begin();
+            JPAManager.getEm().persist(toSave);
+            tx.commit();
+        } finally {
+            if(JPAManager.getTransaction().isActive())
+                JPAManager.getTransaction().rollback();
+        }
     }
 
     public void update(T toUpdate) {
-        EntityTransaction tx = jpaManager.getTransaction();
+        try {
+        EntityTransaction tx = JPAManager.getTransaction();
         tx.begin();
-        jpaManager.getEm().merge(toUpdate);
+            JPAManager.getEm().merge(toUpdate);
         tx.commit();
+        } finally {
+            if(JPAManager.getTransaction().isActive())
+                JPAManager.getTransaction().rollback();
+        }
     }
 
     public void delete(T toDelete) {
-        EntityTransaction tx = jpaManager.getTransaction();
+        try {
+        EntityTransaction tx = JPAManager.getTransaction();
         tx.begin();
-        jpaManager.getEm().remove(toDelete);
+            JPAManager.getEm().remove(toDelete);
         tx.commit();
+        } finally {
+            if(JPAManager.getTransaction().isActive())
+                JPAManager.getTransaction().rollback();
+        }
     }
 
     public T byId(I id) {
-        T found = jpaManager.getEm().find(className, id);
+        T found = JPAManager.getEm().find(className, id);
         return found;
     }
 

@@ -10,29 +10,13 @@ import javax.persistence.Persistence;
  */
 public class JPAManager {
 
-    public final static String PERSISTENCE_UNIT_NAME = "reservationUnit";
+    public static final ThreadLocal<EntityManager> ENTITY_MANAGER = new ThreadLocal<EntityManager>();
 
-    private static JPAManager instance;
-
-    private EntityManager em;
-
-    public static JPAManager getInstance() {
-        return instance == null ?
-                instance = new JPAManager() :
-                instance;
+    public static EntityManager getEm() {
+        return ENTITY_MANAGER.get();
     }
 
-    public JPAManager() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-        em = emf.createEntityManager();
-        emf.close();
-    }
-
-    public EntityManager getEm() {
-        return em;
-    }
-
-    public EntityTransaction getTransaction() {
-        return em.getTransaction();
+    public static EntityTransaction getTransaction() {
+        return getEm().getTransaction();
     }
 }

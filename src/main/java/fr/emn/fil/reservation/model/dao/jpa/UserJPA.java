@@ -16,13 +16,13 @@ public class UserJPA extends AbstractJpaDAO<User,Long> implements UserDAO {
     }
 
     public List<User> findAll() {
-        Query q = jpaManager.getEm().createNamedQuery("user.findAll");
+        Query q = JPAManager.getEm().createNamedQuery("user.findAll");
         List<User> users = q.getResultList();
         return users;
     }
 
     public User byMail(String mail) {
-        Query q = jpaManager.getEm().createNamedQuery("user.byMail");
+        Query q = JPAManager.getEm().createNamedQuery("user.byMail");
         q.setParameter("mail", mail);
         List<User> users = q.getResultList();
         return users.size() > 0 ? users.get(0) : null;

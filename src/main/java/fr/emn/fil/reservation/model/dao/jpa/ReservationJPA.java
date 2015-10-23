@@ -15,18 +15,18 @@ public class ReservationJPA extends AbstractJpaDAO<Reservation,Long> implements 
     }
 
     public List<Reservation> findAll() {
-        Query q = jpaManager.getEm().createNamedQuery("reservation.findAll");
+        Query q = JPAManager.getEm().createNamedQuery("reservation.findAll");
         return q.getResultList();
     }
 
     public List<Reservation> byUser(Long userId) {
-        Query q = jpaManager.getEm().createNamedQuery("reservation.byUser");
+        Query q = JPAManager.getEm().createNamedQuery("reservation.byUser");
         q.setParameter("user", userId);
         return q.getResultList();
     }
 
     public List<Reservation> during(Resource resource, Date start, Date end) {
-        Query q = jpaManager.getEm().createNamedQuery("reservation.during");
+        Query q = JPAManager.getEm().createNamedQuery("reservation.during");
         q.setParameter("resource", resource);
         q.setParameter("startDate", start);
         q.setParameter("endDate", end);

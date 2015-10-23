@@ -33,10 +33,10 @@
                 <td>
                     <a href="${appName}/resources/${resource.id}"><span class="glyphicon glyphicon-cart" aria-hidden="true"></span></a>
                 </td>
-                <c:if test="${isAdmin}">
+                <c:if test="${admin}">
                     <td>
-                        <a href="${appName}/resources/${resource.id}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        <a href="${appName}/resources/delete?id=${resource.id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                        <a href="${appPath}/resources/${resource.id}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                        <a href="${appPath}/resources/delete?id=${resource.id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                     </td>
                 </c:if>
             </tr>

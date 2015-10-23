@@ -1,11 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="body-box">
-  <h2>Liste de mes rÃ©servations</h2>
+  <h2>Liste de mes réservations</h2>
   <table class="table table-striped">
     <thead>
     <tr>
-      <th>Date de dÃ©but</th>
+      <th>Date de début</th>
       <th>Date de fin</th>
       <th>Utilisateur</th>
       <th>Ressource</th>
