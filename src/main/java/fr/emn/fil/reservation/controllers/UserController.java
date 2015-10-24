@@ -3,19 +3,26 @@ package fr.emn.fil.reservation.controllers;
 import fr.emn.fil.reservation.controllers.validation.StringValidator;
 import fr.emn.fil.reservation.model.entities.User;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
+import fr.emn.fil.reservation.model.exceptions.ModelError;
 import fr.emn.fil.reservation.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Scanner;
+
+import static fr.emn.fil.reservation.CryptUtils.hash;
 
 /**
  * Created by Alexandre on 21/10/2015.
  */
 public class UserController extends Controller {
 
+    private UserService userService;
+
     public UserController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
+        userService = new UserService();
     }
 
     @Override
@@ -34,6 +41,17 @@ public class UserController extends Controller {
                 if (url.equals("/"))
                     response = getUsers();
 
+                if (url.length() > 1 && response == null) {
+                    Scanner scId = new Scanner(url.trim().substring(1));
+
+                    if (scId.hasNextLong()) {
+                        Long id = scId.nextLong();
+                        response = editUser(id);
+                    } else {
+                        response = getUsers();
+                    }
+                }
+
             } else if (request.getMethod().equals("POST")) {
 
                 if (url.equals("/login"))
@@ -41,6 +59,17 @@ public class UserController extends Controller {
 
                 if (url.equals("/"))
                     response = addUser();
+
+                if (url.length() > 1 && response == null) {
+                    Scanner scId = new Scanner(url.trim().substring(1));
+
+                    if (scId.hasNextLong()) {
+                        Long id = scId.nextLong();
+                        response = editUserSave(id);
+                    } else {
+                        response = getUsers();
+                    }
+                }
             }
 
             if (response == null)
@@ -53,13 +82,57 @@ public class UserController extends Controller {
         }
     }
 
+    private Response editUserSave(Long id) {
+        try {
+            User user = userService.byId(id);
+
+            String lastName = request.getParameter("lastName");
+            if (!lastName.equals(user.getLastName()) && !lastName.isEmpty()) {
+                user.setLastName(lastName);
+            }
+            String firstName = request.getParameter("firstName");
+            if (!firstName.equals(user.getFirstName()) && !firstName.isEmpty()) {
+                user.setFirstName(firstName);
+            }
+            String mail = request.getParameter("mail");
+            if (!mail.equals(user.getMail()) && !mail.isEmpty()) {
+                user.setMail(mail);
+            }
+            String phone = request.getParameter("phone");
+            if (!phone.equals(user.getTelephone()) && !phone.isEmpty()) {
+                user.setTelephone(phone);
+            }
+            String password = request.getParameter("password");
+            if (!hash(password).equals(user.getPassword()) && !password.isEmpty()) {
+                user.setPassword(hash(password));
+            }
+
+            userService.save(user);
+        } catch (ModelError modelError) {
+            request.setAttribute("error", "Utilisateur inexistant");
+        }
+        return this.getUsers();
+    }
+
+    private Response editUser(Long id) {
+        try {
+            User user = userService.byId(id);
+
+            request.setAttribute("user", user);
+            return new Response("users/edit.jsp", Response.Type.FORWARD);
+        } catch (ModelError modelError) {
+            request.setAttribute("error", "Utilisateur inexistant");
+            return this.getUsers();
+        }
+    }
+
 
     public Response login() {
         String mail = request.getParameter("mail");
         String password = request.getParameter("password");
 
         try {
-            User user = new UserService().connect(mail, password);
+            User user = userService.connect(mail, password);
             request.getSession().setAttribute("user", user);
         } catch(GenericError e) {
             request.setAttribute("error", e);
@@ -82,7 +155,7 @@ public class UserController extends Controller {
         }
        try
         {
-            new UserService().delete(userId);
+            userService.delete(userId);
         }
         catch (GenericError e)
         {
@@ -108,7 +181,7 @@ public class UserController extends Controller {
             String lastName = request.getParameter("lastName");
             new StringValidator(firstName, "nom").notEmpty();
 
-            User user = new UserService().create(mail, password, firstName, lastName, phone);
+            User user = userService.create(mail, password, firstName, lastName, phone);
             request.setAttribute("user", user);
             return new Response(request.getContextPath() + "/book/users/", Response.Type.REDIRECT);
 
@@ -119,7 +192,7 @@ public class UserController extends Controller {
     }
 
     public Response getUsers() {
-        List<User> users = new UserService().findAll();
+        List<User> users = userService.findAll();
         request.setAttribute("users", users);
         return new Response("/users/index.jsp", Response.Type.FORWARD);
     }

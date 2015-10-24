@@ -56,8 +56,11 @@ public class UserService {
 
     public User byId(Long id) throws ModelError {
         User user = userDAO.byId(id);
-        if(user == null) throw new ModelError("Utilisateur non trouvé pour l'identifiant donné");
+        if(user == null) throw new ModelError("Utilisateur non trouvï¿½ pour l'identifiant donnï¿½");
         return user;
     }
 
+    public void save(User user) {
+        userDAO.save(user);
+    }
 }

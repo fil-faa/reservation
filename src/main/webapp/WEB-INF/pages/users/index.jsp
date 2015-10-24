@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div>
-
     <%@include file="partials/addForm.jsp"%>
 </div>
 <div class="side-box">

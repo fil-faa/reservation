@@ -43,8 +43,11 @@ public class ResourceService {
 
     public Resource byId(Long id) throws ModelError {
         Resource resource = resourceDAO.byId(id);
-        if(resource == null) throw new ModelError("Ressource non trouvée pour l'id donné");
+        if(resource == null) throw new ModelError("Ressource non trouvï¿½e pour l'id donnï¿½");
         return resource;
     }
 
+    public void save(Resource resource) {
+        resourceDAO.save(resource);
+    }
 }

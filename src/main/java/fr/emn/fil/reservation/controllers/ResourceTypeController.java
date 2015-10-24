@@ -23,7 +23,7 @@ public class ResourceTypeController extends Controller {
     }
 
     @Override
-    protected Response handle(String url)  {
+    protected Response handle(String url) {
         Response response = null;
         try {
 
@@ -32,18 +32,17 @@ public class ResourceTypeController extends Controller {
                 if (url.equals("/"))
                     response = getResourceTypes();
 
-                if (url.equals("/delete")) {
+                if (url.equals("/delete"))
                     response = deleteResourceType();
-                } else {
-                    if (url.length() > 1) {
-                        Scanner scId = new Scanner(url.trim().substring(1));
 
-                       if (scId.hasNextLong()) {
-                           Long id = scId.nextLong();
-                           response = editResourceTypes(id);
-                       } else {
-                           response = getResourceTypes();
-                       }
+                if (url.length() > 1 && response == null) {
+                    Scanner scId = new Scanner(url.trim().substring(1));
+
+                    if (scId.hasNextLong()) {
+                        Long id = scId.nextLong();
+                        response = editResourceTypes(id);
+                    } else {
+                        response = getResourceTypes();
                     }
                 }
 
@@ -69,7 +68,7 @@ public class ResourceTypeController extends Controller {
 
             return response;
 
-        } catch(GenericError e) {
+        } catch (GenericError e) {
             return this.getResourceTypes();
         }
     }
@@ -83,7 +82,7 @@ public class ResourceTypeController extends Controller {
 
             typeService.save(resourceType);
         } catch (ModelError modelError) {
-            request.setAttribute("Type de ressource inexistant", modelError);
+            request.setAttribute("error", "Type de ressource inexistant");
         }
         return this.getResourceTypes();
     }
@@ -95,7 +94,7 @@ public class ResourceTypeController extends Controller {
             request.setAttribute("resourceType", resourceType);
             return new Response("/resourceType/edit.jsp", Response.Type.FORWARD);
         } catch (ModelError modelError) {
-            request.setAttribute("Type de ressource inexistant", modelError);
+            request.setAttribute("error", "Type de ressource inexistant");
             return this.getResourceTypes();
         }
     }
@@ -125,10 +124,10 @@ public class ResourceTypeController extends Controller {
         Long typeId = null;
         try {
             typeId = Long.parseLong(request.getParameter("id"));
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             typeId = null;
         }
-        if(typeId == null) {
+        if (typeId == null) {
             throw new ValidationError("Le type que vous voulez supprimer n'existe pas ou est corrompu");
         }
 

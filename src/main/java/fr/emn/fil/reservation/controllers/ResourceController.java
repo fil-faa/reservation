@@ -14,6 +14,7 @@ import fr.emn.fil.reservation.model.services.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by xela on 21/10/15.
@@ -42,17 +43,81 @@ public class ResourceController extends Controller {
             if(subUrl.equals("/delete"))
                 response = deleteResource();
 
+            if (subUrl.length() > 1 && response == null) {
+                Scanner scId = new Scanner(subUrl.trim().substring(1));
+
+                if (scId.hasNextLong()) {
+                    Long id = scId.nextLong();
+                    response = editResource(id);
+                } else {
+                    response = getResources();
+                }
+            }
+
         } else if(request.getMethod().equals("POST")) {
 
             if(subUrl.equals("/"))
                 response = createResource();
 
+            if (subUrl.length() > 1 && response == null) {
+                Scanner scId = new Scanner(subUrl.trim().substring(1));
+
+                if (scId.hasNextLong()) {
+                    Long id = scId.nextLong();
+                    response = editResourceSave(id);
+                } else {
+                    response = getResources();
+                }
+            }
         }
 
         if(response == null)
             response = new Response("not-found.jsp", Response.Type.FORWARD);
 
         return response;
+    }
+
+    private Response editResourceSave(Long id) {
+        try {
+            Resource resource = resourceService.byId(id);
+
+            String name = request.getParameter("name");
+            if (!name.equals(resource.getName()) && !name.isEmpty()) {
+                resource.setName(name);
+            }
+            String place = request.getParameter("place");
+            if (!place.equals(resource.getPlace()) && !place.isEmpty()) {
+                resource.setPlace(place);
+            }
+            String description = request.getParameter("description");
+            if (!description.equals(resource.getDescription()) && !description.isEmpty()) {
+                resource.setDescription(description);
+            }
+            String typeIdDStr = request.getParameter("typeId");
+            if (!typeIdDStr.equals(resource.getType().getId().toString()) && !typeIdDStr.isEmpty()) {
+                Long typeId = Long.valueOf(typeIdDStr);
+                ResourceType type = new ResourceTypeService().byId(typeId);
+                resource.setType(type);
+            }
+
+            resourceService.save(resource);
+        } catch (ModelError modelError) {
+            request.setAttribute("error", "Ressource inexistante");
+        }
+        return this.getResources();
+    }
+
+    private Response editResource(Long id) {
+        try {
+            Resource resource = resourceService.byId(id);
+
+            request.setAttribute("resource", resource);
+            request.setAttribute("resourceTypes", new ResourceTypeService().findAll());
+            return new Response("resources/edit.jsp", Response.Type.FORWARD);
+        } catch (ModelError modelError) {
+            request.setAttribute("error", "Resource inexistant");
+            return this.getResources();
+        }
     }
 
 
@@ -84,7 +149,7 @@ public class ResourceController extends Controller {
                 userId = Long.parseLong(request.getParameter("userId"));
                 typeId = Long.parseLong(request.getParameter("typeId"));
             } catch (NumberFormatException e) {
-                throw new ValidationError("Erreur de récupération des ids");
+                throw new ValidationError("Erreur de rï¿½cupï¿½ration des ids");
             }
 
             String name = request.getParameter("name");

@@ -9,10 +9,11 @@ import java.util.List;
 
 /**
  * Abstract class handling general CRUD operations on the JPA entities
+ *
  * @param <T> Entity class which we want to query
  * @param <I> ID column type
  */
-public abstract class AbstractJpaDAO<T,I> {
+public abstract class AbstractJpaDAO<T, I> {
 
     private final Class<T> className;
 
@@ -27,31 +28,31 @@ public abstract class AbstractJpaDAO<T,I> {
             JPAManager.getEm().persist(toSave);
             tx.commit();
         } finally {
-            if(JPAManager.getTransaction().isActive())
+            if (JPAManager.getTransaction().isActive())
                 JPAManager.getTransaction().rollback();
         }
     }
 
     public void update(T toUpdate) {
         try {
-        EntityTransaction tx = JPAManager.getTransaction();
-        tx.begin();
+            EntityTransaction tx = JPAManager.getTransaction();
+            tx.begin();
             JPAManager.getEm().merge(toUpdate);
-        tx.commit();
+            tx.commit();
         } finally {
-            if(JPAManager.getTransaction().isActive())
+            if (JPAManager.getTransaction().isActive())
                 JPAManager.getTransaction().rollback();
         }
     }
 
     public void delete(T toDelete) {
         try {
-        EntityTransaction tx = JPAManager.getTransaction();
-        tx.begin();
+            EntityTransaction tx = JPAManager.getTransaction();
+            tx.begin();
             JPAManager.getEm().remove(toDelete);
-        tx.commit();
+            tx.commit();
         } finally {
-            if(JPAManager.getTransaction().isActive())
+            if (JPAManager.getTransaction().isActive())
                 JPAManager.getTransaction().rollback();
         }
     }
