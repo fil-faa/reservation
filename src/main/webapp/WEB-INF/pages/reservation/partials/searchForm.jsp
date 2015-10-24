@@ -1,20 +1,20 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <h1>Recherche</h1>
-<form method="get" action="">
+<form method="get">
+
     <div class="form-group">
-        <label for="search_lastname">Nom</label>
-        <input type="text" class="form-control" id="search_lastname" name="lastname" placeholder="Dupont" value="${param.userLastName}">
+        <label for="search_resourceType">Type de la ressource</label>
+        <select class="form-control" id="search_resourceType" name="searchedType" >
+            <option value="">Tous les types</option>
+            <c:forEach var="type" items="${types}">
+                <option value="${type.id}">${type.name}</option>
+            </c:forEach>
+        </select>
     </div>
     <div class="form-group">
-        <label for="search_firstname">Prénom</label>
-        <input type="text" class="form-control" id="search_firstname" name="firstname" placeholder="Laurent" value="${param.userFirstName}">
+        <label for="search_lastname">Nom de la ressource</label>
+        <input type="text" class="form-control" id="search_lastname" name="searchedName" placeholder="Ordinateur" value="${param.resourceName}">
     </div>
-    <div class="form-group">
-        <label for="search_mail">Mail</label>
-        <input type="email" class="form-control" id="search_mail" name="mail" placeholder="example@domaine.com" value="${param.mail}">
-    </div>
-    <div class="form-group">
-        <label for="search_phone">Téléphone</label>
-        <input type="tel" class="form-control" id="search_phone" name="phone" placeholder="0123456789" value="${param.phone}">
-    </div>
-    <button type="submit" class="btn btn-default">Valider</button>
-    </form>
+
+    <button type="submit" class="btn btn-default">Rechercher</button>
+</form>

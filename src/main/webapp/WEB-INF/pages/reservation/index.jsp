@@ -9,7 +9,6 @@
 
 </div>
 
-<c:set var="date" value="<%=new java.util.Date()%>" />
 <div class="body-box">
   <h2>Liste des réservations</h2>
   <table class="table table-striped">

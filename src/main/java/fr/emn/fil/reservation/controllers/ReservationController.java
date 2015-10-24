@@ -65,7 +65,19 @@ public class ReservationController extends Controller {
     public Response getReservations() {
         try {
             User user = UserManager.getCurrentUser();
-            List<Reservation> reservations = reservationService.byUser(user);
+            Long typeId;
+            ResourceType type = null;
+            try {
+                typeId = Long.parseLong(request.getParameter("searchedTypeId"));
+                type = resourceTypeService.byId(typeId);
+            } catch(NumberFormatException e) {
+                typeId = null;
+            }
+            String name = request.getParameter("searchedName");
+
+            List<ResourceType> types = resourceTypeService.findAll();
+            request.setAttribute("types", types);
+            List<Reservation> reservations = reservationService.filter(user, type, name);
             request.setAttribute("reservations", reservations);
         } catch(GenericError e) { // if the user is not found in the session, we redirect to the login page
             return new Response("/users/login", Response.Type.REDIRECT);

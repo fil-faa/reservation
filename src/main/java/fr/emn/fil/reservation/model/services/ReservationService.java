@@ -4,6 +4,7 @@ import fr.emn.fil.reservation.model.dao.DAOFactory;
 import fr.emn.fil.reservation.model.dao.ReservationDAO;
 import fr.emn.fil.reservation.model.entities.Reservation;
 import fr.emn.fil.reservation.model.entities.Resource;
+import fr.emn.fil.reservation.model.entities.ResourceType;
 import fr.emn.fil.reservation.model.entities.User;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
 
@@ -48,4 +49,7 @@ public class ReservationService {
         reservationDAO.delete(reservation);
     }
 
+    public List<Reservation> filter(User user, ResourceType type, String name) {
+        return reservationDAO.matching(user, type, name);
+    }
 }
