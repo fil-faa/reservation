@@ -63,7 +63,7 @@ public class MyReservationsController extends Controller {
             request.setAttribute("error", e);
             return new Response("users/connect.jsp", Response.Type.FORWARD);
         }
-        return new Response("/reservations/reservation", Response.Type.REDIRECT);
+        return new Response("/book/reservation", Response.Type.REDIRECT);
 
     }
 
@@ -77,7 +77,7 @@ public class MyReservationsController extends Controller {
 
             new ReservationService().delete(reservation);
             request.setAttribute("reservation", reservation);
-            return new Response(request.getContextPath() + "/reservations/reservation/", Response.Type.REDIRECT);
+            return new Response(request.getContextPath() + "/book/reservation/", Response.Type.REDIRECT);
     }
 
     public Response getReservations() {

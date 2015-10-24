@@ -65,7 +65,7 @@ public class UserController extends Controller {
             request.setAttribute("error", e);
             return this.loginForm();
         }
-        return new Response("/reservations/reservations/", Response.Type.REDIRECT);
+        return new Response("/book/reservations/", Response.Type.REDIRECT);
     }
 
     public Response loginForm() {
@@ -78,7 +78,7 @@ public class UserController extends Controller {
             userId = Long.parseLong(request.getParameter("id"));
             if(userId == null) throw new NumberFormatException();
         } catch(NumberFormatException e) {
-            throw new GenericError("Cet utilisateur ne peut être supprimé : erreur système");
+            throw new GenericError("Cet utilisateur ne peut ï¿½tre supprimï¿½ : erreur systï¿½me");
         }
        try
         {
@@ -100,17 +100,17 @@ public class UserController extends Controller {
             new StringValidator(password, "mot de passe").minLength(8).maxLength(250);
 
             String phone = request.getParameter("phone");
-            new StringValidator(phone, "téléphone").mustBeNumeric();
+            new StringValidator(phone, "tï¿½lï¿½phone").mustBeNumeric();
 
             String firstName = request.getParameter("firstName");
-            new StringValidator(firstName, "prénom").notEmpty();
+            new StringValidator(firstName, "prï¿½nom").notEmpty();
 
             String lastName = request.getParameter("lastName");
             new StringValidator(firstName, "nom").notEmpty();
 
             User user = new UserService().create(mail, password, firstName, lastName, phone);
             request.setAttribute("user", user);
-            return new Response(request.getContextPath() + "/reservations/users/", Response.Type.REDIRECT);
+            return new Response(request.getContextPath() + "/book/users/", Response.Type.REDIRECT);
 
         } catch(GenericError e) {
             request.setAttribute("error", e);
