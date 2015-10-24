@@ -20,13 +20,13 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="ressourceType" items="${ressourceTypes}">
+    <c:forEach var="resourceType" items="${resourceTypes}">
       <tr>
-        <td><a href="${appPath}?id_type=${ressourceType.id}">${ressourceType.name}</a></td>
+        <td><a href="${appPath}?id_type=${resourceType.id}">${resourceType.name}</a></td>
         <c:if test="${admin}">
           <td>
-            <a href="${appPath}/resourceTypes/${ressourceType.id}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-            <a href="${appPath}/resourceTypes/delete?id=${ressourceType.id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+            <a href="${appPath}/resourceTypes/${resourceType.id}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+            <a href="${appPath}/resourceTypes/delete?id=${resourceType.id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
           </td>
         </c:if>
       </tr>

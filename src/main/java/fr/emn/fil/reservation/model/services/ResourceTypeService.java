@@ -36,16 +36,19 @@ public class ResourceTypeService {
         for(Resource resource : type.getResources()) {
             for(Reservation reservation : resource.getReservations())
                 if(new Date().compareTo(reservation.getEnd()) > 0)
-                    throw new ModelError("Suppression impossible : une réservation " +
-                            "liée au type que vous voulez supprimée n'est pas encore terminée");
+                    throw new ModelError("Suppression impossible : une rï¿½servation " +
+                            "liï¿½e au type que vous voulez supprimï¿½e n'est pas encore terminï¿½e");
         }
         resourceTypeDAO.delete(type);
     }
 
     public ResourceType byId(Long id) throws ModelError {
         ResourceType resourceType = resourceTypeDAO.byId(id);
-        if(resourceType == null) throw new ModelError("Type de ressource non trouvé pour l'id donné");
+        if(resourceType == null) throw new ModelError("Type de ressource non trouvï¿½ pour l'id donnï¿½");
         return resourceType;
     }
 
+    public void save(ResourceType type) {
+        resourceTypeDAO.save(type);
+    }
 }
