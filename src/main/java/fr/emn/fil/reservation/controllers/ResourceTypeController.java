@@ -4,12 +4,14 @@ package fr.emn.fil.reservation.controllers;
 import fr.emn.fil.reservation.controllers.validation.StringValidator;
 import fr.emn.fil.reservation.model.entities.ResourceType;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
+import fr.emn.fil.reservation.model.exceptions.ModelError;
 import fr.emn.fil.reservation.model.exceptions.ValidationError;
 import fr.emn.fil.reservation.model.services.ResourceTypeService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Scanner;
 
 public class ResourceTypeController extends Controller {
 
@@ -27,17 +29,39 @@ public class ResourceTypeController extends Controller {
 
             if (request.getMethod().equals("GET")) {
 
-
                 if (url.equals("/"))
                     response = getResourceTypes();
 
-                if (url.equals("/delete"))
+                if (url.equals("/delete")) {
                     response = deleteResourceType();
+                } else {
+                    if (url.length() > 1) {
+                        Scanner scId = new Scanner(url.trim().substring(1));
+
+                       if (scId.hasNextLong()) {
+                           Long id = scId.nextLong();
+                           response = editResourceTypes(id);
+                       } else {
+                           response = getResourceTypes();
+                       }
+                    }
+                }
 
             } else if (request.getMethod().equals("POST")) {
 
                 if (url.equals("/"))
                     response = addResourceType();
+
+                if (url.length() > 1) {
+                    Scanner scId = new Scanner(url.trim().substring(1));
+
+                    if (scId.hasNextLong()) {
+                        Long id = scId.nextLong();
+                        response = editResourceTypesSave(id);
+                    } else {
+                        response = getResourceTypes();
+                    }
+                }
             }
 
             if (response == null)
@@ -50,13 +74,39 @@ public class ResourceTypeController extends Controller {
         }
     }
 
+    private Response editResourceTypesSave(Long id) {
+        try {
+            ResourceType resourceType = typeService.byId(id);
+
+            String name = request.getParameter("name");
+            resourceType.setName(name);
+
+            typeService.save(resourceType);
+        } catch (ModelError modelError) {
+            request.setAttribute("Type de ressource inexistant", modelError);
+        }
+        return this.getResourceTypes();
+    }
+
+    private Response editResourceTypes(Long id) {
+        try {
+            ResourceType resourceType = typeService.byId(id);
+
+            request.setAttribute("resourceType", resourceType);
+            return new Response("/resourceType/edit.jsp", Response.Type.FORWARD);
+        } catch (ModelError modelError) {
+            request.setAttribute("Type de ressource inexistant", modelError);
+            return this.getResourceTypes();
+        }
+    }
+
     public Response addResourceType() {
         try {
             String name = request.getParameter("name");
             new StringValidator(name, "nom de la ressource").notEmpty();
 
             ResourceType ressourceType = typeService.create(name);
-            request.setAttribute("ressourceType", ressourceType);
+            request.setAttribute("resourceType", ressourceType);
             return this.getResourceTypes();
 
         } catch (GenericError e) {
@@ -67,8 +117,8 @@ public class ResourceTypeController extends Controller {
 
     public Response getResourceTypes() {
         List<ResourceType> ressourceTypes = typeService.findAll();
-        request.setAttribute("ressourceTypes", ressourceTypes);
-        return new Response("/ressourceType/index.jsp", Response.Type.FORWARD);
+        request.setAttribute("resourceTypes", ressourceTypes);
+        return new Response("/resourceType/index.jsp", Response.Type.FORWARD);
     }
 
     public Response deleteResourceType() throws GenericError {
