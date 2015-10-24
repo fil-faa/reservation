@@ -4,10 +4,12 @@ import fr.emn.fil.reservation.model.UserManager;
 import fr.emn.fil.reservation.model.dao.DAOFactory;
 import fr.emn.fil.reservation.model.entities.Reservation;
 import fr.emn.fil.reservation.model.entities.Resource;
+import fr.emn.fil.reservation.model.entities.ResourceType;
 import fr.emn.fil.reservation.model.entities.User;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
 import fr.emn.fil.reservation.model.services.ReservationService;
 import fr.emn.fil.reservation.model.services.ResourceService;
+import fr.emn.fil.reservation.model.services.ResourceTypeService;
 import fr.emn.fil.reservation.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,11 +27,13 @@ public class ReservationController extends Controller {
 
     private ReservationService reservationService;
 
+    private ResourceTypeService resourceTypeService;
 
     public ReservationController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
         resourceService = new ResourceService();
         reservationService = new ReservationService();
+        resourceTypeService = new ResourceTypeService();
     }
 
     @Override
@@ -59,7 +63,7 @@ public class ReservationController extends Controller {
 
 
     public Response getReservations() {
-        List<Reservation> reservations = new ReservationService().findAll();
+        List<Reservation> reservations = reservationService.findAll();
         request.setAttribute("reservations", reservations);
         return new Response("/reservation/index.jsp", Response.Type.FORWARD);
     }
@@ -93,14 +97,26 @@ public class ReservationController extends Controller {
 
     public Response searchAvailableResources() {
         String rangeString = request.getParameter("searchRange");
+
+        // parse the selected type
+        Long typeId = null;
+        try {
+            typeId = Long.parseLong(request.getParameter("typeId"));
+        } catch(NumberFormatException e) {
+            typeId = null;
+        }
+
+        // parse the date range
         Date[] range = parseRange(rangeString);
         if(range[0] == null || range[1] == null) {
             request.setAttribute("resources", new ArrayList<Resource>());
         } else {
-            List<Resource> resources = resourceService.findAvailableResources(range[0], range[1]);
+            List<Resource> resources = resourceService.findAvailableResources(range[0], range[1], typeId);
             request.setAttribute("searchRange", rangeString);
             request.setAttribute("resources", resources);
         }
+        List<ResourceType> types = resourceTypeService.findAll();
+        request.setAttribute("types", types);
         return new Response("/reservation/search.jsp", Response.Type.FORWARD);
     }
 

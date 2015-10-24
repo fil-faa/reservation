@@ -55,9 +55,19 @@ public class ResourceService {
         return resource;
     }
 
-    public List<Resource> findAvailableResources(Date startDate, Date endDate) {
+    public List<Resource> findAvailableResources(Date startDate, Date endDate, Long typeId) {
         List<Resource> available = resourceDAO.findAvailable(startDate, endDate);
-        // double check if the resource is really available ?
+
+        if(typeId == null) return available;
+
+        // else, we filter by the type id
+        Iterator<Resource> it = available.iterator();
+        while(it.hasNext()) {
+            Resource resource = it.next();
+            if(!resource.getType().getId().equals(typeId))
+                it.remove();
+        }
+
         return available;
     }
 
@@ -68,7 +78,7 @@ public class ResourceService {
     public Resource byId(Long id) throws ModelError {
         if(id == null) throw new ModelError("Identifiant non fourni pour la ressource à chercher");
         Resource resource = resourceDAO.byId(id);
-        if(resource == null) throw new ModelError("Ressource non trouvï¿½e pour l'id donnï¿½");
+        if(resource == null) throw new ModelError("Ressource non trouvée pour l'id donné");
         return resource;
     }
 

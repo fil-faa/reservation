@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<h2>Je rechercher une ressource</h2>
+<h2>Rechercher une ressource</h2>
 
 <p>Par l'intermédiaire de ce formulaire, choisissez la ressource qui vous convient sur la période de votre choix.</p>
 
@@ -8,45 +8,14 @@
 
     <input type="text" class="form-control" name="searchRange" value="01/01/2015 - 01/31/2015" />
 
-    <script type="text/javascript">
-        $('input[name="searchRange"]').daterangepicker(
-                {
-                    locale: {
-                        format: 'DD/MM/YYYY',
-                        applyLabel: "OK",
-                        cancelLabel: 'Annuler',
-                        "daysOfWeek": [
-                            "Lu",
-                            "Ma",
-                            "Me",
-                            "Je",
-                            "Ve",
-                            "Sa",
-                            "Di"
-                        ],
-                        "monthNames": [
-                            "Janvier",
-                            "Février",
-                            "Mars",
-                            "Avril",
-                            "Mai",
-                            "Juin",
-                            "Juillet",
-                            "Août",
-                            "Septembre",
-                            "Octobre",
-                            "Novembre",
-                            "Décembre"
-                        ],
-                    },
-                    startDate: new Date(),
-                    endDate: new Date()
-                });
 
-        function book(resourceId) {
+    <select class="form-control" name="typeId">
+        <option value="">Tous les types</option>
+        <c:forEach var="type" items="${types}">
+            <option value="${type.id}">${type.name}</option>
+        </c:forEach>
+    </select>
 
-        }
-    </script>
 
     <button class="btn btn-primary btn-md" type="submit">Je recherche</button>
 
@@ -90,3 +59,39 @@
 
 </div>
 </c:if>
+
+<script type="text/javascript">
+    $('input[name="searchRange"]').daterangepicker(
+            {
+                locale: {
+                    format: 'DD/MM/YYYY',
+                    applyLabel: "OK",
+                    cancelLabel: 'Annuler',
+                    "daysOfWeek": [
+                        "Lu",
+                        "Ma",
+                        "Me",
+                        "Je",
+                        "Ve",
+                        "Sa",
+                        "Di"
+                    ],
+                    "monthNames": [
+                        "Janvier",
+                        "Février",
+                        "Mars",
+                        "Avril",
+                        "Mai",
+                        "Juin",
+                        "Juillet",
+                        "Août",
+                        "Septembre",
+                        "Octobre",
+                        "Novembre",
+                        "Décembre"
+                    ],
+                },
+                startDate: new Date(),
+                endDate: new Date()
+            });
+</script>
