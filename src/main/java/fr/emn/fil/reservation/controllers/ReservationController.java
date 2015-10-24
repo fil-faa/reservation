@@ -98,6 +98,7 @@ public class ReservationController extends Controller {
             request.setAttribute("resources", new ArrayList<Resource>());
         } else {
             List<Resource> resources = resourceService.findAvailableResources(range[0], range[1]);
+            request.setAttribute("searchRange", rangeString);
             request.setAttribute("resources", resources);
         }
         return new Response("/reservation/search.jsp", Response.Type.FORWARD);

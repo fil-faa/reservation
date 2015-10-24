@@ -65,7 +65,7 @@ public class UserController extends Controller {
             request.setAttribute("error", e);
             return this.loginForm();
         }
-        return new Response("/reservations/reservations/", Response.Type.REDIRECT);
+        return new Response(LoginFilter.ROOT_URL + "/reservations/", Response.Type.REDIRECT);
     }
 
     public Response loginForm() {

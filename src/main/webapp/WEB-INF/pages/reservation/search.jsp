@@ -44,10 +44,7 @@
                 });
 
         function book(resourceId) {
-            $.post('${appPath}/reservations/', {
-                resourceId: resourceId,
-                range: $('input[name="searchRange"]').valueOf()
-            })
+
         }
     </script>
 
@@ -76,7 +73,15 @@
         <td>${resource.type.name}</td>
         <td>${resource.owner.firstName}</td>
         <td>${resource.owner.lastName}</td>
-        <td><a onclick="book()" class="btn btn-primary"></a></td>
+        <td>
+
+
+            <form method="POST" action="${appPath}/reservations/">
+                <input type="hidden" name="reservationRange" value="${searchRange}"/>
+                <input type="hidden" name="resourceId", value="${resource.id}">
+                <button class="btn btn-primary" type="submit">Réserver</button>
+            </form>
+        </td>
       </tr>
     </c:forEach>
 
