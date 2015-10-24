@@ -11,6 +11,7 @@ import java.util.List;
 @Table(name = "RESSOURCE")
 @NamedQueries({
         @NamedQuery(name = "resource.findAll", query = "SELECT r FROM Resource r"),
+        @NamedQuery(name = "resource.byType", query = "SELECT r FROM Resource r WHERE r.type = :type"),
         @NamedQuery(name = "resource.findAvailable", query ="SELECT r FROM Resource r " +
                 "WHERE NOT r IN (SELECT res.resource FROM Reservation res WHERE res.resource = r AND res.start < :endDate AND res.end > :startDate)")
 })

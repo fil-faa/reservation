@@ -21,7 +21,7 @@ public class ResourceTypeService {
     public List<ResourceType> findAll() {
         return resourceTypeDAO.findAll();
     }
-
+    
     public ResourceType create(String name) {
         ResourceType type = new ResourceType(name);
         resourceTypeDAO.save(type);

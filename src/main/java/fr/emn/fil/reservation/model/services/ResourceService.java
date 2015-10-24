@@ -8,6 +8,7 @@ import fr.emn.fil.reservation.model.entities.User;
 import fr.emn.fil.reservation.model.exceptions.ModelError;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -24,6 +25,29 @@ public class ResourceService {
     public List<Resource> findAll() {
         return  resourceDAO.findAll();
     }
+
+    public List<Resource> findByType(ResourceType type) {
+        return resourceDAO.findByType(type);
+    }
+
+    public List<Resource> findByName(String name) {
+        return filter(resourceDAO.findAll(), name);
+    }
+
+    public List<Resource> findbyTypeAndName(ResourceType type, String name) {
+        return filter(resourceDAO.findByType(type), name);
+    }
+
+    private List<Resource> filter(List<Resource> resources, String name) {
+        Iterator<Resource> it = resources.iterator();
+        while(it.hasNext()) {
+            Resource resource = it.next();
+            if(!resource.getName().toLowerCase().contains(name.toLowerCase()))
+                it.remove();
+        }
+        return resources;
+    }
+
 
     public Resource create(String name, User user, ResourceType resourceType, String place, String description) {
         Resource resource = new Resource(name, user, resourceType, description, place);
