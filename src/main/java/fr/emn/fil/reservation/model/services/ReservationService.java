@@ -22,6 +22,10 @@ public class ReservationService {
         return reservationDAO.findAll();
     }
 
+    public List<Reservation> byUser(User user) {
+        return reservationDAO.byUser(user);
+    }
+
     public Reservation create(Date startDate, Date endDate, Resource resource, User user) throws GenericError {
 
         // We must avoid ubiquity for the resources
@@ -44,7 +48,4 @@ public class ReservationService {
         reservationDAO.delete(reservation);
     }
 
-    public List<Reservation> findByUser(User user) {
-        return reservationDAO.byUser(user.getId());
-    }
 }

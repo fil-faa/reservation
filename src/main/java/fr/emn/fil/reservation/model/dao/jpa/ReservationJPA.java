@@ -3,6 +3,7 @@ package fr.emn.fil.reservation.model.dao.jpa;
 import fr.emn.fil.reservation.model.dao.ReservationDAO;
 import fr.emn.fil.reservation.model.entities.Reservation;
 import fr.emn.fil.reservation.model.entities.Resource;
+import fr.emn.fil.reservation.model.entities.User;
 
 import javax.persistence.Query;
 import java.util.Date;
@@ -19,17 +20,18 @@ public class ReservationJPA extends AbstractJpaDAO<Reservation,Long> implements 
         return q.getResultList();
     }
 
-    public List<Reservation> byUser(Long userId) {
-        Query q = JPAManager.getEm().createNamedQuery("reservation.byUser");
-        q.setParameter("user", userId);
-        return q.getResultList();
-    }
-
     public List<Reservation> during(Resource resource, Date start, Date end) {
         Query q = JPAManager.getEm().createNamedQuery("reservation.during");
         q.setParameter("resource", resource);
         q.setParameter("startDate", start);
         q.setParameter("endDate", end);
+        return q.getResultList();
+    }
+
+    @Override
+    public List<Reservation> byUser(User user) {
+        Query q = JPAManager.getEm().createNamedQuery("reservation.byUser");
+        q.setParameter("user", user);
         return q.getResultList();
     }
 }

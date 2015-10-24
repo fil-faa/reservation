@@ -63,8 +63,13 @@ public class ReservationController extends Controller {
 
 
     public Response getReservations() {
-        List<Reservation> reservations = reservationService.findAll();
-        request.setAttribute("reservations", reservations);
+        try {
+            User user = UserManager.getCurrentUser();
+            List<Reservation> reservations = reservationService.byUser(user);
+            request.setAttribute("reservations", reservations);
+        } catch(GenericError e) { // if the user is not found in the session, we redirect to the login page
+            return new Response("/users/login", Response.Type.REDIRECT);
+        }
         return new Response("/reservation/index.jsp", Response.Type.FORWARD);
     }
 
@@ -83,7 +88,6 @@ public class ReservationController extends Controller {
                 resourceId = null;
             }
             Resource resource = resourceService.byId(resourceId);
-
             User user = UserManager.getCurrentUser();
 
             reservationService.create(range[0], range[1], resource, user);
