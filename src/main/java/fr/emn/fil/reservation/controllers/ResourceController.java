@@ -13,6 +13,7 @@ import fr.emn.fil.reservation.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -122,8 +123,35 @@ public class ResourceController extends Controller {
 
 
     public Response getResources() {
-        List<Resource> resources = new ResourceService().findAll();
-        request.setAttribute("resources", resources);
+        Long searchedType;
+        String searchedName = request.getParameter("searchedName");
+        try {
+            searchedType = Long.parseLong(request.getParameter("searchedType"));
+        } catch(Exception e) {
+            searchedType = null;
+        }
+
+        try {
+            List<Resource> found;
+            boolean filterByType = searchedType != null;
+            boolean filterByName = searchedName != null && !searchedName.isEmpty();
+
+            if(filterByType && filterByType) {
+                ResourceType type = resourceTypeService.byId(searchedType);
+                found = resourceService.findbyTypeAndName(type, searchedName);
+            } else if(filterByType) {
+                ResourceType type = resourceTypeService.byId(searchedType);
+                found = resourceService.findByType(type);
+            } else if(filterByName){
+                found = resourceService.findByName(searchedName);
+            } else {
+                found = resourceService.findAll();
+            }
+            request.setAttribute("resources", found);
+        } catch(GenericError e) {
+            request.setAttribute("error", e);
+            return this.getResources();
+        }
         request.setAttribute("resourceTypes", new ResourceTypeService().findAll());
         return new Response("resources/index.jsp", Response.Type.FORWARD);
     }

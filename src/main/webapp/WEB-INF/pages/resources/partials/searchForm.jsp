@@ -4,7 +4,7 @@
 
     <div class="form-group">
         <label for="search_resourceType">Type de la ressource</label>
-        <select class="form-control" id="search_resourceType" name="id_type" >
+        <select class="form-control" id="search_resourceType" name="searchedType" >
             <c:forEach var="type" items="${resourceTypes}">
                 <option value="${type.id}" >${type.name}</option>
             </c:forEach>
@@ -12,7 +12,7 @@
     </div>
     <div class="form-group">
         <label for="search_lastname">Nom de la ressource</label>
-        <input type="text" class="form-control" id="search_lastname" name="name" placeholder="Ordinateur" value="${param.resourceName}">
+        <input type="text" class="form-control" id="search_lastname" name="searchedName" placeholder="Ordinateur" value="${param.resourceName}">
     </div>
 
     <button type="submit" class="btn btn-default">Rechercher</button>

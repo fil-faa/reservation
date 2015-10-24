@@ -20,6 +20,7 @@ public class Reservation {
 
     @Id
     @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
 

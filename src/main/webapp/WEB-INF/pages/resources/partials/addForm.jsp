@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <h1>Ajouter une ressource</h1>
-<form method="post">
+<form method="POST">
     <div class="form-group">
         <label for="resourceName">Nom</label>
         <input type="text" class="form-control" id="resourceName" name="name" placeholder="Tondeuse">

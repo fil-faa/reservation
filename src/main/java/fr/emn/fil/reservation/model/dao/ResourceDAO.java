@@ -10,6 +10,8 @@ public interface ResourceDAO {
 
     List<Resource> findAll();
 
+    List<Resource> findByType(ResourceType type);
+
     void save(Resource toSave);
 
     void update(Resource toUpdate);
