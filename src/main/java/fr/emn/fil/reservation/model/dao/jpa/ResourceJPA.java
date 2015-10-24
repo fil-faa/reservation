@@ -4,6 +4,7 @@ import fr.emn.fil.reservation.model.dao.ResourceDAO;
 import fr.emn.fil.reservation.model.entities.Resource;
 
 import javax.persistence.Query;
+import java.util.Date;
 import java.util.List;
 
 public class ResourceJPA extends AbstractJpaDAO<Resource,Long> implements ResourceDAO {
@@ -18,4 +19,10 @@ public class ResourceJPA extends AbstractJpaDAO<Resource,Long> implements Resour
         return ressources;
     }
 
+    public List<Resource> findAvailable(Date startDate, Date endDate) {
+        Query q = JPAManager.getEm().createNamedQuery("resource.findAvailable");
+        q.setParameter("startDate", startDate);
+        q.setParameter("endDate", endDate);
+        return q.getResultList();
+    }
 }

@@ -3,6 +3,7 @@ package fr.emn.fil.reservation.model.dao;
 import fr.emn.fil.reservation.model.entities.Resource;
 import fr.emn.fil.reservation.model.entities.ResourceType;
 
+import java.util.Date;
 import java.util.List;
 
 public interface ResourceDAO {
@@ -16,5 +17,7 @@ public interface ResourceDAO {
     void delete(Resource toDelete);
 
     Resource byId(Long resourceId);
+
+    List<Resource> findAvailable(Date startDate, Date endDate);
 
 }

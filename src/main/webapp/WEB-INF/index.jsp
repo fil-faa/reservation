@@ -34,6 +34,7 @@
     <jsp:include page="pages/${page}"/>
 
 
-</div>
+</div
+
 </body>
 </html>

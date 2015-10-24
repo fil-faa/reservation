@@ -7,6 +7,7 @@ import fr.emn.fil.reservation.model.entities.ResourceType;
 import fr.emn.fil.reservation.model.entities.User;
 import fr.emn.fil.reservation.model.exceptions.ModelError;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,6 +29,12 @@ public class ResourceService {
         Resource resource = new Resource(name, user, resourceType, description, place);
         resourceDAO.save(resource);
         return resource;
+    }
+
+    public List<Resource> findAvailableResources(Date startDate, Date endDate) {
+        List<Resource> available = resourceDAO.findAvailable(startDate, endDate);
+        // double check if the resource is really available ?
+        return available;
     }
 
     public void delete(Resource resource) {

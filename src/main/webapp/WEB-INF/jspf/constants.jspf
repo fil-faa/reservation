@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="appName" value="FIL FAA - Application web de r&eacute;servations" scope="request"></c:set>
-<c:set var="appPath" value="${pageContext.request.contextPath}/reservations" scope="request"></c:set>
+<c:set var="appPath" value="${pageContext.request.contextPath}/book" scope="request"></c:set>
 
 <c:set var="connected" value="${sessionScope.user != null}" scope="request"></c:set>
 

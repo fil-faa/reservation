@@ -20,7 +20,7 @@ public class MainServlet extends HttpServlet {
 
     public void handleAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Map<String, Controller> routes = new HashMap<String, Controller>();
+        Map<String, Controller> routes = new HashMap<>();
 
         routes.put("/resources", new ResourceController(req, resp));
         routes.put("/users", new UserController(req, resp));
@@ -55,18 +55,4 @@ public class MainServlet extends HttpServlet {
         this.handleAction(req, resp);
     }
 
-    /**
-     * Gets the user's auth status by watching the sessions attributes
-     * @param request HTTP request, containing the session
-     * @return UserDTO's auth status. True if he is connected
-     */
-    public boolean isConnected(HttpServletRequest request) {
-        // We get the current session. If no session exists, we do not create it
-        HttpSession session = request.getSession(false);
-
-        if(session != null && session.getAttribute("user") instanceof User)
-            return true;
-        return false;
-
-    }
 }
