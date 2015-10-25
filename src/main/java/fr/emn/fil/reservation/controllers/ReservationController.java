@@ -164,14 +164,15 @@ public class ReservationController extends Controller {
      * @return an array containing the begin and end date of the range
      */
     private Date[] parseRange(String range) {
+        System.out.println("ok");
         Date[] dates = new Date[2];
         dates[0] = dates[1] = null;
         if(range == null) return dates;
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
             if(range != null) {
-                String start = range.substring(0, 10);
-                String end = range.substring(13);
+                String start = range.substring(0, 16);
+                String end = range.substring(19);
                 dates[0] = sdf.parse(start);
                 dates[1] = sdf.parse(end);
             }
@@ -185,7 +186,7 @@ public class ReservationController extends Controller {
         String range = request.getParameter("searchRange");
         if(range == null) {
             Calendar calendar = new GregorianCalendar();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY hh:mm");
             range = sdf.format(calendar.getTime());
             calendar.add(Calendar.DAY_OF_YEAR, 1);
             range += " - " + sdf.format(calendar.getTime());

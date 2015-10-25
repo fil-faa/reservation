@@ -87,8 +87,11 @@
 <script type="text/javascript">
     $('input[name="searchRange"]').daterangepicker(
             {
+                timePicker: true,
+                "timePickerIncrement": 15,
+                "timePicker24Hour": true,
                 locale: {
-                    format: 'DD/MM/YYYY',
+                    format: 'DD/MM/YYYY hh:mm',
                     applyLabel: "OK",
                     cancelLabel: 'Annuler',
                     "daysOfWeek": [
