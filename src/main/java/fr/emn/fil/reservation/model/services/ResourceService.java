@@ -78,9 +78,9 @@ public class ResourceService {
     }
 
     public Resource byId(Long id) throws ModelError {
-        if(id == null) throw new ModelError("Identifiant non fourni pour la ressource ï¿½ chercher");
+        if(id == null) throw new ModelError("Identifiant non fourni pour la ressource à chercher");
         Resource resource = resourceDAO.byId(id);
-        if(resource == null) throw new ModelError("Ressource non trouvï¿½e pour l'id donnï¿½");
+        if(resource == null) throw new ModelError("Ressource non trouvée pour l'id donné");
         return resource;
     }
 
