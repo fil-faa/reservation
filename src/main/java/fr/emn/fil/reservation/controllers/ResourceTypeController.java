@@ -74,6 +74,7 @@ public class ResourceTypeController extends Controller {
     }
 
     private Response editResourceTypesSave(Long id) {
+        if(nonAdminRedirect()!=null) return nonAdminRedirect();
         try {
             ResourceType resourceType = typeService.byId(id);
 
@@ -88,6 +89,9 @@ public class ResourceTypeController extends Controller {
     }
 
     private Response editResourceTypes(Long id) {
+        if(nonAdminRedirect()!=null) return nonAdminRedirect();
+        Response r = nonAdminRedirect();
+        if(r!=null) return r;
         try {
             ResourceType resourceType = typeService.byId(id);
 
@@ -100,6 +104,10 @@ public class ResourceTypeController extends Controller {
     }
 
     public Response addResourceType() {
+        if(nonAdminRedirect()!=null) return nonAdminRedirect();
+
+        Response r = nonAdminRedirect();
+        if(r!=null) return r;
         try {
             String name = request.getParameter("name");
             new StringValidator(name, "nom de la ressource").notEmpty();
@@ -115,6 +123,7 @@ public class ResourceTypeController extends Controller {
     }
 
     public Response getResourceTypes() {
+
         List<ResourceType> ressourceTypes;
         String name = request.getParameter("searchedName");
         if(name != null) {
@@ -127,6 +136,8 @@ public class ResourceTypeController extends Controller {
     }
 
     public Response deleteResourceType() throws GenericError {
+        if(nonAdminRedirect()!=null) return nonAdminRedirect();
+
         Long typeId;
         try {
             typeId = Long.parseLong(request.getParameter("id"));

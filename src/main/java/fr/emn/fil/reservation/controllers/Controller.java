@@ -1,6 +1,8 @@
 package fr.emn.fil.reservation.controllers;
 
+import fr.emn.fil.reservation.model.UserManager;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
+import fr.emn.fil.reservation.model.exceptions.ModelError;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,7 +20,7 @@ public abstract class Controller {
 
     protected HttpServletRequest request;
     protected HttpServletResponse response;
-
+    protected final static String ROOT_URL = "/book";
     public Controller(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
@@ -53,6 +55,19 @@ public abstract class Controller {
             response.sendRedirect(result.getPage());
         }
     }
+    public Response nonAdminRedirect()
+    {
+        try
+        {
+            if(!UserManager.getCurrentUser().isAdmin())
+                return new Response(ROOT_URL+"/reservations/", Response.Type.REDIRECT);
+        }
+        catch (ModelError e)
+        {
+            return new Response(ROOT_URL+"/users/connect/", Response.Type.REDIRECT);
+        }
+        return null;
 
+    }
 
 }

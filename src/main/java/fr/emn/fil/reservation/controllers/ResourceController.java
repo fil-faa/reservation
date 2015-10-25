@@ -82,6 +82,8 @@ public class ResourceController extends Controller {
     }
 
     private Response editResourceSave(Long id) {
+        if(nonAdminRedirect()!=null) return nonAdminRedirect();
+
         try {
             Resource resource = resourceService.byId(id);
 
@@ -112,6 +114,8 @@ public class ResourceController extends Controller {
     }
 
     private Response editResource(Long id) {
+        if(nonAdminRedirect()!=null) return nonAdminRedirect();
+
         try {
             Resource resource = resourceService.byId(id);
 
@@ -160,6 +164,8 @@ public class ResourceController extends Controller {
     }
 
     public Response deleteResource() {
+        if(nonAdminRedirect()!=null) return nonAdminRedirect();
+
         try {
             Long resourceId = new LongValidator("id").parse(request.getParameter("id")).get();
             Resource resource = resourceService.byId(resourceId);
@@ -173,6 +179,8 @@ public class ResourceController extends Controller {
     }
 
     public Response createResource() {
+        if(nonAdminRedirect()!=null) return nonAdminRedirect();
+
         try {
             Long userId;
             Long typeId;

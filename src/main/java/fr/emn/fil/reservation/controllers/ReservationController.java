@@ -71,7 +71,7 @@ public class ReservationController extends Controller {
         try {
             user = UserManager.getCurrentUser();
         } catch(ModelError e) {
-            return new Response("/users/login", Response.Type.REDIRECT);
+            return new Response( ROOT_URL + "/users/login", Response.Type.REDIRECT);
         }
         try {
             reservationId = new LongValidator("id de réservation")
@@ -101,7 +101,7 @@ public class ReservationController extends Controller {
             List<Reservation> reservations = reservationService.filter(user, type, name);
             request.setAttribute("reservations", reservations);
         } catch(GenericError e) { // if the user is not found in the session, we redirect to the login page
-            return new Response("/users/login", Response.Type.REDIRECT);
+            return new Response(ROOT_URL +"/users/login", Response.Type.REDIRECT);
         }
         return new Response("/reservation/index.jsp", Response.Type.FORWARD);
     }
