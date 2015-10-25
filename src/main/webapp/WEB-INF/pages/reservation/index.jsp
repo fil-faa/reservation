@@ -9,11 +9,11 @@
 
 </div>
 <div class="body-box">
-  <h2>Liste des réservations</h2>
+  <h2>Liste des rï¿½servations</h2>
   <table class="table table-striped">
     <thead>
     <tr>
-      <th>Date de début</th>
+      <th>Date de dï¿½but</th>
       <th>Date de fin</th>
       <th>Utilisateur</th>
       <th>Ressource</th>
@@ -25,7 +25,7 @@
       <tr>
         <td>${reservation.start}</td>
         <td>${reservation.end}</td>
-        <td>${reservation.user}</td>
+        <td>${reservation.user.firstName} ${reservation.user.lastName}</td>
         <td>${reservation.resource.name}</td>
         <td>${reservation.resource.type.name}</td>
       </tr>
