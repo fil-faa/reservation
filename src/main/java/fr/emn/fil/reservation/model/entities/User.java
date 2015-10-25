@@ -2,6 +2,7 @@ package fr.emn.fil.reservation.model.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,7 +27,7 @@ public class User {
     private @NotNull String lastName;
 
     @Basic(optional = false)
-    @Column(name = "MAIL")
+    @Column(name = "MAIL", unique = true)
     private @NotNull String mail;
 
     @Basic(optional = false)
@@ -54,6 +55,12 @@ public class User {
         this.password = password;
         this.telephone = phone;
         this.admin = admin;
+        this.reservations = new ArrayList<>();
+    }
+
+    public User(Long id, String firstName, String lastName, String mail, String password, String phone, boolean admin) {
+        this(firstName, lastName, mail, password, phone, admin);
+        this.id = id;
     }
 
     public Long getId() {
@@ -123,29 +130,31 @@ public class User {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof User)) return false;
 
         User user = (User) o;
 
         if (admin != user.admin) return false;
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
-        if (!firstName.equals(user.firstName)) return false;
-        if (!lastName.equals(user.lastName)) return false;
-        if (!mail.equals(user.mail)) return false;
-        if (!password.equals(user.password)) return false;
-        return !(telephone != null ? !telephone.equals(user.telephone) : user.telephone != null);
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+        if (mail != null ? !mail.equals(user.mail) : user.mail != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (telephone != null ? !telephone.equals(user.telephone) : user.telephone != null) return false;
+        return !(reservations != null ? !reservations.equals(user.reservations) : user.reservations != null);
 
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + firstName.hashCode();
-        result = 31 * result + lastName.hashCode();
-        result = 31 * result + mail.hashCode();
-        result = 31 * result + password.hashCode();
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (mail != null ? mail.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (telephone != null ? telephone.hashCode() : 0);
         result = 31 * result + (admin ? 1 : 0);
+        result = 31 * result + (reservations != null ? reservations.hashCode() : 0);
         return result;
     }
 }

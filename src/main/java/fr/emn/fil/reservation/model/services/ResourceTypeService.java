@@ -18,6 +18,10 @@ public class ResourceTypeService {
         this.resourceTypeDAO = DAOFactory.resourceTypeDAO();
     }
 
+    public ResourceTypeService(ResourceTypeDAO dao) {
+        this.resourceTypeDAO = dao;
+    }
+
     public List<ResourceType> findAll() {
         return resourceTypeDAO.findAll();
     }

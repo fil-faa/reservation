@@ -12,6 +12,7 @@ import static fr.emn.fil.reservation.CryptUtils.hash;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
 import fr.emn.fil.reservation.model.exceptions.ModelError;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -23,6 +24,10 @@ public class UserService {
 
     public UserService() {
         this.userDAO = DAOFactory.userDAO();
+    }
+
+    public UserService(UserDAO dao) {
+        this.userDAO = dao;
     }
 
     public User connect(String mail, String password) throws GenericError {
@@ -41,14 +46,16 @@ public class UserService {
         userDAO.delete(user);
     }
 
-    public User create(String mail, String password, String firstName, String lastName, String phone) throws GenericError {
+    public User create(@NotNull String mail, @NotNull String password,
+                       @NotNull String firstName, @NotNull String lastName,
+                       @NotNull String phone) throws ModelError {
         String hashed = CryptUtils.hash(password);
 
         if (userDAO.byMail(mail) != null)
-            throw new GenericError("Cette adresse email a d?j? ?t? prise");
+            throw new ModelError("Cette adresse email a déjà été prise");
 
         // We create the new user. It's not an admin (the admins are directly created in the database)
-        User toCreate = new User(lastName, firstName, mail, hashed, phone, false);
+        User toCreate = new User(firstName, lastName, mail, hashed, phone, false);
         userDAO.save(toCreate);
 
         return toCreate;

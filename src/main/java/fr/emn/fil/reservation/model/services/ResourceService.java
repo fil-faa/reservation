@@ -22,6 +22,10 @@ public class ResourceService {
         this.resourceDAO = DAOFactory.resourceDAO();
     }
 
+    public ResourceService(ResourceDAO dao) {
+        this.resourceDAO = dao;
+    }
+
     public List<Resource> findAll() {
         return  resourceDAO.findAll();
     }

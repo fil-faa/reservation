@@ -19,6 +19,10 @@ public class ReservationService {
         this.reservationDAO = DAOFactory.reservationDAO();
     }
 
+    public ReservationService(ReservationDAO dao) {
+        this.reservationDAO = dao;
+    }
+
     public List<Reservation> findAll() {
         return reservationDAO.findAll();
     }
