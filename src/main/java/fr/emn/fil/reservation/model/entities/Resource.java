@@ -50,12 +50,17 @@ public class Resource {
     }
 
     public Resource(String name, User owner, ResourceType type, String description, String place) {
+        this();
         this.name = name;
         this.type = type;
-        this.reservations = new ArrayList<Reservation>();
         this.owner = owner;
         this.description = description;
         this.place = place;
+    }
+
+    public Resource(Long id, String name, User owner, ResourceType type, String description, String place) {
+        this(name, owner, type, description, place);
+        this.id = id;
     }
 
     public boolean hasReservationsOngoing() {

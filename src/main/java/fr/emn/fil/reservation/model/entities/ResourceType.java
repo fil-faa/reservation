@@ -30,9 +30,14 @@ public class ResourceType {
         this.resources = new ArrayList<>();
     }
 
-    public ResourceType(String nom) {
-        this.resources = new ArrayList<>();
-        this.name = nom;
+    public ResourceType(String name) {
+        this();
+        this.name = name;
+    }
+
+    public ResourceType(Long id, String name) {
+        this(name);
+        this.id = id;
     }
 
     public Long getId() {

@@ -31,9 +31,9 @@ public class ReservationService {
         return reservationDAO.byUser(user);
     }
 
-    public Reservation create(Date startDate, Date endDate, Resource resource, User user) throws GenericError {
+    public Reservation create(Date startDate, Date endDate, Resource resource, User user) throws ModelError {
         // rule : startDate < endDate
-        if(startDate.getTime() > endDate.getTime())
+        if(startDate.after(endDate))
             throw new ModelError("La date de début de la réservation doit précéder sa date de fin");
 
         if(beginningOfDay(startDate) < beginningOfDay(new Date()))
@@ -42,7 +42,7 @@ public class ReservationService {
         // We must avoid ubiquity for the resources
         List<Reservation> existing = reservationDAO.during(resource, startDate, endDate);
         if(existing.size() > 0)
-            throw new GenericError("Cette ressource est déjà réservée");
+            throw new ModelError("Cette ressource est déjà réservée");
 
         Reservation reservation = new Reservation(startDate, endDate, resource, user);
         reservationDAO.save(reservation);

@@ -29,7 +29,7 @@ public class UserServiceTest extends EasyMockSupport {
     @TestSubject
     private final UserService userService = new UserService(userDAO);
 
-    /** Nominal case, when the users satisfies all the rules
+    /** Nominal test, when the users satisfies all the rules
      * The user must be saved in the database, after verifications
      */
     @Test
