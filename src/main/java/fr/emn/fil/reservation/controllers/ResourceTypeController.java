@@ -82,7 +82,7 @@ public class ResourceTypeController extends Controller {
 
             typeService.save(resourceType);
         } catch (ModelError modelError) {
-            request.setAttribute("error", "Type de ressource inexistant");
+            request.setAttribute("error", new ModelError("Type de ressource inexistant"));
         }
         return this.getResourceTypes();
     }
@@ -94,7 +94,7 @@ public class ResourceTypeController extends Controller {
             request.setAttribute("resourceType", resourceType);
             return new Response("/resourceType/edit.jsp", Response.Type.FORWARD);
         } catch (ModelError modelError) {
-            request.setAttribute("error", "Type de ressource inexistant");
+            request.setAttribute("error", new ModelError("Type de ressource inexistant"));
             return this.getResourceTypes();
         }
     }

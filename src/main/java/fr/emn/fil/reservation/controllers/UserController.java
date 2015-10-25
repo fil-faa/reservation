@@ -109,7 +109,7 @@ public class UserController extends Controller {
 
             userService.save(user);
         } catch (ModelError modelError) {
-            request.setAttribute("error", "Utilisateur inexistant");
+            request.setAttribute("error", new ModelError("Utilisateur inexistant"));
         }
         return this.getUsers();
     }
@@ -121,7 +121,7 @@ public class UserController extends Controller {
             request.setAttribute("user", user);
             return new Response("users/edit.jsp", Response.Type.FORWARD);
         } catch (ModelError modelError) {
-            request.setAttribute("error", "Utilisateur inexistant");
+            request.setAttribute("error", new ModelError("Utilisateur inexistant"));
             return this.getUsers();
         }
     }
@@ -152,7 +152,7 @@ public class UserController extends Controller {
             userId = Long.parseLong(request.getParameter("id"));
             if(userId == null) throw new NumberFormatException();
         } catch(NumberFormatException e) {
-            throw new GenericError("Cet utilisateur ne peut être supprimé : erreur système");
+            throw new GenericError("Cet utilisateur ne peut ï¿½tre supprimï¿½ : erreur systï¿½me");
         }
        try
         {
@@ -174,10 +174,10 @@ public class UserController extends Controller {
             new StringValidator(password, "mot de passe").minLength(8).maxLength(250);
 
             String phone = request.getParameter("phone");
-            new StringValidator(phone, "téléphone").mustBeNumeric();
+            new StringValidator(phone, "tï¿½lï¿½phone").mustBeNumeric();
 
             String firstName = request.getParameter("firstName");
-            new StringValidator(firstName, "prénom").notEmpty();
+            new StringValidator(firstName, "prï¿½nom").notEmpty();
 
             String lastName = request.getParameter("lastName");
             new StringValidator(firstName, "nom").notEmpty();

@@ -69,4 +69,11 @@ public class ReservationJPA extends AbstractJpaDAO<Reservation,Long> implements 
         return q.getResultList();
     }
 
+    @Override
+    public List<Reservation> byResource(Resource resource) {
+        String query = "SELECT res FROM Reservation res WHERE res.resource.id = '" + resource.getId() + "'";
+        Query q = JPAManager.getEm().createQuery(query);
+        return q.getResultList();
+    }
+
 }

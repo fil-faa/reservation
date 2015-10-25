@@ -25,4 +25,6 @@ public interface ReservationDAO {
     Reservation byId(Long reservationId);
 
     List<Reservation> matching(User user, ResourceType type, String name);
+
+    List<Reservation> byResource(Resource resource);
 }

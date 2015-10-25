@@ -93,4 +93,9 @@ public class Reservation {
     public void setUser(User type) {
         this.user = user;
     }
+
+    public boolean getStatus() {
+        Date currentDate = new Date();
+        return this.end.getTime() > currentDate.getTime();
+    }
 }

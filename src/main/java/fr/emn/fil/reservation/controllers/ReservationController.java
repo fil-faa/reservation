@@ -73,11 +73,11 @@ public class ReservationController extends Controller {
             return new Response("/users/login", Response.Type.REDIRECT);
         }
         try {
-            reservationId = new LongValidator("id de réservation")
+            reservationId = new LongValidator("id de rï¿½servation")
                     .parse(request.getParameter("reservationId"))
                     .get();
             reservationService.cancel(user, reservationId);
-            request.setAttribute("success", "La réservation d'identifiant " + reservationId + " a bien été supprimée.");
+            request.setAttribute("success", new ModelError("La rï¿½servation d'identifiant " + reservationId + " a bien ï¿½tï¿½ supprimï¿½e."));
         } catch(GenericError e) {
             request.setAttribute("error", e);
         }
