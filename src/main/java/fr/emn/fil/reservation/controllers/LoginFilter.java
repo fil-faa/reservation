@@ -23,6 +23,14 @@ public class LoginFilter implements Filter {
         destroy();
     }
 
+    /**
+     * This filter handles user's authentification by retrieving the logged user in the session
+     * @param req HTTP request
+     * @param resp future HTTP response
+     * @param filterChain rest of the filters which proceeds the request
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
@@ -33,8 +41,9 @@ public class LoginFilter implements Filter {
 
             if (session != null && session.getAttribute("user") != null) {
                 User user = (User) session.getAttribute("user");
+                // set the user in the singleton
                 UserManager.users.set(user);
-                filterChain.doFilter(request, response);
+                filterChain.doFilter(request, response); // we proceed the request
                 UserManager.users.remove();
             } else {
                 String requestURI = request.getRequestURI();

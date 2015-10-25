@@ -4,6 +4,7 @@ import fr.emn.fil.reservation.model.dao.DAOFactory;
 import fr.emn.fil.reservation.model.dao.ReservationDAO;
 import fr.emn.fil.reservation.model.entities.Reservation;
 import fr.emn.fil.reservation.model.entities.Resource;
+import fr.emn.fil.reservation.model.entities.ResourceType;
 import fr.emn.fil.reservation.model.entities.User;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
 
@@ -20,6 +21,10 @@ public class ReservationService {
 
     public List<Reservation> findAll() {
         return reservationDAO.findAll();
+    }
+
+    public List<Reservation> byUser(User user) {
+        return reservationDAO.byUser(user);
     }
 
     public Reservation create(Date startDate, Date endDate, Resource resource, User user) throws GenericError {
@@ -44,7 +49,7 @@ public class ReservationService {
         reservationDAO.delete(reservation);
     }
 
-    public List<Reservation> findByUser(User user) {
-        return reservationDAO.byUser(user.getId());
+    public List<Reservation> filter(User user, ResourceType type, String name) {
+        return reservationDAO.matching(user, type, name);
     }
 }

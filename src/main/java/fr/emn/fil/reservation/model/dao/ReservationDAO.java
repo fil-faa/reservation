@@ -2,12 +2,15 @@ package fr.emn.fil.reservation.model.dao;
 
 import fr.emn.fil.reservation.model.entities.Reservation;
 import fr.emn.fil.reservation.model.entities.Resource;
+import fr.emn.fil.reservation.model.entities.ResourceType;
+import fr.emn.fil.reservation.model.entities.User;
 
 import java.util.Date;
 import java.util.List;
 
 public interface ReservationDAO {
 
+    List<Reservation> byUser(User user);
 
     List<Reservation> findAll();
 
@@ -21,5 +24,5 @@ public interface ReservationDAO {
 
     Reservation byId(Long reservationId);
 
-    List<Reservation> byUser(Long userId);
+    List<Reservation> matching(User user, ResourceType type, String name);
 }

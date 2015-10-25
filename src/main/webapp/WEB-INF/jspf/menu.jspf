@@ -19,7 +19,7 @@
                 <c:if test="${admin}">
                     <li><a href="${appPath}/users/">Utilisateurs</a></li>
                     <li><a href="${appPath}/resourceTypes/">Types de ressources</a></li>
-                    <li><a href="${appPath}/reservations/">Réservations</a></li>
+                    <li><a href="${appPath}/reservations/">Mes réservations</a></li>
                 </c:if>
             </ul>
         </div><!--/.nav-collapse -->
