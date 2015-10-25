@@ -9,8 +9,11 @@ import fr.emn.fil.reservation.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 import static fr.emn.fil.reservation.CryptUtils.hash;
 
@@ -205,9 +208,36 @@ public class UserController extends Controller {
 
     public Response getUsers() {
         if(nonAdminRedirect()!=null) return nonAdminRedirect();
+        String lastName = request.getParameter("lastname");
+        String firstName = request.getParameter("firstname");
+        String mail = request.getParameter("mail");
+        String phone = request.getParameter("phone");
 
         List<User> users = userService.findAll();
-        request.setAttribute("users", users);
+
+        List<User> usersFiltered = new ArrayList<User>(users);
+        Iterator<User> usersIterator = usersFiltered.iterator();
+        while (usersIterator.hasNext()) {
+            User u = usersIterator.next();
+            boolean delete = false;
+            if(lastName!=null)
+                if(!u.getLastName().toLowerCase().contains(lastName.toLowerCase()))
+                    delete=true;
+            if(firstName!=null)
+                if(!u.getFirstName().toLowerCase().contains(firstName.toLowerCase()))
+                    delete=true;
+            if(mail!=null)
+                if(!u.getMail().toLowerCase().contains(mail.toLowerCase()))
+                    delete=true;
+            if(phone!=null)
+                if(!u.getTelephone().toLowerCase().contains(phone.toLowerCase()))
+                    delete=true;
+            if(delete)
+                usersIterator.remove();
+        }
+
+
+        request.setAttribute("users", usersFiltered);
         return new Response("/users/index.jsp", Response.Type.FORWARD);
     }
 
