@@ -49,9 +49,9 @@ public class ReservationService {
         return reservation;
     }
 
-    public void cancel(User user, Long id) throws GenericError {
+    public void cancel(User user, Long id) throws ModelError {
         Reservation reservation = reservationDAO.byId(id);
-        if(reservation == null) throw new GenericError("La réservation que vous voulez supprimer n'existe plus");
+        if(reservation == null) throw new ModelError("La réservation que vous voulez supprimer n'existe plus");
 
 
         if(reservation.getUser().equals(user))

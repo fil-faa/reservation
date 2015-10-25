@@ -85,7 +85,7 @@ public class ReservationServiceTest extends EasyMockSupport {
      * If the reservation is in the past, a model exception must be thrown
      */
     @Test
-    public void testBeforeToday() {
+    public void testCreateBeforeToday() {
         Calendar calendar = new GregorianCalendar();
         calendar.add(Calendar.DATE, -1);
         final Date startDate = calendar.getTime(); // the start date is yesterday
@@ -107,7 +107,7 @@ public class ReservationServiceTest extends EasyMockSupport {
      * An exception must be thrown : ubiquity error
      */
     @Test
-    public void testReservationsDuring() {
+    public void testCreateReservationsDuring() {
         final Date startDate = new Date(new Date().getTime() + 1000); // the date is future to avoid a ModelError
         final Date endDate = new Date(startDate.getTime() + 1000);    // and end date just after
 
@@ -130,4 +130,47 @@ public class ReservationServiceTest extends EasyMockSupport {
         verifyAll();
     }
 
+    /**
+     * Nominal test of cancel
+     * A reservation is already created, and we want to cancel it
+     */
+    @Test
+    public void testCancel() {
+        final Date startDate = new Date(new Date().getTime() + 1000); // the date is future to avoid a ModelError
+        final Date endDate = new Date(startDate.getTime() + 1000);    // and end date just after
+        final Reservation toCancel = new Reservation(1L, startDate, endDate, resource, user);
+
+
+        EasyMock.expect(reservationDAO.byId(toCancel.getId())).andReturn(toCancel);
+        reservationDAO.delete(toCancel);
+        EasyMock.expectLastCall();
+        replayAll();
+
+        try {
+            reservationService.cancel(user, toCancel.getId());
+        } catch(ModelError e) {
+            fail();
+        }
+        verifyAll();
+    }
+
+    @Test
+    public void testCancelWrongUser() {
+        final User otherUser = new User(2L, "Faouzi", "CHIHEB", "f.chiheb@d.fr", "pwd", null, false);
+        final Date startDate = new Date(new Date().getTime() + 1000); // the date is future to avoid a ModelError
+        final Date endDate = new Date(startDate.getTime() + 1000);    // and end date just after
+        final Reservation toCancel = new Reservation(1L, startDate, endDate, resource, otherUser);
+
+        EasyMock.expect(reservationDAO.byId(toCancel.getId())).andReturn(toCancel);
+        replayAll();
+
+        ModelError error = null;
+        try {
+            reservationService.cancel(user, toCancel.getId());
+        } catch(ModelError e) {
+            error = e;
+        }
+        assertNotNull(error);
+        verifyAll();
+    }
 }
