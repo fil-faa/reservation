@@ -1,5 +1,6 @@
 package fr.emn.fil.reservation.controllers;
 
+import fr.emn.fil.reservation.controllers.validation.LongValidator;
 import fr.emn.fil.reservation.model.UserManager;
 import fr.emn.fil.reservation.model.dao.DAOFactory;
 import fr.emn.fil.reservation.model.entities.Reservation;
@@ -7,6 +8,7 @@ import fr.emn.fil.reservation.model.entities.Resource;
 import fr.emn.fil.reservation.model.entities.ResourceType;
 import fr.emn.fil.reservation.model.entities.User;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
+import fr.emn.fil.reservation.model.exceptions.ModelError;
 import fr.emn.fil.reservation.model.services.ReservationService;
 import fr.emn.fil.reservation.model.services.ResourceService;
 import fr.emn.fil.reservation.model.services.ResourceTypeService;
@@ -48,6 +50,9 @@ public class ReservationController extends Controller {
             if (url.equals("/"))
                 response = getReservations();
 
+            if(url.equals("/cancel"))
+                response = cancelReservation();
+
         } else if (request.getMethod().equals("POST")) {
 
             if (url.equals("/"))
@@ -61,6 +66,25 @@ public class ReservationController extends Controller {
         return response;
     }
 
+    public Response cancelReservation() {
+        User user;           // we ensure that the connected user owns the reservation
+        Long reservationId;  // id of the reservation to cancel
+        try {
+            user = UserManager.getCurrentUser();
+        } catch(ModelError e) {
+            return new Response("/users/login", Response.Type.REDIRECT);
+        }
+        try {
+            reservationId = new LongValidator("id de réservation")
+                    .parse(request.getParameter("reservationId"))
+                    .get();
+            reservationService.cancel(user, reservationId);
+            request.setAttribute("success", "La réservation d'identifiant " + reservationId + " a bien été supprimée.");
+        } catch(GenericError e) {
+            request.setAttribute("error", e);
+        }
+        return this.getReservations();
+    }
 
     public Response getReservations() {
         try {

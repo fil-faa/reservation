@@ -7,6 +7,7 @@ import fr.emn.fil.reservation.model.entities.Resource;
 import fr.emn.fil.reservation.model.entities.ResourceType;
 import fr.emn.fil.reservation.model.entities.User;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
+import fr.emn.fil.reservation.model.exceptions.ModelError;
 
 import java.util.Date;
 import java.util.List;
@@ -39,10 +40,14 @@ public class ReservationService {
         return reservation;
     }
 
-    public void cancel(Long id) throws GenericError {
+    public void cancel(User user, Long id) throws GenericError {
         Reservation reservation = reservationDAO.byId(id);
         if(reservation == null) throw new GenericError("La réservation que vous voulez supprimer n'existe plus");
-        reservationDAO.delete(reservation);
+
+
+        if(reservation.getUser().equals(user))
+            reservationDAO.delete(reservation);
+        else throw new ModelError("Erreur d'annulation : vous essayer de supprimer une réservation qui ne vous appartient pas");
     }
 
     public void delete(Reservation reservation) {

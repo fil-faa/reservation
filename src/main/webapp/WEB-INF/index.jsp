@@ -27,7 +27,7 @@
     </c:if>
     <c:if test="${not empty success}">
         <div class="alert alert-success" role="alert">
-                ${success.label}
+                ${success}
         </div>
     </c:if>
 

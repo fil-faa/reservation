@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<h1>Mes rï¿½servations</h1>
+<h1>Mes réservations</h1>
 
 
 <div class="side-box">
@@ -10,15 +10,16 @@
 </div>
 
 <div class="body-box">
-  <h2>Liste des rï¿½servations</h2>
+  <h2>Liste des réservations</h2>
   <table class="table table-striped">
     <thead>
     <tr>
-      <th>Date de dï¿½but</th>
+      <th>Date de début</th>
       <th>Date de fin</th>
       <th>Utilisateur</th>
       <th>Ressource</th>
       <th>Type de ressource</th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -29,6 +30,7 @@
         <td>${reservation.user.firstName} ${reservation.user.lastName}</td>
         <td>${reservation.resource.name}</td>
         <td>${reservation.resource.type.name}</td>
+        <td><a class="btn btn-primary" href="${appPath}/reservations/cancel?reservationId=${reservation.id}">Annuler</a></td>
       </tr>
     </c:forEach>
 

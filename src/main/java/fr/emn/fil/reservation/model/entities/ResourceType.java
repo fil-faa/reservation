@@ -8,7 +8,7 @@ import java.util.List;
  * Created by arthur on 20/10/15.
  */
 @Entity
-@Table(name = "TYPE_RESSOURCE")
+@Table(name = "RESOURCE_TYPE")
 @NamedQueries({
         @NamedQuery(name = "resourceType.findAll", query = "SELECT r FROM ResourceType r")
 })
@@ -27,11 +27,11 @@ public class ResourceType {
     private List<Resource> resources;
 
     public ResourceType() {
-        this.resources = new ArrayList<Resource>();
+        this.resources = new ArrayList<>();
     }
 
     public ResourceType(String nom) {
-        this.resources = new ArrayList<Resource>();
+        this.resources = new ArrayList<>();
         this.name = nom;
     }
 

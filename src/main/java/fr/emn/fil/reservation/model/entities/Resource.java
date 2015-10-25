@@ -8,7 +8,7 @@ import java.util.List;
  * Created by arthur on 20/10/15.
  */
 @Entity
-@Table(name = "RESSOURCE")
+@Table(name = "RESOURCE")
 @NamedQueries({
         @NamedQuery(name = "resource.findAll", query = "SELECT r FROM Resource r"),
         @NamedQuery(name = "resource.byType", query = "SELECT r FROM Resource r WHERE r.type = :type"),
@@ -23,7 +23,7 @@ public class Resource {
     private Long id;
 
     @Basic
-    @Column(name = "NOM", length = 255)
+    @Column(name = "NAME", length = 255)
     private String name;
 
     @Basic
