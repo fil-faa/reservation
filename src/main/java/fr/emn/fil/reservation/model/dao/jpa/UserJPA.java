@@ -28,4 +28,12 @@ public class UserJPA extends AbstractJpaDAO<User,Long> implements UserDAO {
         return users.size() > 0 ? users.get(0) : null;
     }
 
+    @Override
+    public List<User> findAdmin() {
+        String query = "SELECT usr FROM User usr WHERE usr.admin = '1'";
+        Query q = JPAManager.getEm().createQuery(query);
+
+        return q.getResultList();
+    }
+
 }

@@ -138,7 +138,7 @@ public class UserController extends Controller {
             request.setAttribute("error", e);
             return this.loginForm();
         }
-        return new Response(LoginFilter.ROOT_URL + "/reservations/search", Response.Type.REDIRECT);
+        return new Response(LoginFilter.ROOT_URL + "/book/search", Response.Type.REDIRECT);
     }
 
     public Response loginForm() {
@@ -156,7 +156,11 @@ public class UserController extends Controller {
         }
        try
         {
-            userService.delete(userId);
+            if (userService.isUserDeletable(userId)) {
+                userService.delete(userId);
+            } else {
+                request.setAttribute("error", new ModelError("Impossible de supprimer l'utilisateur"));
+            }
         }
         catch (GenericError e)
         {
@@ -184,7 +188,7 @@ public class UserController extends Controller {
 
             User user = userService.create(mail, password, firstName, lastName, phone);
             request.setAttribute("user", user);
-            return new Response(request.getContextPath() + "/reservations/users/", Response.Type.REDIRECT);
+            return new Response(request.getContextPath() + "/book/users/", Response.Type.REDIRECT);
 
         } catch(GenericError e) {
             request.setAttribute("error", e);
