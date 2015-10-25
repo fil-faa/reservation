@@ -5,7 +5,7 @@
         <h3 class="panel-title">Recherche</h3>
     </div>
     <div class="panel-body">
-        <form method="get" action="${appPath}/resources/">
+        <form method="get" action="${appPath}/reservations/">
 
             <div class="form-group">
                 <label for="search_resourceType">Type de la ressource</label>
