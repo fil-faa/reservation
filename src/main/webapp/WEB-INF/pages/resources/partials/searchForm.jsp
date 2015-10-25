@@ -1,5 +1,8 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<h1>Recherche</h1>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Recherche</h3>
+    </div>
+    <div class="panel-body">
 <form method="get">
 
     <div class="form-group">
@@ -16,5 +19,7 @@
         <input type="text" class="form-control" id="search_lastname" name="searchedName" placeholder="Ordinateur" value="${param.resourceName}">
     </div>
 
-    <button type="submit" class="btn btn-default">Rechercher</button>
+    <button type="submit" class="btn btn-primary form-control">Rechercher</button>
 </form>
+        </div>
+    </div>

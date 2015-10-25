@@ -1,16 +1,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${admin}">
-<div>
-    <c:import url="/WEB-INF/pages/resources/partials/addForm.jsp"></c:import>
-</div>
-</c:if>
 <div class="side-box">
     <c:import url="/WEB-INF/pages/resources/partials/searchForm.jsp"></c:import>
-    </form>
+<c:if test="${admin}">
+    <button id="addButton" type="submit" class="btn btn-primary form-control" onclick="$('#addForm').toggle(200);$('#addButton').hide();">Ajouter une ressource</button>
+    <div id="addForm">
+        <c:import url="/WEB-INF/pages/resources/partials/addForm.jsp"></c:import>
+    </div>
+</c:if>
 </div>
 <div class="body-box">
-    <h2>Liste des ressources</h2>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">Liste des ressources</h1>
+            </div>
+            <div class="panel-body">
     <table class="table table-striped">
         <thead>
         <tr>
@@ -19,7 +23,9 @@
             <th>Localisation</th>
             <th>Type</th>
             <th>Responsable</th>
-            <th>Actions</th>
+            <c:if test="${admin}">
+                <th style="min-width: 100px">Actions</th>
+            </c:if>
         </tr>
         </thead>
         <tbody>
@@ -30,13 +36,12 @@
                 <td>${resource.place}</td>
                 <td>${resource.type.name}</td>
                 <td>${resource.owner.firstName} ${resource.owner.lastName}</td>
-                <td>
-                    <a href="${appName}/resources/${resource.id}"><span class="glyphicon glyphicon-cart" aria-hidden="true"></span></a>
-                </td>
                 <c:if test="${admin}">
                     <td>
-                        <a href="${appPath}/resources/${resource.id}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        <a href="${appPath}/resources/delete?id=${resource.id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default" onclick="location.href='${appPath}/resources/${resource.id}'"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
+                            <button type="button" class="btn btn-default" onclick="location.href='${appPath}/resources/delete?id=${resource.id}'"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        </div>
                     </td>
                 </c:if>
             </tr>
@@ -45,3 +50,6 @@
         </tbody>
     </table>
 </div>
+            </div>
+        </div>
+    </div>

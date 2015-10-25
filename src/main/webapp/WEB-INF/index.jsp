@@ -14,14 +14,15 @@
 
 <body>
 
+<c:if test="${connected}">
+    <%@include file="jspf/menu.jspf"%>
+</c:if>
 <div class="container">
 
-    <c:if test="${connected}">
-        <%@include file="jspf/menu.jspf"%>
-    </c:if>
+
 
     <c:if test="${not empty error}">
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-danger" role="alert">
                 ${error.label}
         </div>
     </c:if>
@@ -30,8 +31,8 @@
                 ${success.label}
         </div>
     </c:if>
-
     <jsp:include page="pages/${page}"/>
+
 
 
 </div

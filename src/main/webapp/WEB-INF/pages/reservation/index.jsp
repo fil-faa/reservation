@@ -1,16 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<h1>Mes réservations</h1>
-
-
 <div class="side-box">
   <%@include file="partials/searchForm.jsp"%>
 
 </div>
 
 <div class="body-box">
-  <h2>Liste des réservations</h2>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h1 class="panel-title">Liste des réservations</h1>
+    </div>
+    <div class="panel-body">
   <table class="table table-striped">
     <thead>
     <tr>
@@ -30,10 +30,12 @@
         <td>${reservation.user.firstName} ${reservation.user.lastName}</td>
         <td>${reservation.resource.name}</td>
         <td>${reservation.resource.type.name}</td>
-        <td><a class="btn btn-primary" href="${appPath}/reservations/cancel?reservationId=${reservation.id}">Annuler</a></td>
+        <td><a class="btn btn-danger form-control" href="${appPath}/reservations/cancel?reservationId=${reservation.id}">Annuler</a></td>
       </tr>
     </c:forEach>
 
     </tbody>
   </table>
 </div>
+    </div>
+  </div>

@@ -1,4 +1,8 @@
-<h1>Ajouter un utilisateur</h1>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Ajouter un utilisateur</h3>
+    </div>
+    <div class="panel-body">
 <form method="POST">
     <div class="form-group">
         <label for="lastName">Nom</label>
@@ -20,5 +24,7 @@
         <label for="password">Mot de passe</label>
         <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe">
     </div>
-    <button type="submit" class="btn btn-default">Valider</button>
+    <button type="submit" class="btn btn-primary form-control">Ajouter</button>
 </form>
+    </div>
+</div>

@@ -1,5 +1,8 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<h1>Ajouter une ressource</h1>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Ajouter une ressource</h3>
+    </div>
+    <div class="panel-body">
 <form method="POST">
     <div class="form-group">
         <label for="resourceName">Nom</label>
@@ -30,3 +33,5 @@
 
     <button type="submit" class="btn btn-default">Ajouter</button>
 </form>
+    </div>
+</div>

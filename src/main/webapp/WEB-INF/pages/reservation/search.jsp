@@ -1,52 +1,60 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<h2>Rechercher une ressource</h2>
+<div class="side-box">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Rechercher une ressource</h3>
+        </div>
+        <div class="panel-body">
 
-<p>Par l'intermédiaire de ce formulaire, choisissez la ressource qui vous convient sur la période de votre choix.</p>
+    <p>Par l'intermédiaire de ce formulaire, choisissez la ressource qui vous convient sur la période de votre choix.</p>
 
-<form action="${appPath}/reservations/search" method="GET">
+    <form action="${appPath}/reservations/search" method="GET">
 
-
-    <div class="row">
-
-        <div class="col-md-5">
-            <input type="text" class="form-control" name="searchRange" value="${searchRange}" />
+        <div class="form-group">
+            <label for="searchRange">Dates</label>
+            <input type="text" class="form-control" id="searchRange" name="searchRange" value="${searchRange}" />
         </div>
 
-        <div class="col-md-6">
-            <select class="form-control" name="typeId">
+        <div class="form-group">
+            <label for="typeId">Type de la ressource</label>
+            <select class="form-control" id="typeId" name="typeId">
                 <option value="">Tous les types</option>
                 <c:forEach var="type" items="${types}">
                     <option value="${type.id}">${type.name}</option>
                 </c:forEach>
             </select>
         </div>
+        <button class="btn btn-primary form-control " type="submit">Rechercher</button>
 
-        <div class="col-md-1">
-            <button class="btn btn-primary btn-md" type="submit">Je recherche</button>
+
+
+    </form>
+            </div>
         </div>
+</div>
 
-    </div>
-
-
-</form>
-
+<div class="body-box">
 <c:if test="${empty resources}">
-
-    <p class="lead">Aucune ressource n'a été trouvée pour la période sélectionnée</p>
+    <div class="alert alert-danger" role="alert">
+        Aucune ressource n'a été trouvée pour la période sélectionnée
+    </div>
 
 </c:if>
 
 <c:if test="${not empty resources}">
-        <h2>Liste des resources disponibles</h2>
+    <div class="panel panel-primary">
+    <div class="panel-heading">
+        <h1 class="panel-title">Liste des ressources disponibles</h1>
+    </div>
+    <div class="panel-body">
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>Nom de la ressource</th>
                 <th>Type de la ressource</th>
-                <th>Prénom du propriétaire</th>
-                <th>Nom du propriétaire</th>
+                <th>Responsable</th>
                 <th>Réserver <br>(période: ${searchRange})</th>
             </tr>
             </thead>
@@ -56,15 +64,14 @@
                 <tr>
                     <td>${resource.name}</td>
                     <td>${resource.type.name}</td>
-                    <td>${resource.owner.firstName}</td>
-                    <td>${resource.owner.lastName}</td>
+                    <td>${resource.owner.lastName} ${resource.owner.firstName}</td>
                     <td>
 
 
                         <form method="POST" action="${appPath}/reservations/">
                             <input type="hidden" name="reservationRange" value="${searchRange}"/>
                             <input type="hidden" name="resourceId", value="${resource.id}">
-                            <button class="btn btn-primary" type="submit"><b>Réserver</b></button>
+                            <button class="btn btn-success form-control" type="submit"><b>Réserver</b></button>
                         </form>
                     </td>
                 </tr>
@@ -74,7 +81,9 @@
         </table>
 
 </c:if>
-
+</div>
+</div>
+    </div>
 <script type="text/javascript">
     $('input[name="searchRange"]').daterangepicker(
             {
