@@ -78,13 +78,17 @@ public class ResourceService {
     }
 
     public Resource byId(Long id) throws ModelError {
-        if(id == null) throw new ModelError("Identifiant non fourni pour la ressource à chercher");
+        if(id == null) throw new ModelError("Identifiant non fourni pour la ressource ï¿½ chercher");
         Resource resource = resourceDAO.byId(id);
-        if(resource == null) throw new ModelError("Ressource non trouvée pour l'id donné");
+        if(resource == null) throw new ModelError("Ressource non trouvï¿½e pour l'id donnï¿½");
         return resource;
     }
 
     public void save(Resource resource) {
         resourceDAO.save(resource);
+    }
+
+    public List<Resource> findByOwner(User user) {
+        return resourceDAO.findByOwner(user.getId());
     }
 }

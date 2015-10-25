@@ -22,4 +22,5 @@ public interface ResourceDAO {
 
     List<Resource> findAvailable(Date startDate, Date endDate);
 
+    List<Resource> findByOwner(Long id);
 }

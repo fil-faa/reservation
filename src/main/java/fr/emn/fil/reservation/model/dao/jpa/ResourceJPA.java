@@ -30,6 +30,14 @@ public class ResourceJPA extends AbstractJpaDAO<Resource,Long> implements Resour
     }
 
     @Override
+    public List<Resource> findByOwner(Long id) {
+        String query = "SELECT res FROM Resource res WHERE res.owner = '" + id + "'";
+        Query q = JPAManager.getEm().createQuery(query);
+
+        return q.getResultList();
+    }
+
+    @Override
     public List<Resource> findByType(ResourceType type) {
         Query q = JPAManager.getEm().createNamedQuery("resource.byType");
         q.setParameter("type", type);
