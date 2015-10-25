@@ -1,7 +1,10 @@
 package fr.emn.fil.reservation.model.dao;
 
+import fr.emn.fil.reservation.model.dao.jpa.JPAManager;
+import fr.emn.fil.reservation.model.entities.Reservation;
 import fr.emn.fil.reservation.model.entities.User;
 
+import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -22,4 +25,7 @@ public interface UserDAO {
     User byId(Long userId);
 
     List<User> findAdmin();
+
+    List<User> matching(String firstName, String lastName, String mail, String phone);
+
 }
