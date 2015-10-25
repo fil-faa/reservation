@@ -19,9 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class ReservationController extends Controller {
 
@@ -136,7 +134,8 @@ public class ReservationController extends Controller {
     }
 
     public Response searchAvailableResources() {
-        String rangeString = request.getParameter("searchRange");
+        initSpan();
+        String rangeString = request.getAttribute("searchRange").toString();
 
         // parse the selected type
         Long typeId = null;
@@ -148,15 +147,15 @@ public class ReservationController extends Controller {
 
         // parse the date range
         Date[] range = parseRange(rangeString);
-        if(range[0] == null || range[1] == null) {
-            request.setAttribute("resources", new ArrayList<Resource>());
-        } else {
-            List<Resource> resources = resourceService.findAvailableResources(range[0], range[1], typeId);
-            request.setAttribute("searchRange", rangeString);
-            request.setAttribute("resources", resources);
-        }
+
+        // fetch the resources for the selected ranges
+        List<Resource> resources = resourceService.findAvailableResources(range[0], range[1], typeId);
+        request.setAttribute("resources", resources);
+
+        // add the resource types for the view
         List<ResourceType> types = resourceTypeService.findAll();
         request.setAttribute("types", types);
+
         return new Response("/reservation/search.jsp", Response.Type.FORWARD);
     }
 
@@ -181,6 +180,20 @@ public class ReservationController extends Controller {
             e.printStackTrace();
         }
         return dates;
+    }
+
+    private void initSpan() {
+        String range = request.getParameter("searchRange");
+        if(range == null) {
+            Calendar calendar = new GregorianCalendar();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
+            range = sdf.format(calendar.getTime());
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+            range += " - " + sdf.format(calendar.getTime());
+            request.setAttribute("searchRange", range);
+        } else {
+            request.setAttribute("searchRange", request.getParameter("searchRange"));
+        }
     }
 
 }

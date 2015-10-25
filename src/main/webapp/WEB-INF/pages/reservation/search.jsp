@@ -6,7 +6,7 @@
 
 <form action="${appPath}/reservations/search" method="GET">
 
-    <input type="text" class="form-control" name="searchRange" value="01/01/2015 - 01/31/2015" />
+    <input type="text" class="form-control" name="searchRange" value="${searchRange}" />
 
 
     <select class="form-control" name="typeId">
@@ -24,7 +24,7 @@
 
 <c:if test="${not empty resources}">
 <div class="body-box">
-  <h2>Liste des resources disponibles</h2>
+  <h2>Liste des resources disponibles : ${searchRange}</h2>
   <table class="table table-striped">
     <thead>
     <tr>
@@ -36,6 +36,13 @@
     </tr>
     </thead>
     <tbody>
+
+    <c:if test="${empty resources}">
+
+        <p class="lead">Aucune ressource n'a été trouvée pour la période sélectionnée</p>
+
+    </c:if>
+
     <c:forEach var="resource" items="${resources}">
       <tr>
         <td>${resource.name}</td>
@@ -90,8 +97,6 @@
                         "Novembre",
                         "Décembre"
                     ],
-                },
-                startDate: new Date(),
-                endDate: new Date()
+                }
             });
 </script>
