@@ -1,9 +1,9 @@
 package fr.emn.fil.reservation.controllers;
 
 import fr.emn.fil.reservation.controllers.validation.StringValidator;
-import fr.emn.fil.reservation.model.UserManager;
 import fr.emn.fil.reservation.model.entities.User;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
+import fr.emn.fil.reservation.model.exceptions.GenericSuccess;
 import fr.emn.fil.reservation.model.exceptions.ModelError;
 import fr.emn.fil.reservation.model.services.UserService;
 
@@ -28,6 +28,7 @@ public class UserController extends Controller {
 
     @Override
     protected Response handle(String url) {
+
         Response response = null;
         try {
             if (request.getMethod().equals("GET")) {
@@ -146,18 +147,17 @@ public class UserController extends Controller {
     }
 
     public Response loginForm() {
-        return new Response("/users/connect.jsp", Response.Type.FORWARD);
+        return new Response("users/connect.jsp", Response.Type.FORWARD);
     }
 
     public Response deleteUser() throws GenericError
     {
-        if(nonAdminRedirect()!=null) return nonAdminRedirect();
         Long userId=null;
         try {
             userId = Long.parseLong(request.getParameter("id"));
             if(userId == null) throw new NumberFormatException();
         } catch(NumberFormatException e) {
-            throw new GenericError("Cet utilisateur ne peut ï¿½tre supprimï¿½ : erreur systï¿½me");
+            throw new GenericError("Cet utilisateur ne peut être supprimé : erreur système");
         }
        try
         {
@@ -172,6 +172,8 @@ public class UserController extends Controller {
             request.setAttribute("error", e);
             return getUsers();
         }
+        request.setAttribute("success", new GenericSuccess("L'utilisateur d'identifiant "
+                + userId + " a bien été supprimé."));
         return getUsers();
     }
     public Response addUser() {
@@ -185,16 +187,18 @@ public class UserController extends Controller {
             new StringValidator(password, "mot de passe").minLength(8).maxLength(250);
 
             String phone = request.getParameter("phone");
-            new StringValidator(phone, "tï¿½lï¿½phone").mustBeNumeric();
+            new StringValidator(phone, "téléphone").mustBeNumeric();
 
             String firstName = request.getParameter("firstName");
-            new StringValidator(firstName, "prï¿½nom").notEmpty();
+            new StringValidator(firstName, "prénom").notEmpty();
 
             String lastName = request.getParameter("lastName");
             new StringValidator(firstName, "nom").notEmpty();
 
             User user = userService.create(mail, password, firstName, lastName, phone);
             request.setAttribute("user", user);
+            request.setAttribute("success", new GenericSuccess("L'utilisateur " + user.getFirstName() + " "
+                    + user.getLastName() + " a bien été créé."));
             return new Response(ROOT_URL + "/users/", Response.Type.REDIRECT);
 
         } catch(GenericError e) {
@@ -204,9 +208,18 @@ public class UserController extends Controller {
     }
 
     public Response getUsers() {
-        if(nonAdminRedirect()!=null) return nonAdminRedirect();
+        String mail = request.getParameter("searchedMail");
+        String firstName = request.getParameter("searchedFirstName");
+        String lastName = request.getParameter("searchedLastName");
+        String phone = request.getParameter("searchedPhone");
 
-        List<User> users = userService.findAll();
+        List<User> users;
+        if(mail == null && firstName == null && lastName == null && phone == null){
+            users = userService.findAll();
+        } else {
+            users = userService.filter(firstName, lastName, mail, phone);
+        }
+
         request.setAttribute("users", users);
         return new Response("/users/index.jsp", Response.Type.FORWARD);
     }

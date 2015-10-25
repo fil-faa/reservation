@@ -16,9 +16,7 @@
     </div>
     <div class="form-group">
         <label for="resourceDescription">Description</label>
-        <textarea class="form-control" id="resourceDescription" name="description" rows="3">
-            ${resource.description}
-        </textarea>
+        <textarea class="form-control" id="resourceDescription" name="description" rows="3">${resource.description}</textarea>
     </div>
     <div class="form-group">
         <label for="resourceType">Type de la ressource</label>

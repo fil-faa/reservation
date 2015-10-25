@@ -1,6 +1,8 @@
 package fr.emn.fil.reservation.model.dao.jpa;
 
 import fr.emn.fil.reservation.model.dao.UserDAO;
+import fr.emn.fil.reservation.model.entities.Reservation;
+import fr.emn.fil.reservation.model.entities.ResourceType;
 import fr.emn.fil.reservation.model.entities.User;
 
 import javax.persistence.Query;
@@ -36,4 +38,44 @@ public class UserJPA extends AbstractJpaDAO<User,Long> implements UserDAO {
         return q.getResultList();
     }
 
+    /**
+     * Dynamic query handling cumulative filters on users
+     * @param firstName filter by first name (nullable)
+     * @param lastName filter by last naeme (nullable)
+     * @param mail filter by mail address (nullable)
+     * @param phone filter by phone number (nullable)
+     * @return
+     */
+    @Override
+    public List<User> matching(String firstName, String lastName, String mail, String phone) {
+        String query = "SELECT u FROM User u WHERE ";
+        boolean hasPrev = false;
+        if(firstName != null) {
+            query += " UPPER(u.firstName) LIKE '%" + firstName.toUpperCase() + "%'";
+            hasPrev = true;
+        }
+        if(lastName != null) {
+            if(hasPrev) {
+                query += " and";
+            }
+            query += " UPPER(u.lastName) LIKE '%" + lastName.toUpperCase() + "%'";
+            hasPrev = true;
+        }
+        if(mail != null) {
+            if(hasPrev) {
+                query += " and";
+            }
+            query += " UPPER(u.mail) LIKE '%" + mail.toUpperCase() + "%'";
+            hasPrev = true;
+        }
+        if(phone != null) {
+            if(hasPrev) {
+                query += " and";
+            }
+            query += " UPPER(u.telephone) LIKE '%" + phone.toUpperCase() + "%'";
+        }
+
+        Query q = JPAManager.getEm().createQuery(query);
+        return q.getResultList();
+    }
 }

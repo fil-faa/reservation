@@ -62,12 +62,16 @@ public class UserService {
     }
 
     public List<User> findAll() {
-        return DAOFactory.userDAO().findAll();
+        return userDAO.findAll();
+    }
+
+    public List<User> filter(String firstName, String lastName, String mail, String phone) {
+        return userDAO.matching(firstName, lastName, mail, phone);
     }
 
     public User byId(Long id) throws ModelError {
         User user = userDAO.byId(id);
-        if (user == null) throw new ModelError("Utilisateur non trouv� pour l'identifiant donn�");
+        if (user == null) throw new ModelError("Utilisateur non trouvé pour l'identifiant donné");
         return user;
     }
 
