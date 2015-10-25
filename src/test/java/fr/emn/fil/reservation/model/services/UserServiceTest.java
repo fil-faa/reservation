@@ -10,9 +10,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Created by Alexandre on 21/10/2015.
@@ -85,5 +83,32 @@ public class UserServiceTest extends EasyMockSupport {
         }
         verifyAll();
         assertNotNull(error);
+    }
+
+    /**
+     * Method tested : login
+     * Nominal test : the user is really in the database, and the password is correct
+     */
+    @Test
+    public void testLoginOK() {
+        String mail = "alexandre.lebrun@etudiant.mines-nantes.fr";
+        String password = "mot de passe";
+        String hashedPassword = "b9e50e0e8b504aa57a1bb6711ee832ee4ce9c641a1618b91833582382c709023";
+
+        EasyMock.expect(userDAO.byMail(mail)).andReturn(new User(1L, "Alexandre", "LEBRUN", mail,
+                hashedPassword, "0672566252", false));
+        replayAll();
+
+        User user;
+        try {
+            user = userService.connect(mail, password);
+        } catch(ModelError e) {
+            fail();
+            user = null;
+        }
+        assertNotNull(user);
+        assertNotEquals(user.getPassword(), password); // the password must be hashed
+
+        verifyAll();
     }
 }

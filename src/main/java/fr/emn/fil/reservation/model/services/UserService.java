@@ -30,10 +30,10 @@ public class UserService {
         this.userDAO = dao;
     }
 
-    public User connect(String mail, String password) throws GenericError {
+    public User connect(String mail, String password) throws ModelError {
         User user = userDAO.byMail(mail);
         if (user == null || !hash(password).equals(user.getPassword()))
-            throw new GenericError("Utilisateur non trouv?");
+            throw new ModelError("Utilisateur non trouv?");
 
         return user;
     }
