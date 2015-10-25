@@ -111,4 +111,24 @@ public class UserServiceTest extends EasyMockSupport {
 
         verifyAll();
     }
+
+    @Test
+    public void testLoginIncorrectPassword() {
+        String mail = "alexandre.lebrun@etudiant.mines-nantes.fr";
+        String password = "wrong password";
+        String hashedPassword = "b9e50e0e8b504aa57a1bb6711ee832ee4ce9c641a1618b91833582382c709023";
+
+        EasyMock.expect(userDAO.byMail(mail)).andReturn(new User(1L, "Alexandre", "LEBRUN", mail,
+                hashedPassword, "0672566252", false));
+        replayAll();
+
+        GenericError error;
+        try {
+            userService.connect(mail, password);
+            error = null;
+        } catch(ModelError e) {
+            error = e;
+        }
+        assertNotNull(error);
+    }
 }
