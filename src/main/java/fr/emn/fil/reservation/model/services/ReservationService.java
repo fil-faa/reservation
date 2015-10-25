@@ -54,7 +54,7 @@ public class ReservationService {
         if(reservation == null) throw new GenericError("La réservation que vous voulez supprimer n'existe plus");
 
 
-        if(reservation.getUser().equals(user))
+        if(!reservation.getUser().equals(user))
             reservationDAO.delete(reservation);
         else throw new ModelError("Erreur d'annulation : vous essayer de supprimer une rï¿½servation qui ne vous appartient pas");
     }

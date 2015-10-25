@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<div class="panel panel-default">
+  <div class="panel-body">
 <h1>Editer un type de ressource</h1>
 
 <form method="POST">
@@ -10,3 +11,6 @@
 
   <button type="submit" class="btn btn-default">Modifier</button>
 </form>
+
+    </div>
+  </div>
