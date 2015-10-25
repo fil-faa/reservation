@@ -25,8 +25,8 @@
     <tbody>
     <c:forEach var="reservation" items="${reservations}">
       <tr>
-        <td><fmt:formatDate type="date" value="${reservation.start}" pattern="dd/MM/YYYY"/></td>
-        <td><fmt:formatDate type="date" value="${reservation.end}" pattern="dd/MM/YYYY"/></td>
+        <td><fmt:formatDate type="date" value="${reservation.start}" pattern="dd/MM/YYYY hh:mm"/></td>
+        <td><fmt:formatDate type="date" value="${reservation.end}" pattern="dd/MM/YYYY hh:mm"/></td>
         <td>${reservation.user.firstName} ${reservation.user.lastName}</td>
         <td>${reservation.resource.name}</td>
         <td>${reservation.resource.type.name}</td>
