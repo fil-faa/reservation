@@ -54,6 +54,11 @@ public class Reservation {
         this.user = user;
     }
 
+    public Reservation(Long id, Date start, Date end, Resource resource, User user) {
+        this(start, end, resource, user);
+        this.id = id;
+    }
+
     public boolean isOngoing() {
         Date currentDate = new Date();
         return this.end.getTime() > currentDate.getTime();
