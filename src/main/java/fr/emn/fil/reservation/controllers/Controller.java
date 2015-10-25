@@ -55,15 +55,18 @@ public abstract class Controller {
             response.sendRedirect(result.getPage());
         }
     }
+
+    /**
+     * Manage the user rights in order to avoid unauthorized actions
+     * @return a redirect response if the user has not the rights, <code>null</code> otherwise
+     */
     public Response nonAdminRedirect()
     {
-        try
-        {
+        try {
             if(!UserManager.getCurrentUser().isAdmin())
                 return new Response(ROOT_URL+"/reservations/", Response.Type.REDIRECT);
         }
-        catch (ModelError e)
-        {
+        catch (ModelError e) {
             return new Response(ROOT_URL+"/users/connect/", Response.Type.REDIRECT);
         }
         return null;
