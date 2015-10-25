@@ -51,4 +51,19 @@ public class ResourceTypeService {
     public void save(ResourceType type) {
         resourceTypeDAO.save(type);
     }
+
+    public boolean hasResources(Long typeId) {
+        ResourceType type = null;
+        try {
+            type = byId(typeId);
+            System.out.println("bouh");
+            List<Resource> resources = new ResourceService().findByType(type);
+            System.out.println(resources.size());
+            return !resources.isEmpty();
+        } catch (ModelError modelError) {
+            modelError.printStackTrace();
+        }
+        System.out.println("bu");
+        return false;
+    }
 }

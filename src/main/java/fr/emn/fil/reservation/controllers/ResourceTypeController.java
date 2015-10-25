@@ -131,7 +131,11 @@ public class ResourceTypeController extends Controller {
             throw new ValidationError("Le type que vous voulez supprimer n'existe pas ou est corrompu");
         }
 
-        typeService.delete(typeId);
+        if (!typeService.hasResources(typeId)) {
+            typeService.delete(typeId);
+        } else {
+            request.setAttribute("error", new ModelError("Impossible de supprimer le type de ressource : il y a encore des ressources de ce type"));
+        }
         return this.getResourceTypes();
     }
 
