@@ -54,6 +54,11 @@ public class Reservation {
         this.user = user;
     }
 
+    public boolean isOngoing() {
+        Date currentDate = new Date();
+        return this.end.getTime() > currentDate.getTime();
+    }
+
     public Long getId() {
         return id;
     }
@@ -94,8 +99,4 @@ public class Reservation {
         this.user = user;
     }
 
-    public boolean getStatus() {
-        Date currentDate = new Date();
-        return this.end.getTime() > currentDate.getTime();
-    }
 }

@@ -9,9 +9,7 @@ import fr.emn.fil.reservation.model.entities.User;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
 import fr.emn.fil.reservation.model.exceptions.ModelError;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class ReservationService {
 
@@ -30,11 +28,17 @@ public class ReservationService {
     }
 
     public Reservation create(Date startDate, Date endDate, Resource resource, User user) throws GenericError {
+        // rule : startDate < endDate
+        if(startDate.getTime() > endDate.getTime())
+            throw new ModelError("La date de début de la réservation doit précéder sa date de fin");
+
+        if(beginningOfDay(startDate) < beginningOfDay(new Date()))
+            throw new ModelError("Impossible d'effectuer une réservation dans le passé");
 
         // We must avoid ubiquity for the resources
         List<Reservation> existing = reservationDAO.during(resource, startDate, endDate);
         if(existing.size() > 0)
-            throw new GenericError("Cette ressource est dï¿½jï¿½ rï¿½servï¿½e");
+            throw new GenericError("Cette ressource est déjà réservée");
 
         Reservation reservation = new Reservation(startDate, endDate, resource, user);
         reservationDAO.save(reservation);
@@ -43,7 +47,7 @@ public class ReservationService {
 
     public void cancel(User user, Long id) throws GenericError {
         Reservation reservation = reservationDAO.byId(id);
-        if(reservation == null) throw new GenericError("La rï¿½servation que vous voulez supprimer n'existe plus");
+        if(reservation == null) throw new GenericError("La réservation que vous voulez supprimer n'existe plus");
 
 
         if(reservation.getUser().equals(user))
@@ -63,15 +67,13 @@ public class ReservationService {
         return reservationDAO.byResource(resource);
     }
 
-    public List<Reservation> getFutureReservationByResource(Resource resource) {
-        List<Reservation> reservations = byResource(resource);
-        ArrayList<Reservation> futureReservation = new ArrayList<>();
-
-        for(Reservation reservation : reservations) {
-            if (reservation.getStatus())
-                futureReservation.add(reservation);
-        }
-
-        return futureReservation;
+    private Long beginningOfDay(Date startDate) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(startDate);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime().getTime();
     }
 }

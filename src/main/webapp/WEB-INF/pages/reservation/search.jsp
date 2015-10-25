@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <h2>Rechercher une ressource</h2>
 
@@ -31,9 +32,14 @@
 
 </form>
 
+<c:if test="${empty resources}">
+
+    <p class="lead">Aucune ressource n'a été trouvée pour la période sélectionnée</p>
+
+</c:if>
+
 <c:if test="${not empty resources}">
-    <div class="body-box">
-        <h2>Liste des resources disponibles : ${searchRange}</h2>
+        <h2>Liste des resources disponibles</h2>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -41,16 +47,10 @@
                 <th>Type de la ressource</th>
                 <th>Prénom du propriétaire</th>
                 <th>Nom du propriétaire</th>
-                <th>Réserver</th>
+                <th>Réserver <br>(période: ${searchRange})</th>
             </tr>
             </thead>
             <tbody>
-
-            <c:if test="${empty resources}">
-
-                <p class="lead">Aucune ressource n'a été trouvée pour la période sélectionnée</p>
-
-            </c:if>
 
             <c:forEach var="resource" items="${resources}">
                 <tr>
@@ -64,7 +64,7 @@
                         <form method="POST" action="${appPath}/reservations/">
                             <input type="hidden" name="reservationRange" value="${searchRange}"/>
                             <input type="hidden" name="resourceId", value="${resource.id}">
-                            <button class="btn btn-primary" type="submit">Réserver</button>
+                            <button class="btn btn-primary" type="submit"><b>Réserver</b></button>
                         </form>
                     </td>
                 </tr>
@@ -73,7 +73,6 @@
             </tbody>
         </table>
 
-    </div>
 </c:if>
 
 <script type="text/javascript">

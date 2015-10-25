@@ -58,6 +58,14 @@ public class Resource {
         this.place = place;
     }
 
+    public boolean hasReservationsOngoing() {
+        for(Reservation r : this.reservations) {
+            if(r.isOngoing())
+                return true;
+        }
+        return false;
+    }
+
     public User getOwner() {
         return owner;
     }

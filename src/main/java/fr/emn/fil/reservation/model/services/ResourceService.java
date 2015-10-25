@@ -71,8 +71,10 @@ public class ResourceService {
         return available;
     }
 
-    public void delete(Resource resource) {
-        resourceDAO.delete(resource);
+    public void delete(Resource resource) throws ModelError {
+        if(!resource.hasReservationsOngoing())
+            resourceDAO.delete(resource);
+        else throw new ModelError("Impossible de supprimer la ressource : des réservations futures de cette ressource sont programmées");
     }
 
     public Resource byId(Long id) throws ModelError {

@@ -2,24 +2,25 @@ package fr.emn.fil.reservation.controllers;
 
 import fr.emn.fil.reservation.controllers.validation.LongValidator;
 import fr.emn.fil.reservation.model.UserManager;
-import fr.emn.fil.reservation.model.dao.DAOFactory;
 import fr.emn.fil.reservation.model.entities.Reservation;
 import fr.emn.fil.reservation.model.entities.Resource;
 import fr.emn.fil.reservation.model.entities.ResourceType;
 import fr.emn.fil.reservation.model.entities.User;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
+import fr.emn.fil.reservation.model.exceptions.GenericSuccess;
 import fr.emn.fil.reservation.model.exceptions.ModelError;
 import fr.emn.fil.reservation.model.services.ReservationService;
 import fr.emn.fil.reservation.model.services.ResourceService;
 import fr.emn.fil.reservation.model.services.ResourceTypeService;
-import fr.emn.fil.reservation.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 public class ReservationController extends Controller {
 
@@ -73,11 +74,11 @@ public class ReservationController extends Controller {
             return new Response("/users/login", Response.Type.REDIRECT);
         }
         try {
-            reservationId = new LongValidator("id de rï¿½servation")
+            reservationId = new LongValidator("id de réservation")
                     .parse(request.getParameter("reservationId"))
                     .get();
             reservationService.cancel(user, reservationId);
-            request.setAttribute("success", new ModelError("La rï¿½servation d'identifiant " + reservationId + " a bien ï¿½tï¿½ supprimï¿½e."));
+            request.setAttribute("success", new GenericSuccess("La réservation d'identifiant " + reservationId + " a bien été supprimée."));
         } catch(GenericError e) {
             request.setAttribute("error", e);
         }
@@ -92,9 +93,7 @@ public class ReservationController extends Controller {
             try {
                 typeId = Long.parseLong(request.getParameter("searchedTypeId"));
                 type = resourceTypeService.byId(typeId);
-            } catch(NumberFormatException e) {
-                typeId = null;
-            }
+            } catch(NumberFormatException e) { }
             String name = request.getParameter("searchedName");
 
             List<ResourceType> types = resourceTypeService.findAll();
@@ -115,7 +114,7 @@ public class ReservationController extends Controller {
         try {
 
             // Get the resource id
-            Long resourceId = null;
+            Long resourceId;
             try {
                 resourceId = Long.parseLong(request.getParameter("resourceId"));
             } catch (NumberFormatException e) {
@@ -138,7 +137,7 @@ public class ReservationController extends Controller {
         String rangeString = request.getAttribute("searchRange").toString();
 
         // parse the selected type
-        Long typeId = null;
+        Long typeId;
         try {
             typeId = Long.parseLong(request.getParameter("typeId"));
         } catch(NumberFormatException e) {

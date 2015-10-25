@@ -1,5 +1,6 @@
 package fr.emn.fil.reservation.controllers;
 
+import fr.emn.fil.reservation.controllers.validation.LongValidator;
 import fr.emn.fil.reservation.controllers.validation.StringValidator;
 import fr.emn.fil.reservation.model.entities.Reservation;
 import fr.emn.fil.reservation.model.entities.Resource;
@@ -159,17 +160,11 @@ public class ResourceController extends Controller {
     }
 
     public Response deleteResource() {
-        Long resourceId = null;
         try {
-            Resource resource = resourceService.byId(Long.parseLong(request.getParameter("id")));
-
-            List<Reservation> reservations = new ReservationService().getFutureReservationByResource(resource);
-            if (reservations.isEmpty()) {
-                resourceService.delete(resource);
-            } else {
-                request.setAttribute("error", new ModelError("Impossible de supprimer la ressource : des réservations futures de cette ressource sont programmées"));
-            }
-        } catch(ModelError e) {
+            Long resourceId = new LongValidator("id").parse(request.getParameter("id")).get();
+            Resource resource = resourceService.byId(resourceId);
+            resourceService.delete(resource);
+        } catch(GenericError e) {
             request.setAttribute("error", e);
         }
         finally {
