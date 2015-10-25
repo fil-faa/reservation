@@ -28,7 +28,7 @@
     <tbody>
     <c:forEach var="resourceType" items="${resourceTypes}">
       <tr>
-        <td><a href="${appPath}/resources/?id_type=${resourceType.id}">${resourceType.name}</a></td>
+        <td><a href="${appPath}/resources/?searchedType=${resourceType.id}">${resourceType.name}</a></td>
         <c:if test="${admin}">
           <td>
             <div class="btn-group" role="group">
