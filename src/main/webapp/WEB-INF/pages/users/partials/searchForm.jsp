@@ -6,11 +6,11 @@
         <form method="get" action="">
             <div class="form-group">
                 <label for="search_lastname">Nom</label>
-                <input type="text" class="form-control" id="search_lastname" name="lastname" placeholder="Dupont" value="${param.userLastName}">
+                <input type="text" class="form-control" id="search_lastname" name="lastname" placeholder="Dupont" value="${param.lastname}">
             </div>
             <div class="form-group">
                 <label for="search_firstname">Prénom</label>
-                <input type="text" class="form-control" id="search_firstname" name="firstname" placeholder="Laurent" value="${param.userFirstName}">
+                <input type="text" class="form-control" id="search_firstname" name="firstname" placeholder="Laurent" value="${param.firstname}">
             </div>
             <div class="form-group">
                 <label for="search_mail">Mail</label>

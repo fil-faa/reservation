@@ -7,7 +7,7 @@
                 <div class="form-group">
                     <label for="search_name">Nom du type de ressource</label>
                     <input type="text" class="form-control" id="search_name" name="searchedName" placeholder="e.g. Voiture"
-                           value="${param.resourceTypeName}">
+                           value="${param.searchedName}">
                 </div>
 
                 <button type="submit" class="btn btn-primary form-control">Rechercher</button>

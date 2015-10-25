@@ -3,10 +3,12 @@
 
 <div class="side-box">
   <%@include file="partials/searchForm.jsp"%>
+  <c:if test="${admin}">
     <button id="addButton" type="submit" class="btn btn-primary form-control" onclick="$('#addForm').toggle(200);$('#addButton').hide();">Ajouter un type</button>
     <div id="addForm">
       <%@include file="partials/addForm.jsp"%>
   </div>
+  </c:if>
 </div>
 <div class="body-box">
   <div class="panel panel-primary">

@@ -139,11 +139,12 @@ public class ResourceController extends Controller {
         }
 
         try {
+            request.setAttribute("types", resourceTypeService.findAll());
             List<Resource> found;
             boolean filterByType = searchedType != null;
             boolean filterByName = searchedName != null && !searchedName.isEmpty();
 
-            if(filterByType && filterByType) {
+            if(filterByType && filterByName) {
                 ResourceType type = resourceTypeService.byId(searchedType);
                 found = resourceService.findbyTypeAndName(type, searchedName);
             } else if(filterByType) {
@@ -159,7 +160,7 @@ public class ResourceController extends Controller {
             request.setAttribute("error", e);
             return this.getResources();
         }
-        request.setAttribute("resourceTypes", new ResourceTypeService().findAll());
+
         return new Response("resources/index.jsp", Response.Type.FORWARD);
     }
 
