@@ -115,13 +115,19 @@ public class ResourceTypeController extends Controller {
     }
 
     public Response getResourceTypes() {
-        List<ResourceType> ressourceTypes = typeService.findAll();
+        List<ResourceType> ressourceTypes;
+        String name = request.getParameter("searchedName");
+        if(name != null) {
+            ressourceTypes = typeService.byName(name);
+        } else {
+            ressourceTypes = typeService.findAll();
+        }
         request.setAttribute("resourceTypes", ressourceTypes);
         return new Response("/resourceType/index.jsp", Response.Type.FORWARD);
     }
 
     public Response deleteResourceType() throws GenericError {
-        Long typeId = null;
+        Long typeId;
         try {
             typeId = Long.parseLong(request.getParameter("id"));
         } catch (NumberFormatException e) {

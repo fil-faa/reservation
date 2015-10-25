@@ -3,6 +3,7 @@ package fr.emn.fil.reservation.controllers;
 import fr.emn.fil.reservation.controllers.validation.StringValidator;
 import fr.emn.fil.reservation.model.entities.User;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
+import fr.emn.fil.reservation.model.exceptions.GenericSuccess;
 import fr.emn.fil.reservation.model.exceptions.ModelError;
 import fr.emn.fil.reservation.model.services.UserService;
 
@@ -138,7 +139,7 @@ public class UserController extends Controller {
             request.setAttribute("error", e);
             return this.loginForm();
         }
-        return new Response(LoginFilter.ROOT_URL + "/book/search", Response.Type.REDIRECT);
+        return new Response(LoginFilter.ROOT_URL + "/reservations/search", Response.Type.REDIRECT);
     }
 
     public Response loginForm() {
@@ -152,7 +153,7 @@ public class UserController extends Controller {
             userId = Long.parseLong(request.getParameter("id"));
             if(userId == null) throw new NumberFormatException();
         } catch(NumberFormatException e) {
-            throw new GenericError("Cet utilisateur ne peut ï¿½tre supprimï¿½ : erreur systï¿½me");
+            throw new GenericError("Cet utilisateur ne peut être supprimé : erreur système");
         }
        try
         {
@@ -167,6 +168,8 @@ public class UserController extends Controller {
             request.setAttribute("error", e);
             return getUsers();
         }
+        request.setAttribute("success", new GenericSuccess("L'utilisateur d'identifiant "
+                + userId + " a bien été supprimé."));
         return getUsers();
     }
     public Response addUser() {
@@ -178,16 +181,18 @@ public class UserController extends Controller {
             new StringValidator(password, "mot de passe").minLength(8).maxLength(250);
 
             String phone = request.getParameter("phone");
-            new StringValidator(phone, "tï¿½lï¿½phone").mustBeNumeric();
+            new StringValidator(phone, "téléphone").mustBeNumeric();
 
             String firstName = request.getParameter("firstName");
-            new StringValidator(firstName, "prï¿½nom").notEmpty();
+            new StringValidator(firstName, "prénom").notEmpty();
 
             String lastName = request.getParameter("lastName");
             new StringValidator(firstName, "nom").notEmpty();
 
             User user = userService.create(mail, password, firstName, lastName, phone);
             request.setAttribute("user", user);
+            request.setAttribute("success", new GenericSuccess("L'utilisateur " + user.getFirstName() + " "
+                    + user.getLastName() + " a bien été créé."));
             return new Response(request.getContextPath() + "/book/users/", Response.Type.REDIRECT);
 
         } catch(GenericError e) {

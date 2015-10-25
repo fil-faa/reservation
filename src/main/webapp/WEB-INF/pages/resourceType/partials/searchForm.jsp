@@ -6,7 +6,7 @@
             <form method="get" action="">
                 <div class="form-group">
                     <label for="search_name">Nom du type de ressource</label>
-                    <input type="text" class="form-control" id="search_name" name="name" placeholder="e.g. Voiture"
+                    <input type="text" class="form-control" id="search_name" name="searchedName" placeholder="e.g. Voiture"
                            value="${param.resourceTypeName}">
                 </div>
 

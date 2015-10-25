@@ -2,6 +2,8 @@ package fr.emn.fil.reservation.controllers;
 
 import fr.emn.fil.reservation.model.UserManager;
 import fr.emn.fil.reservation.model.entities.User;
+import fr.emn.fil.reservation.model.exceptions.GenericError;
+import fr.emn.fil.reservation.model.services.UserService;
 
 import javax.jms.Session;
 import javax.servlet.*;
@@ -41,6 +43,15 @@ public class LoginFilter implements Filter {
 
             if (session != null && session.getAttribute("user") != null) {
                 User user = (User) session.getAttribute("user");
+
+                Long id = user.getId();
+                try {
+                    user = new UserService().byId(id);
+                } catch(GenericError e) {
+                    response.sendRedirect(request.getContextPath() + LOGIN_URL);
+                    return;
+                }
+
                 // set the user in the singleton
                 UserManager.users.set(user);
                 filterChain.doFilter(request, response); // we proceed the request

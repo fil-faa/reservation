@@ -11,6 +11,8 @@ public interface ResourceTypeDAO {
 
     List<ResourceType> findAll();
 
+    List<ResourceType> byName(String name);
+
     void save(ResourceType toSave);
 
     void update(ResourceType toUpdate);

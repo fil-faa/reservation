@@ -8,7 +8,7 @@
         <input type="text" class="form-control" id="lastname" name="lastName" placeholder="Dupont" value="${user.lastName}">
       </div>
       <div class="form-group">
-        <label for="firstName">PrÃ©nom</label>
+        <label for="firstName">Prénom</label>
         <input type="text" class="form-control" id="firstname" name="firstName" placeholder="Laurent" value="${user.firstName}">
       </div>
       <div class="form-group">
@@ -16,7 +16,7 @@
         <input type="email" class="form-control" id="mail" name="mail" placeholder="example@domaine.com" value="${user.mail}">
       </div>
       <div class="form-group">
-        <label for="phone">TÃ©lÃ©phone</label>
+        <label for="phone">Téléphone</label>
         <input type="tel" class="form-control" id="phone" name="phone" placeholder="0123456789" value="${user.telephone}">
       </div>
       <div class="form-group">

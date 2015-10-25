@@ -10,7 +10,8 @@ import java.util.List;
 @Entity
 @Table(name = "RESOURCE_TYPE")
 @NamedQueries({
-        @NamedQuery(name = "resourceType.findAll", query = "SELECT r FROM ResourceType r")
+        @NamedQuery(name = "resourceType.findAll", query = "SELECT r FROM ResourceType r"),
+        @NamedQuery(name = "resourceType.byNameLike", query = "SELECT r FROM ResourceType r WHERE UPPER(r.name) LIKE :name")
 })
 public class ResourceType {
 
