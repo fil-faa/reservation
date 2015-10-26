@@ -1,7 +1,6 @@
 package fr.emn.fil.reservation.controllers;
 
 import fr.emn.fil.reservation.model.UserManager;
-import fr.emn.fil.reservation.model.exceptions.GenericError;
 import fr.emn.fil.reservation.model.exceptions.ModelError;
 
 import javax.servlet.RequestDispatcher;

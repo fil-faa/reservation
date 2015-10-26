@@ -1,10 +1,7 @@
 package fr.emn.fil.reservation.model.dao;
 
-import fr.emn.fil.reservation.model.dao.jpa.JPAManager;
-import fr.emn.fil.reservation.model.entities.Reservation;
 import fr.emn.fil.reservation.model.entities.User;
 
-import javax.persistence.Query;
 import java.util.List;
 
 /**

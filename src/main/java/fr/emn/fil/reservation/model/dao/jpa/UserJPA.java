@@ -1,8 +1,8 @@
 package fr.emn.fil.reservation.model.dao.jpa;
 
 import fr.emn.fil.reservation.model.dao.UserDAO;
-import fr.emn.fil.reservation.model.entities.User;
 import fr.emn.fil.reservation.model.dao.jpa.JPAFilter.FilterType;
+import fr.emn.fil.reservation.model.entities.User;
 
 import javax.persistence.Query;
 import java.util.List;
