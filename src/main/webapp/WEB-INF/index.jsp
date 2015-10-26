@@ -17,7 +17,7 @@
 <c:if test="${connected}">
     <%@include file="jspf/menu.jspf"%>
 </c:if>
-<div class="container">
+<div class="col-xs-12">
 
 
 

@@ -29,7 +29,7 @@ public class ReservationServiceTest extends EasyMockSupport {
     @TestSubject
     private final ReservationService reservationService = new ReservationService(reservationDAO);
 
-    private final ResourceType type = new ResourceType(1L, "Matériel");
+    private final ResourceType type = new ResourceType(1L, "MatÃ©riel");
 
     private final User user = new User(1L, "Alexandre", "LEBRUN", "a@f.fr", "pwd", "0672566352", false);
 
@@ -47,7 +47,7 @@ public class ReservationServiceTest extends EasyMockSupport {
         final Date endDate = new Date(startDate.getTime() + 1000);    // and end date just after
 
         EasyMock.expect(reservationDAO.during(resource, startDate, endDate))
-                .andReturn(new ArrayList<>());
+                .andReturn(new ArrayList<Reservation>());
 
         reservationDAO.save(new Reservation(startDate, endDate, resource, user));
         EasyMock.expectLastCall();

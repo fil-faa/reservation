@@ -38,6 +38,12 @@ public class ResourceController extends Controller {
 
     @Override
     protected Response handle(String subUrl)  {
+        request.setAttribute("menuUserClass", "info");
+        request.setAttribute("menuReservationsClass", "info");
+        request.setAttribute("menuResourceClass", "info active");
+        request.setAttribute("menuResourceTypeClass", "info");
+        request.setAttribute("menuResourceRechercheClass", "info");
+
         Response response = null;
         if(request.getMethod().equals("GET")) {
 

@@ -73,3 +73,16 @@ table {
 {
     width: 1300px;
 }
+
+.info:hover a {
+    background-color: #d9edf7!important;
+}
+.info.active a {
+    background-color: #76d0eb!important;
+    color: white!important;
+}
+
+.navbar-brand {
+    background-color: #74448f!important;
+    color: white!important;
+}

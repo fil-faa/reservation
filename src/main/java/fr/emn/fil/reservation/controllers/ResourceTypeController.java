@@ -24,6 +24,12 @@ public class ResourceTypeController extends Controller {
 
     @Override
     protected Response handle(String url) {
+        request.setAttribute("menuUserClass", "info");
+        request.setAttribute("menuReservationsClass", "info");
+        request.setAttribute("menuResourceClass", "info");
+        request.setAttribute("menuResourceTypeClass", "info active");
+        request.setAttribute("menuResourceRechercheClass", "info");
+
         Response response = null;
         try {
 
