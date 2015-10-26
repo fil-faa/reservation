@@ -1,6 +1,11 @@
 package fr.emn.fil.reservation;
 
-import fr.emn.fil.reservation.controllers.*;
+import fr.emn.fil.reservation.controllers.Controller;
+import fr.emn.fil.reservation.controllers.ResourceController;
+import fr.emn.fil.reservation.controllers.ReservationController;
+import fr.emn.fil.reservation.controllers.UserController;
+import fr.emn.fil.reservation.controllers.PageNotFoundController;
+import fr.emn.fil.reservation.controllers.ResourceTypeController;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,14 +17,22 @@ import java.util.Map;
 
 /**
  * Created by Alexandre on 09/10/2015.
- * Front controller. It receives all the requests of the application, and redirects it to the correct action
+ * Front controller. It receives all the requests of the application,
+ * and redirects it to the correct action
  */
 public class MainServlet extends HttpServlet {
 
-    public void handleAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    /**
+     * Handle all the requests prefixed by <code>ROOT_NAME</code>
+     * It give the requests to one of the given controllers
+     * @param req HTTP request
+     * @param resp HTTP response
+     */
+    public void handleAction(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
 
+        /** Routes map, containing all the controllers */
         Map<String, Controller> routes = new HashMap<>();
-
         routes.put("/resources", new ResourceController(req, resp));
         routes.put("/users", new UserController(req, resp));
         routes.put("/reservations", new ReservationController(req, resp));
@@ -27,8 +40,12 @@ public class MainServlet extends HttpServlet {
 
         Controller toExecute = null;
 
+        /**
+         * If we find a controller with the matching pattern, we execute its
+         * <code>execute</code> method
+         */
         String subRoute = "";
-        for(String route : routes.keySet() ) {
+        for(String route : routes.keySet()) {
             if(req.getPathInfo() != null && req.getPathInfo().startsWith(route)) {
                 toExecute = routes.get(route);
                 subRoute = req.getPathInfo().substring(route.length());
@@ -42,13 +59,21 @@ public class MainServlet extends HttpServlet {
         toExecute.execute("/WEB-INF/index.jsp", subRoute);
     }
 
+    /**
+     * Retrieves the GET HTTP requests
+     */
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         this.handleAction(req, resp);
     }
 
+    /**
+     * Retrieves the POST HTTP requests
+     */
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         this.handleAction(req, resp);
     }
 

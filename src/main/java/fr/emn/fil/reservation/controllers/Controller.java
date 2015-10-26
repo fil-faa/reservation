@@ -17,9 +17,9 @@ import java.io.IOException;
  */
 public abstract class Controller {
 
-    protected HttpServletRequest request;
-    protected HttpServletResponse response;
-    protected final static String ROOT_URL = "/book";
+    protected final HttpServletRequest request;
+    protected final HttpServletResponse response;
+    protected static final String ROOT_URL = "/book";
     public Controller(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
@@ -37,7 +37,9 @@ public abstract class Controller {
      * @throws IOException
      * @throws ServletException Thrown when a servlet error occurs
      */
-    public void execute(String endpoint, String subRoute) throws IOException, ServletException {
+    public void execute(final String endpoint, final String subRoute)
+            throws IOException, ServletException {
+
         Response result = null;
         result = handle(subRoute);
         request.setAttribute("page", result.getPage());
@@ -63,7 +65,8 @@ public abstract class Controller {
     {
         try {
             if(!UserManager.getCurrentUser().isAdmin())
-                return new Response(ROOT_URL+"/reservations/"+UserManager.getCurrentUser().getId(), Response.Type.REDIRECT);
+                return new Response(ROOT_URL+"/reservations/"
+                        + UserManager.getCurrentUser().getId(), Response.Type.REDIRECT);
         }
         catch (ModelError e) {
             return new Response(ROOT_URL+"/users/connect/", Response.Type.REDIRECT);
