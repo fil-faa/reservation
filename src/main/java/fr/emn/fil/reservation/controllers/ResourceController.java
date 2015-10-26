@@ -83,6 +83,11 @@ public class ResourceController extends Controller {
     }
 
 
+    /**
+     * Edit the resource linked to the given id, then saves it
+     * @param id id of the resource to update
+     * @return Forward to the resources list if OK
+     */
     private Response editResourceSave(Long id) {
         if(nonAdminRedirect()!=null) return nonAdminRedirect();
 
@@ -128,6 +133,11 @@ public class ResourceController extends Controller {
         return this.getResources();
     }
 
+    /**
+     * Display the resource edition page
+     * @param id id of the resource to display
+     * @return forward to the edit page if OK
+     */
     private Response editResource(Long id) {
         if(nonAdminRedirect()!=null) return nonAdminRedirect();
 
@@ -145,7 +155,10 @@ public class ResourceController extends Controller {
         }
     }
 
-
+    /**
+     * List all the resource of the application
+     * @return
+     */
     public Response getResources() {
         Long searchedType;
         String searchedName = request.getParameter("searchedName");
@@ -181,6 +194,10 @@ public class ResourceController extends Controller {
         return new Response("resources/index.jsp", Response.Type.FORWARD);
     }
 
+    /**
+     * Delete a resource if it's not linked to any reservation ongoing
+     * @return forward to the resources pages if OK
+     */
     public Response deleteResource() {
         if(nonAdminRedirect()!=null) return nonAdminRedirect();
 
@@ -196,6 +213,10 @@ public class ResourceController extends Controller {
         }
     }
 
+    /**
+     * Create a resource if all the required fields are given and valid
+     * @return
+     */
     public Response createResource() {
         if(nonAdminRedirect()!=null) return nonAdminRedirect();
 
@@ -206,7 +227,7 @@ public class ResourceController extends Controller {
                 userId = Long.parseLong(request.getParameter("userId"));
                 typeId = Long.parseLong(request.getParameter("typeId"));
             } catch (NumberFormatException e) {
-                throw new ValidationError("Erreur de r�cup�ration des ids");
+                throw new ValidationError("Erreur de récupération des ids");
             }
 
             String name = request.getParameter("name");
