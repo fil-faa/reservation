@@ -1,8 +1,6 @@
 package fr.emn.fil.reservation;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by Alexandre on 20/10/2015.

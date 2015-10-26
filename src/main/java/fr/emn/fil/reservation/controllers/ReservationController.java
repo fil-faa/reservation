@@ -113,14 +113,10 @@ public class ReservationController extends Controller {
         try {
             typeId = Long.parseLong(request.getParameter("searchedType"));
         } catch(NumberFormatException e) {
-
-        String FDDFSD = e.getMessage();
         }
         try {
             userId = Long.parseLong(request.getParameter("searchedUser"));
         } catch(NumberFormatException e) {
-
-            String dsqd = e.getMessage();
         }
 
         String rangeString = request.getParameter("searchRange");
@@ -233,12 +229,11 @@ public class ReservationController extends Controller {
         if(range == null) return dates;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-            if(range != null) {
                 String start = range.substring(0, 16);
                 String end = range.substring(19);
                 dates[0] = sdf.parse(start);
                 dates[1] = sdf.parse(end);
-            }
+
         } catch (ParseException e){
             e.printStackTrace();
         }

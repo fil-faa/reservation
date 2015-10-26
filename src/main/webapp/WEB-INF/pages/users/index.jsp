@@ -5,7 +5,7 @@
 </div>
 <div class="side-box">
     <%@include file="partials/searchForm.jsp"%>
-    <button id="addButton" type="submit" class="btn btn-primary form-control" onclick="$('#addForm').toggle(200);$('#addButton').hide();">Ajouter un utilisateur</button>
+    <button id="addButton" type="submit" class="btn btn-primary form-control" onclick="$('#addForm').toggle('200');$('#addButton').hide();">Ajouter un utilisateur</button>
     <div id="addForm">
     <%@include file="partials/addForm.jsp"%>
     </div>

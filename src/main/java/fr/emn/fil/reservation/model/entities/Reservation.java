@@ -1,7 +1,6 @@
 package fr.emn.fil.reservation.model.entities;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
 
 /**

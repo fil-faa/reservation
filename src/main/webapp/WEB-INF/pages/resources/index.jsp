@@ -3,7 +3,7 @@
 <div class="side-box">
     <c:import url="/WEB-INF/pages/resources/partials/searchForm.jsp"></c:import>
 <c:if test="${admin}">
-    <button id="addButton" type="submit" class="btn btn-primary form-control" onclick="$('#addForm').toggle(200);$('#addButton').hide();"><i class="glyphicon glyphicon-plus"></i> Ajouter une ressource</button>
+    <button id="addButton" type="submit" class="btn btn-primary form-control" onclick="$('#addForm').toggle('200');$('#addButton').hide();"><i class="glyphicon glyphicon-plus"></i> Ajouter une ressource</button>
     <div id="addForm">
         <c:import url="/WEB-INF/pages/resources/partials/addForm.jsp"></c:import>
     </div>

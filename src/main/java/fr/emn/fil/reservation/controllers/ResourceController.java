@@ -192,9 +192,9 @@ public class ResourceController extends Controller {
         } catch(GenericError e) {
             request.setAttribute("error", e);
         }
-        finally {
+
             return getResources();
-        }
+
     }
 
     public Response createResource() {
@@ -225,8 +225,8 @@ public class ResourceController extends Controller {
         } catch(GenericError e) {
             request.setAttribute("error", e);
         }
-        finally {
+
             return this.getResources();
-        }
+
     }
 }

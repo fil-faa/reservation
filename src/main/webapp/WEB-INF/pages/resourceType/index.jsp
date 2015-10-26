@@ -4,7 +4,7 @@
 <div class="side-box">
   <%@include file="partials/searchForm.jsp"%>
   <c:if test="${admin}">
-    <button id="addButton" type="submit" class="btn btn-primary form-control" onclick="$('#addForm').toggle(200);$('#addButton').hide();"><i class="glyphicon glyphicon-plus"></i> Ajouter un type</button>
+    <button id="addButton" type="submit" class="btn btn-primary form-control" onclick="$('#addForm').toggle('200');$('#addButton').hide();"><i class="glyphicon glyphicon-plus"></i> Ajouter un type</button>
     <div id="addForm">
       <%@include file="partials/addForm.jsp"%>
   </div>

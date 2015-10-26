@@ -1,13 +1,11 @@
 package fr.emn.fil.reservation;
 
 import fr.emn.fil.reservation.controllers.*;
-import fr.emn.fil.reservation.model.entities.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +39,7 @@ public class MainServlet extends HttpServlet {
         if(toExecute == null) toExecute = new PageNotFoundController(req, resp);
 
 
-        toExecute.execute("/WEB-INF/index.jsp", subRoute);
+        toExecute.execute(subRoute);
     }
 
     @Override

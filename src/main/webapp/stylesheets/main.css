@@ -25,12 +25,7 @@ body {
     margin: 0 auto;
 }
 .form-signin .form-signin-heading,
-.form-signin .checkbox {
-    margin-bottom: 10px;
-}
-.form-signin .checkbox {
-    font-weight: normal;
-}
+
 .form-signin .form-control {
     position: relative;
     height: auto;
@@ -69,10 +64,6 @@ table {
 {
     display: none;
 }
-.container
-{
-    width: 1300px;
-}
 
 .info:hover > a {
     background-color: #c3f2c3!important;
@@ -87,7 +78,7 @@ table {
     color: white!important;
 }
 #menu-container {
-    padding: 0px;
+    padding: 0;
 }
 
 .names {

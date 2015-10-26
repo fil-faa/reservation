@@ -125,7 +125,7 @@
                         "Octobre",
                         "Novembre",
                         "Décembre"
-                    ],
+                    ]
                 }
             });
 </script>

@@ -58,8 +58,7 @@ public abstract class AbstractJpaDAO<T, I> {
     }
 
     public T byId(I id) {
-        T found = JPAManager.getEm().find(className, id);
-        return found;
+        return JPAManager.getEm().find(className, id);
     }
 
     public abstract List<T> findAll();

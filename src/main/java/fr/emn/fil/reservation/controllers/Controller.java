@@ -1,7 +1,6 @@
 package fr.emn.fil.reservation.controllers;
 
 import fr.emn.fil.reservation.model.UserManager;
-import fr.emn.fil.reservation.model.exceptions.GenericError;
 import fr.emn.fil.reservation.model.exceptions.ModelError;
 
 import javax.servlet.RequestDispatcher;
@@ -21,6 +20,7 @@ public abstract class Controller {
     protected HttpServletRequest request;
     protected HttpServletResponse response;
     protected final static String ROOT_URL = "/book";
+    protected final static String endpoint ="/WEB-INF/index.jsp";
     public Controller(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
@@ -34,11 +34,10 @@ public abstract class Controller {
 
     /**
      * Executes the action, and then redirects to the correct page
-     * @param endpoint URL of generic page
      * @throws IOException
      * @throws ServletException Thrown when a servlet error occurs
      */
-    public void execute(String endpoint, String subRoute) throws IOException, ServletException {
+    public void execute(String subRoute) throws IOException, ServletException {
         Response result = null;
         result = handle(subRoute);
         request.setAttribute("page", result.getPage());

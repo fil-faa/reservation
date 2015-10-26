@@ -81,7 +81,7 @@
                         "Octobre",
                         "Novembre",
                         "Décembre"
-                    ],
+                    ]
                 }
             });
 </script>

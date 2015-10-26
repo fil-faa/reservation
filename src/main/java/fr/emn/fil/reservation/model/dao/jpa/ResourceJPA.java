@@ -17,8 +17,7 @@ public class ResourceJPA extends AbstractJpaDAO<Resource,Long> implements Resour
     @Override
     public List<Resource> findAll() {
         Query q = JPAManager.getEm().createNamedQuery("resource.findAll");
-        List<Resource> ressources = q.getResultList();
-        return ressources;
+        return q.getResultList();
     }
 
     @Override
