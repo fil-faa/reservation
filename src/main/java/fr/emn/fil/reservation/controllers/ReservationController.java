@@ -39,12 +39,20 @@ public class ReservationController extends Controller {
 
     @Override
     protected Response handle(String url) {
+        request.setAttribute("menuUserClass", "info");
+        request.setAttribute("menuReservationsClass", "info active");
+        request.setAttribute("menuResourceClass", "info");
+        request.setAttribute("menuResourceTypeClass", "info");
+        request.setAttribute("menuResourceRechercheClass", "info");
 
         Response response = null;
         if (request.getMethod().equals("GET")) {
 
-            if (url.equals("/search"))
+            if (url.equals("/search")) {
                 response = searchAvailableResources();
+                request.setAttribute("menuResourceRechercheClass", "info active");
+                request.setAttribute("menuReservationsClass", "info");
+            }
 
             if (url.equals("/"))
                 response = getReservations();
@@ -74,11 +82,11 @@ public class ReservationController extends Controller {
             return new Response( ROOT_URL + "/users/login", Response.Type.REDIRECT);
         }
         try {
-            reservationId = new LongValidator("id de réservation")
+            reservationId = new LongValidator("id de rï¿½servation")
                     .parse(request.getParameter("reservationId"))
                     .get();
             reservationService.cancel(user, reservationId);
-            request.setAttribute("success", new GenericSuccess("La réservation d'identifiant " + reservationId + " a bien été supprimée."));
+            request.setAttribute("success", new GenericSuccess("La rï¿½servation d'identifiant " + reservationId + " a bien ï¿½tï¿½ supprimï¿½e."));
         } catch(GenericError e) {
             request.setAttribute("error", e);
         }

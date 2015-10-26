@@ -28,6 +28,11 @@ public class UserController extends Controller {
 
     @Override
     protected Response handle(String url) {
+        request.setAttribute("menuUserClass", "info active");
+        request.setAttribute("menuReservationsClass", "info");
+        request.setAttribute("menuResourceClass", "info");
+        request.setAttribute("menuResourceTypeClass", "info");
+        request.setAttribute("menuResourceRechercheClass", "info");
 
         Response response = null;
         try {
@@ -157,7 +162,7 @@ public class UserController extends Controller {
             userId = Long.parseLong(request.getParameter("id"));
             if(userId == null) throw new NumberFormatException();
         } catch(NumberFormatException e) {
-            throw new GenericError("Cet utilisateur ne peut être supprimé : erreur système");
+            throw new GenericError("Cet utilisateur ne peut ï¿½tre supprimï¿½ : erreur systï¿½me");
         }
        try
         {
@@ -173,7 +178,7 @@ public class UserController extends Controller {
             return getUsers();
         }
         request.setAttribute("success", new GenericSuccess("L'utilisateur d'identifiant "
-                + userId + " a bien été supprimé."));
+                + userId + " a bien ï¿½tï¿½ supprimï¿½."));
         return getUsers();
     }
     public Response addUser() {
@@ -187,10 +192,10 @@ public class UserController extends Controller {
             new StringValidator(password, "mot de passe").minLength(8).maxLength(250);
 
             String phone = request.getParameter("phone");
-            new StringValidator(phone, "téléphone").mustBeNumeric();
+            new StringValidator(phone, "tï¿½lï¿½phone").mustBeNumeric();
 
             String firstName = request.getParameter("firstName");
-            new StringValidator(firstName, "prénom").notEmpty();
+            new StringValidator(firstName, "prï¿½nom").notEmpty();
 
             String lastName = request.getParameter("lastName");
             new StringValidator(firstName, "nom").notEmpty();
@@ -198,7 +203,7 @@ public class UserController extends Controller {
             User user = userService.create(mail, password, firstName, lastName, phone);
             request.setAttribute("user", user);
             request.setAttribute("success", new GenericSuccess("L'utilisateur " + user.getFirstName() + " "
-                    + user.getLastName() + " a bien été créé."));
+                    + user.getLastName() + " a bien ï¿½tï¿½ crï¿½ï¿½."));
             return new Response(ROOT_URL + "/users/", Response.Type.REDIRECT);
 
         } catch(GenericError e) {
