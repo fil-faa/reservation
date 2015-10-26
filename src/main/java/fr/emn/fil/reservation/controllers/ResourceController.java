@@ -105,6 +105,19 @@ public class ResourceController extends Controller {
                 ResourceType type = new ResourceTypeService().byId(typeId);
                 resource.setType(type);
             }
+            String idUser = request.getParameter("userId");
+            if(idUser!=null)
+            {
+                if (!idUser.isEmpty()) {
+                    Long userId = Long.valueOf(idUser);
+                    User owner =userService.byId(userId);
+                    if(owner!=null)
+                    {
+                        resource.setOwner(owner);
+                    }
+                }
+            }
+
 
             resourceService.save(resource);
         } catch (ModelError modelError) {
@@ -118,8 +131,10 @@ public class ResourceController extends Controller {
 
         try {
             Resource resource = resourceService.byId(id);
-
+            List<User> users= userService.findAdmin();
             request.setAttribute("resource", resource);
+            request.setAttribute("users", users);
+
             request.setAttribute("resourceTypes", new ResourceTypeService().findAll());
             return new Response("resources/edit.jsp", Response.Type.FORWARD);
         } catch (ModelError modelError) {

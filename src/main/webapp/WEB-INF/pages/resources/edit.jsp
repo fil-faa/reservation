@@ -33,7 +33,14 @@
     <div class="form-group">
         <label for="resourceResponsable">Responsable</label>
         <select class="form-control" id="resourceResponsable" name="userId">
-            <option value="${resource.owner.id}">${resource.owner.firstName} ${resource.owner.lastName}</option>
+            <c:forEach var="user" items="${users}">
+                <c:if test="${resource.owner.id == user.id}">
+                    <option selected="selected" value="${user.id}">${user.firstName} ${user.lastName}</option>
+                </c:if>
+                <c:if test="${resource.owner.id != user.id}">
+                    <option value="${user.id}">${user.firstName} ${user.lastName}</option>
+                </c:if>
+            </c:forEach>
         </select>
     </div>
 
