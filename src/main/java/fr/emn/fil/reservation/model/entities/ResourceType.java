@@ -16,6 +16,10 @@ import java.util.List;
 })
 public class ResourceType {
 
+    /**----------------------------------------------
+     *               ENTITY FIELDS
+     *---------------------------------------------*/
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
@@ -27,6 +31,12 @@ public class ResourceType {
 
     @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
     private List<Resource> resources;
+
+
+
+    /**----------------------------------------------
+     *                CONSTRUCTORS
+     *---------------------------------------------*/
 
     public ResourceType() {
         this.resources = new ArrayList<>();
@@ -41,6 +51,12 @@ public class ResourceType {
         this(name);
         this.id = id;
     }
+
+
+
+    /**----------------------------------------------
+     *             GETTERS AND SETTERS
+     *---------------------------------------------*/
 
     public Long getId() {
         return id;
@@ -64,5 +80,32 @@ public class ResourceType {
 
     public void setResources(List<Resource> resources) {
         this.resources = resources;
+    }
+
+
+
+    /**----------------------------------------------
+     *              EQUALS AND HASHCODE
+     *---------------------------------------------*/
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ResourceType that = (ResourceType) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        return !(resources != null ? !resources.equals(that.resources) : that.resources != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (resources != null ? resources.hashCode() : 0);
+        return result;
     }
 }

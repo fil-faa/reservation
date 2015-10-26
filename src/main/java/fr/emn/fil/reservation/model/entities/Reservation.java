@@ -22,13 +22,16 @@ import java.util.Date;
 @Entity
 public class Reservation {
 
+
+    /**----------------------------------------------
+     *               ENTITY FIELDS
+     *---------------------------------------------*/
+
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
-    // TODO granularity of the dates ?
     @Basic
     @Temporal(TemporalType.DATE)
     @Column(name = "START")
@@ -48,6 +51,12 @@ public class Reservation {
     @JoinColumn(name = "RESOURCE_ID")
     private Resource resource;
 
+
+
+    /**----------------------------------------------
+     *                CONSTRUCTORS
+     *---------------------------------------------*/
+
     public Reservation() {
     }
 
@@ -63,10 +72,20 @@ public class Reservation {
         this.id = id;
     }
 
+
+    /**----------------------------------------------
+     *                  METHODS
+     *---------------------------------------------*/
+
     public boolean isOngoing() {
         Date currentDate = new Date();
         return this.end.getTime() > currentDate.getTime();
     }
+
+
+    /**----------------------------------------------
+     *             GETTERS AND SETTERS
+     *---------------------------------------------*/
 
     public Long getId() {
         return id;
@@ -107,6 +126,11 @@ public class Reservation {
     public void setUser(User type) {
         this.user = user;
     }
+
+
+    /**----------------------------------------------
+     *              EQUALS AND HASHCODE
+     *---------------------------------------------*/
 
     @Override
     public boolean equals(Object o) {

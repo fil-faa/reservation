@@ -18,6 +18,11 @@ import java.util.List;
 })
 public class User {
 
+
+    /**----------------------------------------------
+     *               ENTITY FIELDS
+     *---------------------------------------------*/
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
@@ -53,6 +58,12 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Reservation> reservations;
 
+
+
+    /**----------------------------------------------
+     *                CONSTRUCTORS
+     *---------------------------------------------*/
+
     public User() {
     }
 
@@ -70,6 +81,12 @@ public class User {
         this(firstName, lastName, mail, password, phone, admin);
         this.id = id;
     }
+
+
+
+    /**----------------------------------------------
+     *             GETTERS AND SETTERS
+     *---------------------------------------------*/
 
     public Long getId() {
         return id;
@@ -134,6 +151,12 @@ public class User {
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
     }
+
+
+
+    /**----------------------------------------------
+     *              EQUALS AND HASHCODE
+     *---------------------------------------------*/
 
     @Override
     public boolean equals(Object o) {
