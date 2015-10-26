@@ -6,3 +6,11 @@ script: mvn test
 
 notifications:
   slack: fil2017:Ds0bIP5UpkPlNHk7zMN7azxF
+
+deploy:
+  provider: releases
+  api_key: "818c13d84c1d77831fbe4806bd62d3ca5c29bbb2"
+  file: "target/reservation.war"
+  skip_cleanup: true
+  on:
+    tags: true
