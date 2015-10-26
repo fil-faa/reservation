@@ -131,4 +131,40 @@ public class UserServiceTest extends EasyMockSupport {
         }
         assertNotNull(error);
     }
+
+    /** Nominal test, when the users satisfies all the rules
+     * The user must be saved in the database, after verifications
+     */
+    @Test
+    public void testDelete() {
+        String firstName = "Alexandre";
+        String mail = "a@f.fr";
+        String lastName = "LEBRUN";
+        String phone = "0522222222";
+        String password = "test";
+        String encryptedPassword = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
+        boolean admin = false;
+
+        /** first the service must check if there is the same email in the database */
+        EasyMock.expect(userDAO.byMail(mail)).andReturn(null);
+
+        /* Create the user */
+        User toSave = new User(firstName, lastName, mail, encryptedPassword, phone, admin);
+        userDAO.save(toSave);
+        EasyMock.expectLastCall().once();
+
+        /*Check if the user exists before remove it */
+        EasyMock.expect(userDAO.byId(toSave.getId())).andReturn(toSave);
+        userDAO.delete(toSave);
+        EasyMock.expectLastCall().once();
+
+        replayAll();
+        try {
+            User saved = userService.create(mail, password, firstName, lastName, phone);
+            userService.delete(saved.getId());
+            verifyAll();
+        } catch(Exception e) {
+            fail();
+        }
+    }
 }
