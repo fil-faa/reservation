@@ -22,6 +22,8 @@ public interface ReservationDAO {
 
     List<Reservation> during(Resource resource, Date start, Date end);
 
+    List<Reservation> during( Date start, Date end);
+
     Reservation byId(Long reservationId);
 
     List<Reservation> matching(User user, ResourceType type, String name);

@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import java.util.Date;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class ReservationJPA extends AbstractJpaDAO<Reservation,Long> implements ReservationDAO {
 
     public ReservationJPA() {
@@ -29,6 +30,13 @@ public class ReservationJPA extends AbstractJpaDAO<Reservation,Long> implements 
         q.setParameter("endDate", end);
         return q.getResultList();
     }
+
+    @Override
+    public List<Reservation> during(Date start, Date end) {
+        Query q = JPAManager.getEm().createNamedQuery("reservation.findAllDuring");
+        q.setParameter("startDate", start);
+        q.setParameter("endDate", end);
+        return q.getResultList();    }
 
     @Override
     public List<Reservation> byUser(User user) {

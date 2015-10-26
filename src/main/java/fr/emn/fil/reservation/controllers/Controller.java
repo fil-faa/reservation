@@ -64,7 +64,7 @@ public abstract class Controller {
     {
         try {
             if(!UserManager.getCurrentUser().isAdmin())
-                return new Response(ROOT_URL+"/reservations/", Response.Type.REDIRECT);
+                return new Response(ROOT_URL+"/reservations/"+UserManager.getCurrentUser().getId(), Response.Type.REDIRECT);
         }
         catch (ModelError e) {
             return new Response(ROOT_URL+"/users/connect/", Response.Type.REDIRECT);

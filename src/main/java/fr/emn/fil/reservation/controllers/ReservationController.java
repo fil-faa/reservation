@@ -12,15 +12,13 @@ import fr.emn.fil.reservation.model.exceptions.ModelError;
 import fr.emn.fil.reservation.model.services.ReservationService;
 import fr.emn.fil.reservation.model.services.ResourceService;
 import fr.emn.fil.reservation.model.services.ResourceTypeService;
+import fr.emn.fil.reservation.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 public class ReservationController extends Controller {
 
@@ -30,11 +28,14 @@ public class ReservationController extends Controller {
 
     private ResourceTypeService resourceTypeService;
 
+    private UserService userService;
+
     public ReservationController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
         resourceService = new ResourceService();
         reservationService = new ReservationService();
         resourceTypeService = new ResourceTypeService();
+        userService = new UserService();
     }
 
     @Override
@@ -54,9 +55,17 @@ public class ReservationController extends Controller {
                 request.setAttribute("menuReservationsClass", "info");
             }
 
+            if (url.length() > 1 && response == null) {
+                Scanner scId = new Scanner(url.trim().substring(1));
+                if (scId.hasNextLong()) {
+                    Long id = scId.nextLong();
+                    response = getUserReservations(id);
+                } else {
+                    response = searchAvailableResources();
+                }
+            }
             if (url.equals("/"))
-                response = getReservations();
-
+                response = getAllReservations();
             if(url.equals("/cancel"))
                 response = cancelReservation();
 
@@ -82,20 +91,57 @@ public class ReservationController extends Controller {
             return new Response( ROOT_URL + "/users/login", Response.Type.REDIRECT);
         }
         try {
-            reservationId = new LongValidator("id de r�servation")
+            reservationId = new LongValidator("id de réservation")
                     .parse(request.getParameter("reservationId"))
                     .get();
             reservationService.cancel(user, reservationId);
-            request.setAttribute("success", new GenericSuccess("La r�servation d'identifiant " + reservationId + " a bien �t� supprim�e."));
+            request.setAttribute("success", new GenericSuccess("La réservation d'identifiant " + reservationId + " a bien été supprimée."));
         } catch(GenericError e) {
             request.setAttribute("error", e);
         }
-        return this.getReservations();
+        return this.getUserReservations(user.getId());
     }
 
-    public Response getReservations() {
+    public Response getAllReservations() {
+        if(nonAdminRedirect()!=null) return nonAdminRedirect();
+        Long typeId=null;
+        Long userId=null;
         try {
+            typeId = Long.parseLong(request.getParameter("searchedType"));
+        } catch(NumberFormatException e) {
+
+        String FDDFSD = e.getMessage();
+        }
+        try {
+            userId = Long.parseLong(request.getParameter("searchedUser"));
+        } catch(NumberFormatException e) {
+
+            String dsqd = e.getMessage();
+        }
+
+        String rangeString = request.getParameter("searchRange");
+
+        Date[] range = parseRange(rangeString);
+
+        String resourceName = request.getParameter("searchedName");
+
+
+        List<ResourceType> types = resourceTypeService.findAll();
+            request.setAttribute("types", types);
+            List<User> users = userService.findAll();
+            request.setAttribute("users", users);
+            List<Reservation> reservations = reservationService.findAllDuring(userId,typeId,resourceName,range[0],range[1]);
+            request.setAttribute("reservations", reservations);
+
+        return new Response("/reservation/index.jsp", Response.Type.FORWARD);
+    }
+
+    public Response getUserReservations(Long idUser) {
+        try {
+
             User user = UserManager.getCurrentUser();
+            if(!user.isAdmin() && !user.getId().equals(idUser) ) return  nonAdminRedirect();
+            user = userService.byId(idUser);
             Long typeId;
             ResourceType type = null;
             try {
@@ -109,9 +155,9 @@ public class ReservationController extends Controller {
             List<Reservation> reservations = reservationService.filter(user, type, name);
             request.setAttribute("reservations", reservations);
         } catch(GenericError e) { // if the user is not found in the session, we redirect to the login page
-            return new Response(ROOT_URL +"/users/login", Response.Type.REDIRECT);
+            return nonAdminRedirect();
         }
-        return new Response("/reservation/index.jsp", Response.Type.FORWARD);
+        return new Response("/reservation/singleton.jsp", Response.Type.FORWARD);
     }
 
     public Response book() {
@@ -137,7 +183,12 @@ public class ReservationController extends Controller {
             request.setAttribute("error", e);
             return this.searchAvailableResources();
         }
-        return this.getReservations();
+        try {
+            return this.getUserReservations(UserManager.getCurrentUser().getId());
+        } catch (ModelError modelError) {
+            modelError.printStackTrace();
+        }
+        return nonAdminRedirect();
     }
 
     public Response searchAvailableResources() {

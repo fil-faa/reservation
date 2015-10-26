@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="side-box">
-  <%@include file="partials/searchFormAll.jsp"%>
+  <%@include file="partials/searchFormSingleton.jsp"%>
 
 </div>
 
@@ -27,9 +27,7 @@
       <tr>
         <td><fmt:formatDate type="date" value="${reservation.start}" pattern="dd/MM/YYYY hh:mm"/></td>
         <td><fmt:formatDate type="date" value="${reservation.end}" pattern="dd/MM/YYYY hh:mm"/></td>
-        <td><a href="${appPath}/users/?searchedLastName=${reservation.user.lastName}&searchedFirstName=${reservation.user.firstName}">
-          ${reservation.user.firstName} ${reservation.user.lastName}
-        </td>
+        <td>${reservation.user.firstName} ${reservation.user.lastName}</td>
         <td>${reservation.resource.name}</td>
         <td>${reservation.resource.type.name}</td>
         <td><a class="btn btn-danger form-control" href="${appPath}/reservations/cancel?reservationId=${reservation.id}">Annuler</a></td>

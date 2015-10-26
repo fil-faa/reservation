@@ -143,15 +143,15 @@ public class UserController extends Controller {
     public Response login() {
         String mail = request.getParameter("mail");
         String password = request.getParameter("password");
-
+        User user=null;
         try {
-            User user = userService.connect(mail, password);
+           user = userService.connect(mail, password);
             request.getSession().setAttribute("user", user);
         } catch(GenericError e) {
             request.setAttribute("error", e);
             return this.loginForm();
         }
-        return new Response(ROOT_URL + "/reservations/", Response.Type.REDIRECT);
+        return new Response(ROOT_URL + "/reservations/"+user.getId(), Response.Type.REDIRECT);
     }
 
     private Response logout() {
