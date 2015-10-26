@@ -17,24 +17,29 @@ public class JPAFilter {
 
     private JPAFilter next;
 
-    private JPAFilter(FilterType type, String field, Object value) {
+    private JPAFilter(FilterType type, String field, Object value, JPAFilter next) {
         this.type = type;
         this.field = field;
         this.value = value;
+        this.next = next;
+    }
+
+    public static JPAFilter create(FilterType type, String field, Object value, JPAFilter next) {
+        return new JPAFilter(type, field, value, next);
     }
 
     public static JPAFilter create(FilterType type, String field, Object value) {
-        return new JPAFilter(type, field, value);
+        return new JPAFilter(type, field, value, null);
     }
 
 
     public static JPAFilter create(JPAFilter filter) {
-        return new JPAFilter(filter.type, filter.field, filter.value);
+        return new JPAFilter(filter.type, filter.field, filter.value, filter.next);
     }
 
     public JPAFilter add(FilterType type, String field, Object value) {
-        JPAFilter filter = create(this);
-        filter.next = create(type, field, value);
+        JPAFilter filter = create(type, field, value);
+        filter.next = create(this);
         return filter;
     }
 
