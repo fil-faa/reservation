@@ -75,14 +75,14 @@ table {
 }
 
 .info:hover a {
-    background-color: #d9edf7!important;
+    background-color: #c3f2c3!important;
 }
 .info.active a {
-    background-color: #76d0eb!important;
+    background-color: #66cc66!important;
     color: white!important;
 }
 
 .navbar-brand {
-    background-color: #74448f!important;
+    background-color: #4cae4c!important;
     color: white!important;
 }
