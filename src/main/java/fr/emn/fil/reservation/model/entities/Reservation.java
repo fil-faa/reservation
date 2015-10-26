@@ -8,12 +8,16 @@ import java.util.Date;
  * Created by arthur on 20/10/15.
  */
 
+@SuppressWarnings("ALL")
 @NamedQueries({
         @NamedQuery(name = "reservation.findAll", query = "SELECT r FROM Reservation r"),
         @NamedQuery(name = "reservation.byUser", query = "SELECT r FROM Reservation r WHERE r.user = :user"),
         @NamedQuery(name = "reservation.during", query = "SELECT r FROM Reservation r WHERE r.resource = :resource " +
-                "AND r.start < :endDate AND r.end > :startDate")
-})
+                "AND r.start < :endDate AND r.end > :startDate"),
+        @NamedQuery(name = "reservation.findAllDuring",  query = "SELECT r FROM Reservation r WHERE  " +
+                " r.start < :endDate AND r.end > :startDate"),
+
+        })
 @Table(name = "RESERVATION")
 @Entity
 public class Reservation {

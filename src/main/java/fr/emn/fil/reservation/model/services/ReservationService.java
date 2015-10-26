@@ -31,6 +31,29 @@ public class ReservationService {
         return reservationDAO.byUser(user);
     }
 
+    public List<Reservation> findAllDuring(Long userId,Long typeId,String resourceName,Date startDate, Date endDate) {
+
+        List<Reservation> reservations = reservationDAO.during(startDate,endDate);
+        if(startDate == null || endDate == null) reservations= reservationDAO.findAll();
+        if(userId==null && typeId==null && resourceName==null)return reservations;
+        Iterator<Reservation> it = reservations.iterator();
+        while(it.hasNext()) {
+            Reservation reservation = it.next();
+            boolean delete=false;
+            if(userId!=null)
+                if(!reservation.getUser().getId().equals(userId))
+                    delete=true;
+            if(typeId!=null)
+                if(!reservation.getResource().getType().getId().equals(typeId))
+                    delete=true;
+            if(resourceName != null)
+                if(!reservation.getResource().getName().toLowerCase().contains(resourceName.toLowerCase()))
+                    delete=true;
+            if(delete)
+                it.remove();
+        }
+        return reservations;
+    }
     public Reservation create(Date startDate, Date endDate, Resource resource, User user) throws ModelError {
         // rule : startDate < endDate
         if(startDate.after(endDate))
@@ -54,7 +77,7 @@ public class ReservationService {
         if(reservation == null) throw new ModelError("La réservation que vous voulez supprimer n'existe plus");
 
 
-        if(reservation.getUser().equals(user))
+        if(reservation.getUser().equals(user) || user.isAdmin())
             reservationDAO.delete(reservation);
         else throw new ModelError("Erreur d'annulation : vous essayer de supprimer une réservation qui ne vous appartient pas");
     }

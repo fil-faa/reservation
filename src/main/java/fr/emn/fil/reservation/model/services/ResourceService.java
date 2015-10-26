@@ -61,7 +61,7 @@ public class ResourceService {
 
     public List<Resource> findAvailableResources(Date startDate, Date endDate, Long typeId, String resourceName) {
         List<Resource> available = resourceDAO.findAvailable(startDate, endDate);
-        if(typeId == null && resourceName==null) return available;
+        if(startDate == null && endDate==null) return available;
 
         // else, we filter by the type id
         Iterator<Resource> it = available.iterator();
@@ -84,13 +84,13 @@ public class ResourceService {
     public void delete(Resource resource) throws ModelError {
         if(!resource.hasReservationsOngoing())
             resourceDAO.delete(resource);
-        else throw new ModelError("Impossible de supprimer la ressource : des réservations futures de cette ressource sont programmées");
+        else throw new ModelError("Impossible de supprimer la ressource : des rï¿½servations futures de cette ressource sont programmï¿½es");
     }
 
     public Resource byId(Long id) throws ModelError {
-        if(id == null) throw new ModelError("Identifiant non fourni pour la ressource à chercher");
+        if(id == null) throw new ModelError("Identifiant non fourni pour la ressource ï¿½ chercher");
         Resource resource = resourceDAO.byId(id);
-        if(resource == null) throw new ModelError("Ressource non trouvée pour l'id donné");
+        if(resource == null) throw new ModelError("Ressource non trouvï¿½e pour l'id donnï¿½");
         return resource;
     }
 

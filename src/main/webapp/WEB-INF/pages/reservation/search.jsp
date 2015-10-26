@@ -8,7 +8,7 @@
         </div>
         <div class="panel-body">
 
-    <p>Par l'intermï¿½diaire de ce formulaire, choisissez la ressource qui vous convient sur la pï¿½riode de votre choix.</p>
+    <p>Par l'intermédiaire de ce formulaire, choisissez la ressource qui vous convient sur la période de votre choix.</p>
 
     <form action="${appPath}/reservations/search" method="GET">
 
@@ -47,7 +47,7 @@
 <div class="body-box">
 <c:if test="${empty resources}">
     <div class="alert alert-danger" role="alert">
-        Aucune ressource n'a ï¿½tï¿½ trouvï¿½e pour la pï¿½riode sï¿½lectionnï¿½e
+        Aucune ressource n'a été trouvée pour la période sélectionnée
     </div>
 
 </c:if>
@@ -64,7 +64,7 @@
                 <th>Nom de la ressource</th>
                 <th>Type de la ressource</th>
                 <th>Responsable</th>
-                <th>Rï¿½server <br>(pï¿½riode: ${searchRange})</th>
+                <th>Réserver <br>(période: ${searchRange})</th>
             </tr>
             </thead>
             <tbody>
@@ -80,7 +80,7 @@
                         <form method="POST" action="${appPath}/reservations/">
                             <input type="hidden" name="reservationRange" value="${searchRange}"/>
                             <input type="hidden" name="resourceId", value="${resource.id}">
-                            <button class="btn btn-success form-control" type="submit"><b>Rï¿½server</b></button>
+                            <button class="btn btn-success form-control" type="submit"><b>Réserver</b></button>
                         </form>
                     </td>
                 </tr>
@@ -114,17 +114,17 @@
                     ],
                     "monthNames": [
                         "Janvier",
-                        "Fï¿½vrier",
+                        "Février",
                         "Mars",
                         "Avril",
                         "Mai",
                         "Juin",
                         "Juillet",
-                        "Aoï¿½t",
+                        "Aoét",
                         "Septembre",
                         "Octobre",
                         "Novembre",
-                        "Dï¿½cembre"
+                        "Décembre"
                     ],
                 }
             });

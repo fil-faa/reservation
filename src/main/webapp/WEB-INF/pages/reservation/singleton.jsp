@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="side-box">
-  <%@include file="partials/searchFormAll.jsp"%>
+  <%@include file="partials/searchFormSingleton.jsp"%>
 
 </div>
 

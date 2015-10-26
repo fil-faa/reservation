@@ -23,9 +23,7 @@
             <th>Localisation</th>
             <th>Type</th>
             <th>Responsable</th>
-            <c:if test="${admin}">
-                <th style="min-width: 140px">Actions</th>
-            </c:if>
+            <th style="min-width: 140px">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -36,24 +34,25 @@
                 <td>${resource.place}</td>
                 <td>${resource.type.name}</td>
                 <td>${resource.owner.firstName} ${resource.owner.lastName}</td>
-                <c:if test="${admin}">
                     <td>
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-default"
                                     onclick="location.href='${appPath}/reservations/search?&searchedName=${resource.name}'">
                                 <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
                             </button>
-                            <button type="button" class="btn btn-default"
-                                    onclick="location.href='${appPath}/resources/${resource.id}'">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            </button>
-                            <button type="button" class="btn btn-default"
-                                    onclick="location.href='${appPath}/resources/delete?id=${resource.id}'">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            </button>
+                            <c:if test="${admin}">
+                                <button type="button" class="btn btn-default"
+                                        onclick="location.href='${appPath}/resources/${resource.id}'">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-default"
+                                        onclick="location.href='${appPath}/resources/delete?id=${resource.id}'">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </button>
+                            </c:if>
+
                         </div>
                     </td>
-                </c:if>
             </tr>
         </c:forEach>
 
