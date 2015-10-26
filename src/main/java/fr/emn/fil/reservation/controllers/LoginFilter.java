@@ -5,19 +5,26 @@ import fr.emn.fil.reservation.model.entities.User;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
 import fr.emn.fil.reservation.model.services.UserService;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletResponse;
+import javax.servlet.ServletRequest;
+import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
+ * Filter intercepting the unauthorized requests (the user is not logged)
  * Created by alexa on 24/10/2015.
+ * @see javax.servlet.Filter
  */
 public class LoginFilter implements Filter {
 
-    public static String LOGIN_URL = "/book/users/login";
-    public static String ROOT_URL = "/book";
+    public static final String LOGIN_URL = "/book/users/login";
+    public static final String ROOT_URL = "/book";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -33,7 +40,9 @@ public class LoginFilter implements Filter {
      * @throws ServletException
      */
     @Override
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(final ServletRequest req, final ServletResponse resp, final FilterChain filterChain)
+            throws IOException, ServletException {
+
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
         HttpSession session = request.getSession(false);
@@ -57,12 +66,14 @@ public class LoginFilter implements Filter {
                 UserManager.users.remove();
             } else {
                 String requestURI = request.getRequestURI();
-                if (requestURI.startsWith(request.getContextPath() + ROOT_URL) && !requestURI.equals(request.getContextPath()+LOGIN_URL)) {
+                if (requestURI.startsWith(request.getContextPath() + ROOT_URL)
+                        && !requestURI.equals(request.getContextPath() + LOGIN_URL)) {
                     response.sendRedirect(request.getContextPath() + LOGIN_URL);
-                } else filterChain.doFilter(request, response);
+                } else {
+                    filterChain.doFilter(request, response);
+                }
             }
-
-        } catch(IOException | ClassCastException e) {
+        } catch (IOException | ClassCastException e) {
             e.printStackTrace();
         }
 

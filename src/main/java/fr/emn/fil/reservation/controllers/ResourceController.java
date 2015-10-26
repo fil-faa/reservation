@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
+ * Controller handling resources which could be booked
+ * URL: <code>/resources</code>
  * Created by xela on 21/10/15.
  */
 public class ResourceController extends Controller {
@@ -35,11 +37,7 @@ public class ResourceController extends Controller {
 
     @Override
     protected Response handle(String subUrl)  {
-        request.setAttribute("menuUserClass", "info");
-        request.setAttribute("menuReservationsClass", "info");
-        request.setAttribute("menuResourceClass", "info active");
-        request.setAttribute("menuResourceTypeClass", "info");
-        request.setAttribute("menuResourceRechercheClass", "info");
+        setupNavigationBar();
 
         Response response = null;
         if(request.getMethod().equals("GET")) {
@@ -83,6 +81,7 @@ public class ResourceController extends Controller {
 
         return response;
     }
+
 
     private Response editResourceSave(Long id) {
         if(nonAdminRedirect()!=null) return nonAdminRedirect();
@@ -228,5 +227,16 @@ public class ResourceController extends Controller {
         finally {
             return this.getResources();
         }
+    }
+
+    /**
+     * Configure navigation bar css classes
+     */
+    private void setupNavigationBar() {
+        request.setAttribute("menuUserClass", "info");
+        request.setAttribute("menuReservationsClass", "info");
+        request.setAttribute("menuResourceClass", "info active");
+        request.setAttribute("menuResourceTypeClass", "info");
+        request.setAttribute("menuResourceRechercheClass", "info");
     }
 }

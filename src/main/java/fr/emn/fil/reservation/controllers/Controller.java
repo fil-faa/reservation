@@ -40,8 +40,7 @@ public abstract class Controller {
     public void execute(final String endpoint, final String subRoute)
             throws IOException, ServletException {
 
-        Response result = null;
-        result = handle(subRoute);
+        Response result = handle(subRoute);
         request.setAttribute("page", result.getPage());
 
         // Get the page status if given

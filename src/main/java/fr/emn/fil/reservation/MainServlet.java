@@ -18,15 +18,17 @@ import java.util.Map;
 /**
  * Created by Alexandre on 09/10/2015.
  * Front controller. It receives all the requests of the application,
- * and redirects it to the correct action
+ * and redirects it to the correct action.
  */
 public class MainServlet extends HttpServlet {
 
     /**
      * Handle all the requests prefixed by <code>ROOT_NAME</code>
-     * It give the requests to one of the given controllers
+     * It give the requests to one of the given controllers.
      * @param req HTTP request
      * @param resp HTTP response
+     * @throws IOException case of a IO error
+     * @throws ServletException
      */
     public void handleAction(final HttpServletRequest req, final HttpServletResponse resp)
             throws ServletException, IOException {
@@ -42,7 +44,7 @@ public class MainServlet extends HttpServlet {
 
         /**
          * If we find a controller with the matching pattern, we execute its
-         * <code>execute</code> method
+         * <code>execute</code> method.
          */
         String subRoute = "";
         for(String route : routes.keySet()) {
@@ -60,7 +62,7 @@ public class MainServlet extends HttpServlet {
     }
 
     /**
-     * Retrieves the GET HTTP requests
+     * Retrieves the GET HTTP requests.
      */
     @Override
     protected void doGet(final HttpServletRequest req, final HttpServletResponse resp)

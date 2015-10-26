@@ -17,6 +17,10 @@ public abstract class AbstractJpaDAO<T, I> {
 
     private final Class<T> className;
 
+    /**
+     * Constructs a new <code>AbstractJpaDao</code>
+     * @param className required for <code>byId</code> : class of the entity
+     */
     public AbstractJpaDAO(Class<T> className) {
         this.className = className;
     }
@@ -33,6 +37,10 @@ public abstract class AbstractJpaDAO<T, I> {
         }
     }
 
+    /**
+     * Updates the database using the current object (transactional)
+     * @param toUpdate object which will update the DB
+     */
     public void update(T toUpdate) {
         try {
             EntityTransaction tx = JPAManager.getTransaction();
@@ -45,6 +53,10 @@ public abstract class AbstractJpaDAO<T, I> {
         }
     }
 
+    /**
+     * Delete the current entity from the database (transactional)
+     * @param toDelete object which will be deleted
+     */
     public void delete(T toDelete) {
         try {
             EntityTransaction tx = JPAManager.getTransaction();
@@ -57,6 +69,11 @@ public abstract class AbstractJpaDAO<T, I> {
         }
     }
 
+    /**
+     * Query the entity related to the given ID
+     * @param id ID of the wanted object
+     * @return Complete entity, retrieved for the database
+     */
     public T byId(I id) {
         T found = JPAManager.getEm().find(className, id);
         return found;

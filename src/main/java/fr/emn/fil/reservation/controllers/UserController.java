@@ -15,6 +15,8 @@ import java.util.Scanner;
 import static fr.emn.fil.reservation.CryptUtils.hash;
 
 /**
+ * Controller handling login and user related operations
+ * URL: <code>/users</code>
  * Created by Alexandre on 21/10/2015.
  */
 public class UserController extends Controller {

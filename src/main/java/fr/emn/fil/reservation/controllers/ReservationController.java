@@ -20,6 +20,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * Controller handling all the requests linked to the reservations
+ * URL: <code>/reservations</code>
+ * @author Alexandre LEBRUN
+ * @see fr.emn.fil.reservation.controllers.Controller
+ */
 public class ReservationController extends Controller {
 
     private ResourceService resourceService;
@@ -40,13 +46,7 @@ public class ReservationController extends Controller {
 
     @Override
     protected Response handle(String url) {
-        request.setAttribute("menuUserClass", "info");
-        request.setAttribute("menuReservationsClass", "info active");
-        request.setAttribute("menuMesReservationsClass", "info");
-        request.setAttribute("menuReservationsAdminClass", "info");
-        request.setAttribute("menuResourceClass", "info");
-        request.setAttribute("menuResourceTypeClass", "info");
-        request.setAttribute("menuResourceRechercheClass", "info");
+        setupNavigationBar();
 
         Response response = null;
         if (request.getMethod().equals("GET")) {
@@ -86,6 +86,11 @@ public class ReservationController extends Controller {
         return response;
     }
 
+
+    /**
+     *  Cancel the reservation given by a HTTP GET parameter (reservationId)
+      * @return forward to the user's reservations if OK
+     */
     public Response cancelReservation() {
         User user;           // we ensure that the connected user owns the reservation
         Long reservationId;  // id of the reservation to cancel
@@ -106,27 +111,24 @@ public class ReservationController extends Controller {
         return this.getUserReservations(user.getId());
     }
 
+    /**
+     * Get all the reservations stored in the application.
+     * This action is reserved for the admin
+     * @return Forward to the reservations list if OK, redirect otherwise
+     */
     public Response getAllReservations() {
-        if(nonAdminRedirect()!=null) return nonAdminRedirect();
+        if(nonAdminRedirect()!=null) {
+            return nonAdminRedirect();
+        }
         Long typeId=null;
         Long userId=null;
         try {
             typeId = Long.parseLong(request.getParameter("searchedType"));
-        } catch(NumberFormatException e) {
-
-        String FDDFSD = e.getMessage();
-        }
-        try {
             userId = Long.parseLong(request.getParameter("searchedUser"));
-        } catch(NumberFormatException e) {
-
-            String dsqd = e.getMessage();
-        }
+        } catch (NumberFormatException e) {  }
 
         String rangeString = request.getParameter("searchRange");
-
         Date[] range = parseRange(rangeString);
-
         String resourceName = request.getParameter("searchedName");
 
 
@@ -140,6 +142,11 @@ public class ReservationController extends Controller {
         return new Response("/reservation/index.jsp", Response.Type.FORWARD);
     }
 
+    /**
+     * Get reservations linked to the user given in URL
+     * @param idUser Id of the user which will help to filter
+     * @return FORWARD to the reservations list if OK
+     */
     public Response getUserReservations(Long idUser) {
         try {
 
@@ -164,6 +171,11 @@ public class ReservationController extends Controller {
         return new Response("/reservation/singleton.jsp", Response.Type.FORWARD);
     }
 
+
+    /**
+     * Handles booking for a resource during a given period
+     * @return Forward to the user's reservations if OK
+     */
     public Response book() {
         // Parse the reservation range
         String rangeString = request.getParameter("reservationRange");
@@ -195,9 +207,13 @@ public class ReservationController extends Controller {
         return nonAdminRedirect();
     }
 
+    /**
+     * Search resources that available for booking, over a given period
+     * @return Forward to the resources search page if OK
+     */
     public Response searchAvailableResources() {
         initSpan();
-        String rangeString = request.getAttribute("searchRange").toString();
+        String rangeString  = request.getAttribute("searchRange").toString();
         String searchedName = request.getParameter("searchedName");
 
         // parse the selected type
@@ -245,6 +261,10 @@ public class ReservationController extends Controller {
         return dates;
     }
 
+    /**
+     * Init the span of the date input in the HTML, in order
+     * to have : <code>startDate: today, endDate: today + 1 day</code>
+     */
     private void initSpan() {
         String range = request.getParameter("searchRange");
         if(range == null) {
@@ -257,6 +277,19 @@ public class ReservationController extends Controller {
         } else {
             request.setAttribute("searchRange", request.getParameter("searchRange"));
         }
+    }
+
+    /**
+     * Configure navigation bar css classes
+     */
+    private void setupNavigationBar() {
+        request.setAttribute("menuUserClass", "info");
+        request.setAttribute("menuReservationsClass", "info active");
+        request.setAttribute("menuMesReservationsClass", "info");
+        request.setAttribute("menuReservationsAdminClass", "info");
+        request.setAttribute("menuResourceClass", "info");
+        request.setAttribute("menuResourceTypeClass", "info");
+        request.setAttribute("menuResourceRechercheClass", "info");
     }
 
 }
