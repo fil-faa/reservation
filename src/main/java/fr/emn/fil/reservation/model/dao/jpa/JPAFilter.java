@@ -9,8 +9,6 @@ public class JPAFilter {
         STRING, JOIN
     }
 
-    private Long order;
-
     private String field;
 
     private Object value;
@@ -19,32 +17,24 @@ public class JPAFilter {
 
     private JPAFilter next;
 
-    private JPAFilter(FilterType type, String field, Object value, Long order) {
+    private JPAFilter(FilterType type, String field, Object value) {
         this.type = type;
         this.field = field;
         this.value = value;
-        this.order = order;
-    }
-
-    private JPAFilter(FilterType type, String field, Object value) {
-        this(type, field, value, 0L);
     }
 
     public static JPAFilter create(FilterType type, String field, Object value) {
         return new JPAFilter(type, field, value);
     }
 
-    public static JPAFilter create(FilterType type, String field, Object value, Long order) {
-        return new JPAFilter(type, field, value, order);
-    }
 
     public static JPAFilter create(JPAFilter filter) {
-        return new JPAFilter(filter.type, filter.field, filter.value, filter.order);
+        return new JPAFilter(filter.type, filter.field, filter.value);
     }
 
     public JPAFilter add(FilterType type, String field, Object value) {
         JPAFilter filter = create(this);
-        filter.next = create(type, field, value, this.order + 1);
+        filter.next = create(type, field, value);
         return filter;
     }
 
@@ -55,22 +45,24 @@ public class JPAFilter {
     private String getQuery(String entity, boolean lastFilter) {
         String query;
         if(next == null)
-            query = "SELECT f FROM " + entity + " WHERE ";
+            query = "SELECT f FROM " + entity + " f WHERE ";
         else query = next.getQuery(entity, false);
 
         switch(type) {
             case JOIN:
                 if(value == null)
                     break;
-                query = field + " = " + value + " AND";
+                query += "f." + field + " = " + value + " AND ";
                 break;
 
             case STRING:
-                query = "UPPER(" + field + ") LIKE " + "'%" + value + "%' AND";
+                if(value == null)
+                    break;
+                query += "UPPER(f." + field + ") LIKE " + "'%" + value + "%' AND ";
         }
 
         if(lastFilter) {
-            query = " 1 = 1";
+            query += " 1 = 1";
         }
         return query;
     }

@@ -54,10 +54,11 @@ public class ReservationJPA extends AbstractJpaDAO<Reservation,Long> implements 
      */
     @Override
     public List<Reservation> matching(User user, ResourceType type, String name) {
+        Long typeId = type == null ? null : type.getId();
         String query = JPAFilter.create(FilterType.JOIN, "user.id", user.getId())
-                .add(FilterType.JOIN, "type.id", type.getId())
+                .add(FilterType.JOIN, "type.id", typeId)
                 .add(FilterType.STRING, "resource.name", name)
-                .getQuery("Resource");
+                .getQuery("Reservation");
 
         Query q = JPAManager.getEm().createQuery(query);
         return q.getResultList();
