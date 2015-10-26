@@ -14,8 +14,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="${menuReservationsClass}"><a href="${appPath}/reservations/">Mes rï¿½servations</a></li>
-                <li class="${menuResourceRechercheClass}"><a href="${appPath}/reservations/search">Rï¿½server une ressource</a></li>
+                <li class="${menuReservationsClass}"><a href="${appPath}/reservations/">Mes réservations</a></li>
+                <li class="${menuResourceRechercheClass}"><a href="${appPath}/reservations/search">Réserver une ressource</a></li>
                 <li class="${menuResourceTypeClass}"><a href="${appPath}/resourceTypes/">Types de ressources</a></li>
                 <li class="${menuResourceClass}"><a href="${appPath}/resources/">Ressources</a></li>
                 <c:if test="${admin}">
