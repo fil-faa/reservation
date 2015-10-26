@@ -35,23 +35,12 @@ public class ResourceService {
     }
 
     public List<Resource> findByName(String name) {
-        return filter(resourceDAO.findAll(), name);
+        return resourceDAO.findByTypeAndName(null, name);
     }
 
-    public List<Resource> findbyTypeAndName(ResourceType type, String name) {
-        return filter(resourceDAO.findByType(type), name);
+    public List<Resource> findByTypeAndName(ResourceType type, String name) {
+        return resourceDAO.findByTypeAndName(type, name);
     }
-
-    private List<Resource> filter(List<Resource> resources, String name) {
-        Iterator<Resource> it = resources.iterator();
-        while(it.hasNext()) {
-            Resource resource = it.next();
-            if(!resource.getName().toLowerCase().contains(name.toLowerCase()))
-                it.remove();
-        }
-        return resources;
-    }
-
 
     public Resource create(String name, User user, ResourceType resourceType, String place, String description) {
         Resource resource = new Resource(name, user, resourceType, description, place);

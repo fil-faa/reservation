@@ -58,7 +58,7 @@ public class JPAFilter {
             case STRING:
                 if(value == null)
                     break;
-                query += "UPPER(f." + field + ") LIKE " + "'%" + value + "%' AND ";
+                query += "UPPER(f." + field + ") LIKE " + "'%" + value.toString().toUpperCase() + "%' AND ";
         }
 
         if(lastFilter) {

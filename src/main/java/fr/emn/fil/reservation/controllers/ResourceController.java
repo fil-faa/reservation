@@ -2,21 +2,18 @@ package fr.emn.fil.reservation.controllers;
 
 import fr.emn.fil.reservation.controllers.validation.LongValidator;
 import fr.emn.fil.reservation.controllers.validation.StringValidator;
-import fr.emn.fil.reservation.model.entities.Reservation;
 import fr.emn.fil.reservation.model.entities.Resource;
 import fr.emn.fil.reservation.model.entities.ResourceType;
 import fr.emn.fil.reservation.model.entities.User;
 import fr.emn.fil.reservation.model.exceptions.GenericError;
 import fr.emn.fil.reservation.model.exceptions.ModelError;
 import fr.emn.fil.reservation.model.exceptions.ValidationError;
-import fr.emn.fil.reservation.model.services.ReservationService;
 import fr.emn.fil.reservation.model.services.ResourceService;
 import fr.emn.fil.reservation.model.services.ResourceTypeService;
 import fr.emn.fil.reservation.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -167,7 +164,7 @@ public class ResourceController extends Controller {
 
             if(filterByType && filterByName) {
                 ResourceType type = resourceTypeService.byId(searchedType);
-                found = resourceService.findbyTypeAndName(type, searchedName);
+                found = resourceService.findByTypeAndName(type, searchedName);
             } else if(filterByType) {
                 ResourceType type = resourceTypeService.byId(searchedType);
                 found = resourceService.findByType(type);
