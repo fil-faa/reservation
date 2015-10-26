@@ -5,6 +5,7 @@ import fr.emn.fil.reservation.model.entities.Reservation;
 import fr.emn.fil.reservation.model.entities.Resource;
 import fr.emn.fil.reservation.model.entities.ResourceType;
 import fr.emn.fil.reservation.model.entities.User;
+import fr.emn.fil.reservation.model.dao.jpa.JPAFilter.FilterType;
 
 import javax.persistence.Query;
 import java.util.Date;
@@ -45,25 +46,10 @@ public class ReservationJPA extends AbstractJpaDAO<Reservation,Long> implements 
      */
     @Override
     public List<Reservation> matching(User user, ResourceType type, String name) {
-        String query = "SELECT res FROM Reservation res WHERE ";
-        boolean hasPrev = false;
-        if(user != null) {
-            query += " res.user.id = '" + user.getId() + "'";
-            hasPrev = true;
-        }
-        if(type != null) {
-            if(hasPrev) {
-                query += " and";
-            }
-            query += " res.type.id = '" + type.getId() + "'";
-            hasPrev = true;
-        }
-        if(name != null) {
-            if(hasPrev) {
-                query += " and";
-            }
-            query += " UPPER(res.resource.name) LIKE '%" + name.toUpperCase() + "%'";
-        }
+        String query = JPAFilter.create(FilterType.JOIN, "user.id", user.getId())
+                .add(FilterType.JOIN, "type.id", type.getId())
+                .add(FilterType.STRING, "resource.name", name)
+                .getQuery("Resource");
 
         Query q = JPAManager.getEm().createQuery(query);
         return q.getResultList();
