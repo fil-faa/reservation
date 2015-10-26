@@ -143,6 +143,7 @@ public class ReservationController extends Controller {
     public Response searchAvailableResources() {
         initSpan();
         String rangeString = request.getAttribute("searchRange").toString();
+        String searchedName = request.getParameter("searchedName");
 
         // parse the selected type
         Long typeId;
@@ -156,7 +157,7 @@ public class ReservationController extends Controller {
         Date[] range = parseRange(rangeString);
 
         // fetch the resources for the selected ranges
-        List<Resource> resources = resourceService.findAvailableResources(range[0], range[1], typeId);
+        List<Resource> resources = resourceService.findAvailableResources(range[0], range[1], typeId,searchedName);
         request.setAttribute("resources", resources);
 
         // add the resource types for the view
@@ -172,7 +173,6 @@ public class ReservationController extends Controller {
      * @return an array containing the begin and end date of the range
      */
     private Date[] parseRange(String range) {
-        System.out.println("ok");
         Date[] dates = new Date[2];
         dates[0] = dates[1] = null;
         if(range == null) return dates;
