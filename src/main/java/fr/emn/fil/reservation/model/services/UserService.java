@@ -33,7 +33,7 @@ public class UserService {
     public User connect(String mail, String password) throws ModelError {
         User user = userDAO.byMail(mail);
         if (user == null || !hash(password).equals(user.getPassword()))
-            throw new ModelError("Utilisateur non trouv?");
+            throw new ModelError("Utilisateur non trouvé");
 
         return user;
     }
