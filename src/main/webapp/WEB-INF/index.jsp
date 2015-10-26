@@ -37,7 +37,7 @@
 
 <footer class="footer col-xs-12">
     <div>Réalisé par : <span class="names">Faouzi CHIHEB</span>, <span class="names">Arthur FAUGERAS</span> et <span
-        id="alexandre" class="names">Alexandre LEBRUN</span> - Formation Ingénierie Logicielle à l'école des Mines de Nantes
+        class="names">Alexandre LEBRUN</span> - Formation Ingénierie Logicielle à l'école des Mines de Nantes
         </div>
 </footer>
 
