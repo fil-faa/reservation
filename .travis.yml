@@ -3,3 +3,6 @@ language: java
 jdk : oraclejdk7
 
 script: mvn test
+
+notifications:
+  slack: fil2017:Ds0bIP5UpkPlNHk7zMN7azxF
