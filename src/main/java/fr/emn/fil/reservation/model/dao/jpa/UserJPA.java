@@ -1,9 +1,8 @@
 package fr.emn.fil.reservation.model.dao.jpa;
 
 import fr.emn.fil.reservation.model.dao.UserDAO;
-import fr.emn.fil.reservation.model.entities.Reservation;
-import fr.emn.fil.reservation.model.entities.ResourceType;
 import fr.emn.fil.reservation.model.entities.User;
+import fr.emn.fil.reservation.model.dao.jpa.JPAFilter.FilterType;
 
 import javax.persistence.Query;
 import java.util.List;
@@ -48,33 +47,11 @@ public class UserJPA extends AbstractJpaDAO<User,Long> implements UserDAO {
      */
     @Override
     public List<User> matching(String firstName, String lastName, String mail, String phone) {
-        String query = "SELECT u FROM User u WHERE ";
-        boolean hasPrev = false;
-        if(firstName != null) {
-            query += " UPPER(u.firstName) LIKE '%" + firstName.toUpperCase() + "%'";
-            hasPrev = true;
-        }
-        if(lastName != null) {
-            if(hasPrev) {
-                query += " and";
-            }
-            query += " UPPER(u.lastName) LIKE '%" + lastName.toUpperCase() + "%'";
-            hasPrev = true;
-        }
-        if(mail != null) {
-            if(hasPrev) {
-                query += " and";
-            }
-            query += " UPPER(u.mail) LIKE '%" + mail.toUpperCase() + "%'";
-            hasPrev = true;
-        }
-        if(phone != null) {
-            if(hasPrev) {
-                query += " and";
-            }
-            query += " UPPER(u.telephone) LIKE '%" + phone.toUpperCase() + "%'";
-        }
-
+        String query = JPAFilter.create(FilterType.STRING, "firstName", firstName)
+                .add(FilterType.STRING, "lastName", lastName)
+                .add(FilterType.STRING, "mail", mail)
+                .add(FilterType.STRING, "telephone", phone)
+                .getQuery("User");
         Query q = JPAManager.getEm().createQuery(query);
         return q.getResultList();
     }
