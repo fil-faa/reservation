@@ -1,24 +1,20 @@
 package fr.emn.fil.reservation.model.services;
 
 import fr.emn.fil.reservation.model.dao.ResourceDAO;
-import fr.emn.fil.reservation.model.entities.Reservation;
 import fr.emn.fil.reservation.model.entities.Resource;
 import fr.emn.fil.reservation.model.entities.ResourceType;
 import fr.emn.fil.reservation.model.entities.User;
 import org.easymock.*;
-import org.hamcrest.CoreMatchers;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.is;
 
 /**
  * Created by Alexandre on 26/10/2015.
@@ -41,19 +37,22 @@ public class ResourceServiceTest extends EasyMockSupport {
             , "password", null, false);
 
 
-    private final ResourceType type = new ResourceType(1L, "Test");
+    private final ResourceType type1 = new ResourceType(1L, "Test 1");
+    private final ResourceType type2 = new ResourceType(0L, "Test 2");
+
 
     @Test
     public void testFindAvailableResources() {
         // three reservations in the database
-        final Resource res1 = new Resource(1L, "test 1", user, type, "description 1", "place 1");
-        final Resource res2 = new Resource(1L, "test 2", user, type, "description 2", "place 2");
-        final Resource res3 = new Resource(1L, "test 3", user, type, "description 3", "place 3");
+        final Resource res1 = new Resource(1L, "MATCH1 1", user, type1, "description 3", "place 3");
+        final Resource res2 = new Resource(1L, "MATCH1 2", user, type2, "description 2", "place 2");
+        final Resource res3 = new Resource(1L, "MATCH1 3", user, type2, "description 1", "place 1");
+        final Resource res4 = new Resource(1L, "test 1", user, type1, "description 1", "place 1");
+        final Resource res5 = new Resource(1L, "test 1", user, type2, "description 1", "place 1");
 
         // one is booked
         final Date startDate = new Date(new Date().getTime() + 1000); // the date is future to avoid a ModelError
         final Date endDate = new Date(startDate.getTime() + 1000);    // and end date just after
-        final Reservation reservation = new Reservation(startDate, endDate, res1, user);
 
         /********************
          *  What we expect
@@ -62,6 +61,8 @@ public class ResourceServiceTest extends EasyMockSupport {
         result.add(res1);
         result.add(res2);
         result.add(res3);
+        result.add(res4);
+        result.add(res5);
 
         EasyMock.expect(resourceDAO.findAvailable(startDate, endDate)).andReturn(result);
         replayAll();
@@ -69,15 +70,14 @@ public class ResourceServiceTest extends EasyMockSupport {
         /********************
          *  Call of the service
          ********************/
-        List<Resource> found = resourceService.findAvailableResources(startDate, endDate, null, null); // no filter
+        List<Resource> found = resourceService.findAvailableResources(startDate, endDate, type2.getId(), "MATCH1");
 
         /********************
          *  Check
          ********************/
-        assertThat(found, containsInAnyOrder(res2, res3));
-        assertThat(found, not(contains(res1)));
-        verifyAll();
 
+        assertThat(found, is(Arrays.asList(res2, res3)));
+        verifyAll();
 
     }
 
