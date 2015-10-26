@@ -41,6 +41,9 @@ public class UserController extends Controller {
                 if (url.equals("/login"))
                     response = loginForm();
 
+                if (url.equals("/logout"))
+                    response = logout();
+
                 if (url.equals("/delete"))
                     response = deleteUser();
 
@@ -149,6 +152,11 @@ public class UserController extends Controller {
             return this.loginForm();
         }
         return new Response(ROOT_URL + "/reservations/", Response.Type.REDIRECT);
+    }
+
+    private Response logout() {
+        request.getSession().setAttribute("user", null);
+        return new Response(ROOT_URL + "/users/login", Response.Type.REDIRECT);
     }
 
     public Response loginForm() {

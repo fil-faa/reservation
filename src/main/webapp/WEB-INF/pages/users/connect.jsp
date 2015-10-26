@@ -1,6 +1,6 @@
 
 <form action="login" method="POST" class="form-signin">
-  <h2 class="form-signin-heading">Connectez-vous</h2>
+  <h2 class="form-signin-heading"><i class="glyphicon glyphicon-log-in"></i> Connectez-vous</h2>
   <label for="inputEmail" class="sr-only">Nom d'utilisateur</label>
   <input type="mail" id="inputEmail" name="mail" class="form-control" placeholder="Nom d'utilisateur" required autofocus>
   <label for="inputPassword" class="sr-only">Mot de passe</label>

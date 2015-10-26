@@ -2,7 +2,7 @@
 
 <!-- Static navbar -->
 <nav class="navbar navbar-default navbar-static-top">
-    <div class="container">
+    <div id="menu-container" class="col-xs-12">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Affichage du menu</span>
@@ -14,13 +14,14 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="${menuReservationsClass}"><a href="${appPath}/reservations/">Mes réservations</a></li>
-                <li class="${menuResourceRechercheClass}"><a href="${appPath}/reservations/search">Réserver une ressource</a></li>
-                <li class="${menuResourceTypeClass}"><a href="${appPath}/resourceTypes/">Types de ressources</a></li>
-                <li class="${menuResourceClass}"><a href="${appPath}/resources/">Ressources</a></li>
+                <li class="${menuReservationsClass}"><a href="${appPath}/reservations/"><i class="glyphicon glyphicon-list-alt"></i> Mes réservations</a></li>
+                <li class="${menuResourceRechercheClass}"><a href="${appPath}/reservations/search"><i class="glyphicon glyphicon-shopping-cart"></i> Réserver une ressource</a></li>
+                <li class="${menuResourceTypeClass}"><a href="${appPath}/resourceTypes/"><i class="glyphicon glyphicon-tags"></i> Types de ressources</a></li>
+                <li class="${menuResourceClass}"><a href="${appPath}/resources/"><i class="glyphicon glyphicon-leaf"></i> Ressources</a></li>
                 <c:if test="${admin}">
-                    <li class="${menuUserClass}"><a href="${appPath}/users/">Utilisateurs</a></li>
+                    <li class="${menuUserClass}"><a href="${appPath}/users/"><i class="glyphicon glyphicon-user"></i> Utilisateurs</a></li>
                 </c:if>
+                <li class="info"><a href="${appPath}/users/logout"><i class="glyphicon glyphicon-log-out"></i> Déconnexion</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div><!--/.container-fluid -->

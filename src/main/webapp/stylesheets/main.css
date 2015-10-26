@@ -86,3 +86,6 @@ table {
     background-color: #4cae4c!important;
     color: white!important;
 }
+#menu-container {
+    padding: 0px;
+}
