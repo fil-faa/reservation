@@ -59,16 +59,22 @@ public class ResourceService {
         return resource;
     }
 
-    public List<Resource> findAvailableResources(Date startDate, Date endDate, Long typeId) {
+    public List<Resource> findAvailableResources(Date startDate, Date endDate, Long typeId, String resourceName) {
         List<Resource> available = resourceDAO.findAvailable(startDate, endDate);
-
-        if(typeId == null) return available;
+        if(typeId == null && resourceName==null) return available;
 
         // else, we filter by the type id
         Iterator<Resource> it = available.iterator();
         while(it.hasNext()) {
             Resource resource = it.next();
-            if(!resource.getType().getId().equals(typeId))
+            boolean delete=false;
+            if(typeId!=null)
+                if(!resource.getType().getId().equals(typeId))
+                    delete=true;
+            if(resourceName != null)
+                if(!resource.getName().toLowerCase().contains(resourceName.toLowerCase()))
+                    delete=true;
+            if(delete)
                 it.remove();
         }
 

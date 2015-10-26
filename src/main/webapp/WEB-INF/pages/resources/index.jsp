@@ -24,7 +24,7 @@
             <th>Type</th>
             <th>Responsable</th>
             <c:if test="${admin}">
-                <th style="min-width: 100px">Actions</th>
+                <th style="min-width: 140px">Actions</th>
             </c:if>
         </tr>
         </thead>
@@ -39,8 +39,18 @@
                 <c:if test="${admin}">
                     <td>
                         <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-default" onclick="location.href='${appPath}/resources/${resource.id}'"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
-                            <button type="button" class="btn btn-default" onclick="location.href='${appPath}/resources/delete?id=${resource.id}'"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                            <button type="button" class="btn btn-default"
+                                    onclick="location.href='${appPath}/reservations/search?&searchedName=${resource.name}'">
+                                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-default"
+                                    onclick="location.href='${appPath}/resources/${resource.id}'">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-default"
+                                    onclick="location.href='${appPath}/resources/delete?id=${resource.id}'">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
                         </div>
                     </td>
                 </c:if>

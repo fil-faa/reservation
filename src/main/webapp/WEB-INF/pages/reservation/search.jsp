@@ -22,9 +22,18 @@
             <select class="form-control" id="typeId" name="typeId">
                 <option value="">Tous les types</option>
                 <c:forEach var="type" items="${types}">
-                    <option value="${type.id}">${type.name}</option>
+                    <c:if test="${type.id==param.typeId}">
+                        <option selected="selected" value="${type.id}">${type.name}</option>
+                    </c:if>
+                    <c:if test="${type.id!=param.typeId}">
+                        <option value="${type.id}">${type.name}</option>
+                    </c:if>
                 </c:forEach>
             </select>
+        </div>
+        <div class="form-group">
+            <label for="search_lastname">Nom de la ressource</label>
+            <input type="text" class="form-control" id="search_lastname" name="searchedName" placeholder="Ordinateur" value="${param.searchedName}">
         </div>
         <button class="btn btn-primary form-control " type="submit">Rechercher</button>
 
