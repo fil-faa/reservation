@@ -145,23 +145,16 @@ public class UserServiceTest extends EasyMockSupport {
         String encryptedPassword = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
         boolean admin = false;
 
-        /** first the service must check if there is the same email in the database */
-        EasyMock.expect(userDAO.byMail(mail)).andReturn(null);
-
         /* Create the user */
-        User toSave = new User(firstName, lastName, mail, encryptedPassword, phone, admin);
-        userDAO.save(toSave);
-        EasyMock.expectLastCall().once();
-
+        User toRemove = new User(1L,firstName, lastName, mail, encryptedPassword, phone, admin);
         /*Check if the user exists before remove it */
-        EasyMock.expect(userDAO.byId(toSave.getId())).andReturn(toSave);
-        userDAO.delete(toSave);
+        EasyMock.expect(userDAO.byId(toRemove.getId())).andReturn(toRemove);
+        userDAO.delete(toRemove);
         EasyMock.expectLastCall().once();
 
         replayAll();
         try {
-            User saved = userService.create(mail, password, firstName, lastName, phone);
-            userService.delete(saved.getId());
+            userService.delete(toRemove.getId());
             verifyAll();
         } catch(Exception e) {
             fail();
