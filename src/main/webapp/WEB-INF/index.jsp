@@ -7,18 +7,17 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@include file="jspf/constants.jspf"%>
+<%@include file="jspf/constants.jspf" %>
 
-<%@include file="jspf/header.jspf"%>
+<%@include file="jspf/header.jspf" %>
 
 
 <body>
 
 <c:if test="${connected}">
-    <%@include file="jspf/menu.jspf"%>
+    <%@include file="jspf/menu.jspf" %>
 </c:if>
 <div class="col-xs-12">
-
 
 
     <c:if test="${not empty error}">
@@ -34,8 +33,13 @@
     <jsp:include page="pages/${page}"/>
 
 
+</div>
 
-</div
+<footer class="footer col-xs-12">
+    <div>Réalisé par : <span class="names">Faouzi CHIHEB</span>, <span class="names">Arthur FAUGERAS</span> et <span
+        id="alexandre" class="names">Alexandre LEBRUN</span> - Formation Ingénierie Logicielle à l'école des Mines de Nantes
+        </div>
+</footer>
 
 </body>
 </html>
