@@ -9,7 +9,7 @@ notifications:
 
 deploy:
   provider: releases
-  api_key: "818c13d84c1d77831fbe4806bd62d3ca5c29bbb2"
+  api_key: "a5d976ea0f17b8bafe15d6db8900dcb28a0498bd"
   file: "target/reservation.war"
   skip_cleanup: true
   on:
