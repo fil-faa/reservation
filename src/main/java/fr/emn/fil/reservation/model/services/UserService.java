@@ -6,14 +6,13 @@ import fr.emn.fil.reservation.model.dao.UserDAO;
 import fr.emn.fil.reservation.model.entities.Reservation;
 import fr.emn.fil.reservation.model.entities.Resource;
 import fr.emn.fil.reservation.model.entities.User;
-
-import static fr.emn.fil.reservation.CryptUtils.hash;
-
 import fr.emn.fil.reservation.model.exceptions.GenericError;
 import fr.emn.fil.reservation.model.exceptions.ModelError;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+
+import static fr.emn.fil.reservation.CryptUtils.hash;
 
 /**
  * Created by Alexandre on 20/10/2015.

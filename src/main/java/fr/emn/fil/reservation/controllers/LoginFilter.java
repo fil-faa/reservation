@@ -57,7 +57,7 @@ public class LoginFilter implements Filter {
                 UserManager.users.remove();
             } else {
                 String requestURI = request.getRequestURI();
-                if (requestURI.startsWith(ROOT_URL) && !requestURI.equals(LOGIN_URL)) {
+                if (requestURI.startsWith(request.getContextPath() + ROOT_URL) && !requestURI.equals(request.getContextPath()+LOGIN_URL)) {
                     response.sendRedirect(request.getContextPath() + LOGIN_URL);
                 } else filterChain.doFilter(request, response);
             }

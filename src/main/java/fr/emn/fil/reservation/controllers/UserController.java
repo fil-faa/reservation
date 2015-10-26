@@ -151,12 +151,12 @@ public class UserController extends Controller {
             request.setAttribute("error", e);
             return this.loginForm();
         }
-        return new Response(ROOT_URL + "/reservations/"+user.getId(), Response.Type.REDIRECT);
+        return new Response(request.getContextPath() + ROOT_URL + "/reservations/"+user.getId(), Response.Type.REDIRECT);
     }
 
     private Response logout() {
         request.getSession().setAttribute("user", null);
-        return new Response(ROOT_URL + "/users/login", Response.Type.REDIRECT);
+        return new Response(request.getContextPath() + ROOT_URL + "/users/login", Response.Type.REDIRECT);
     }
 
     public Response loginForm() {
