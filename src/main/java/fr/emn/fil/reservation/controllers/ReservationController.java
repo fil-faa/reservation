@@ -173,7 +173,6 @@ public class ReservationController extends Controller {
      * @return an array containing the begin and end date of the range
      */
     private Date[] parseRange(String range) {
-        System.out.println("ok");
         Date[] dates = new Date[2];
         dates[0] = dates[1] = null;
         if(range == null) return dates;
