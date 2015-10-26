@@ -7,7 +7,8 @@ import javax.persistence.Query;
 import java.util.List;
 
 /**
- * Created by Alexandre on 20/10/2015.
+ * JPA implementation of the resource type DAO
+ * @see ResourceTypeDAO
  */
 public class ResourceTypeJPA extends AbstractJpaDAO<ResourceType,Long> implements ResourceTypeDAO {
 

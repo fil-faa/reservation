@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A resource an object that can be booked.
+ * It has a name, a description, and a place
  * Created by arthur on 20/10/15.
  */
 @Entity

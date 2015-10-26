@@ -8,6 +8,10 @@ import javax.persistence.Query;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * JPA implementation of the resource DAO
+ * @see ResourceDAO
+ */
 public class ResourceJPA extends AbstractJpaDAO<Resource,Long> implements ResourceDAO {
 
     public ResourceJPA() {

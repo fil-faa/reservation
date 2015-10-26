@@ -11,6 +11,10 @@ import javax.persistence.Query;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * JPA implementation of the reservation DAO
+ * @see ReservationDAO
+ */
 @SuppressWarnings("ALL")
 public class ReservationJPA extends AbstractJpaDAO<Reservation,Long> implements ReservationDAO {
 
@@ -23,6 +27,9 @@ public class ReservationJPA extends AbstractJpaDAO<Reservation,Long> implements 
         return q.getResultList();
     }
 
+    /**
+     * @see ReservationDAO
+     */
     public List<Reservation> during(Resource resource, Date start, Date end) {
         Query q = JPAManager.getEm().createNamedQuery("reservation.during");
         q.setParameter("resource", resource);
@@ -64,11 +71,5 @@ public class ReservationJPA extends AbstractJpaDAO<Reservation,Long> implements 
         return q.getResultList();
     }
 
-    @Override
-    public List<Reservation> byResource(Resource resource) {
-        String query = "SELECT res FROM Reservation res WHERE res.resource.id = '" + resource.getId() + "'";
-        Query q = JPAManager.getEm().createQuery(query);
-        return q.getResultList();
-    }
 
 }

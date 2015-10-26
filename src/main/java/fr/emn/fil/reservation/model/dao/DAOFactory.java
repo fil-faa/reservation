@@ -5,11 +5,10 @@ import fr.emn.fil.reservation.model.dao.jpa.ResourceJPA;
 import fr.emn.fil.reservation.model.dao.jpa.ResourceTypeJPA;
 import fr.emn.fil.reservation.model.dao.jpa.UserJPA;
 
+/**
+ * Factory storing the current implementations of the DAOs
+ */
 public class DAOFactory {
-
-    public static ReservationDAO reversationDAO() {
-        return new ReservationJPA();
-    }
 
     public static ResourceDAO resourceDAO() {
         return new ResourceJPA();

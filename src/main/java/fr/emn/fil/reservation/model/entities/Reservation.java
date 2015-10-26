@@ -4,9 +4,10 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
+ * A reservation links a resource to user during a specific period
+ * When a resource is booked, it's unavailable for another booking at the same time
  * Created by arthur on 20/10/15.
  */
-
 @SuppressWarnings("ALL")
 @NamedQueries({
         @NamedQuery(name = "reservation.findAll", query = "SELECT r FROM Reservation r"),

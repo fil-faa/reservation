@@ -8,7 +8,8 @@ import javax.persistence.Query;
 import java.util.List;
 
 /**
- * Created by Alexandre on 20/10/2015.
+ * JPA implementation of the user DAO
+ * @see UserDAO
  */
 public class UserJPA extends AbstractJpaDAO<User,Long> implements UserDAO {
 

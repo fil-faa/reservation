@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Different types of resources exists : they can be added by the user within the application
  * Created by arthur on 20/10/15.
  */
 @Entity

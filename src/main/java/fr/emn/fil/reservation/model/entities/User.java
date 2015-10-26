@@ -5,6 +5,11 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Stores the user of booking web app.
+ * Different types of users exists : the admin can administrate the resources, while
+ * the average user can book a specific resource during a given period
+ */
 @Entity
 @Table(name = "USER")
 @NamedQueries({
@@ -30,6 +35,9 @@ public class User {
     @Column(name = "MAIL", unique = true)
     private @NotNull String mail;
 
+    /**
+     * Password, hashed in SHA-256
+     */
     @Basic(optional = false)
     @Column(name = "PASSWORD")
     private @NotNull String password;
