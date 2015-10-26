@@ -20,9 +20,9 @@
                 <thead>
                 <tr>
                     <th>Nom</th>
-                    <th>PrÃ©nom</th>
+                    <th>Prénom</th>
                     <th>Mail</th>
-                    <th>TÃ©lÃ©phone</th>
+                    <th>Téléphone</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
