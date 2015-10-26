@@ -42,6 +42,8 @@ public class ReservationController extends Controller {
     protected Response handle(String url) {
         request.setAttribute("menuUserClass", "info");
         request.setAttribute("menuReservationsClass", "info active");
+        request.setAttribute("menuMesReservationsClass", "info");
+        request.setAttribute("menuReservationsAdminClass", "info");
         request.setAttribute("menuResourceClass", "info");
         request.setAttribute("menuResourceTypeClass", "info");
         request.setAttribute("menuResourceRechercheClass", "info");
@@ -52,7 +54,6 @@ public class ReservationController extends Controller {
             if (url.equals("/search")) {
                 response = searchAvailableResources();
                 request.setAttribute("menuResourceRechercheClass", "info active");
-                request.setAttribute("menuReservationsClass", "info");
             }
 
             if (url.length() > 1 && response == null) {
@@ -60,12 +61,15 @@ public class ReservationController extends Controller {
                 if (scId.hasNextLong()) {
                     Long id = scId.nextLong();
                     response = getUserReservations(id);
+                    request.setAttribute("menuMesReservationsClass", "info active");
                 } else {
                     response = searchAvailableResources();
                 }
             }
-            if (url.equals("/"))
+            if (url.equals("/")) {
                 response = getAllReservations();
+                request.setAttribute("menuReservationsAdminClass", "info active");
+            }
             if(url.equals("/cancel"))
                 response = cancelReservation();
 

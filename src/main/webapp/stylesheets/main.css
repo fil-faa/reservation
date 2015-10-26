@@ -74,10 +74,10 @@ table {
     width: 1300px;
 }
 
-.info:hover a {
+.info:hover > a {
     background-color: #c3f2c3!important;
 }
-.info.active a {
+.info.active > a {
     background-color: #66cc66!important;
     color: white!important;
 }
