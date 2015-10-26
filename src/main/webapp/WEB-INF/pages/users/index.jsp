@@ -35,9 +35,16 @@
                         <td>${u.telephone}</td>
                         <td>
                             <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-default" onclick="location.href='${appPath}/users/${u.id}'"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
+                                <button type="button" class="btn btn-default" onclick="location.href='${appPath}/users/${u.id}'">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-default" onclick="location.href='${appPath}/reservations/?searchedUser=${u.id}'">
+                                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                </button>
                             <c:if test="${u.id != user.id}">
-                                <button type="button" class="btn btn-default" onclick="location.href='${appPath}/users/delete?id=${u.id}'"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                                <button type="button" class="btn btn-default" onclick="location.href='${appPath}/users/delete?id=${u.id}'">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </button>
                             </c:if>
                             </div>
                         </td>

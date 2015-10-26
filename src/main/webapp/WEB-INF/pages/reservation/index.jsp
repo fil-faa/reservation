@@ -27,7 +27,9 @@
       <tr>
         <td><fmt:formatDate type="date" value="${reservation.start}" pattern="dd/MM/YYYY hh:mm"/></td>
         <td><fmt:formatDate type="date" value="${reservation.end}" pattern="dd/MM/YYYY hh:mm"/></td>
-        <td>${reservation.user.firstName} ${reservation.user.lastName}</td>
+        <td><a href="${appPath}/users/?searchedLastName=${reservation.user.lastName}&searchedFirstName=${reservation.user.firstName}">
+          ${reservation.user.firstName} ${reservation.user.lastName}
+        </td>
         <td>${reservation.resource.name}</td>
         <td>${reservation.resource.type.name}</td>
         <td><a class="btn btn-danger form-control" href="${appPath}/reservations/cancel?reservationId=${reservation.id}">Annuler</a></td>
