@@ -58,23 +58,25 @@ public class ResourceServiceTest extends EasyMockSupport {
         /********************
          *  What we expect
          ********************/
-
         List<Resource> result = new ArrayList<>();
         result.add(res1);
         result.add(res2);
         result.add(res3);
 
         EasyMock.expect(resourceDAO.findAvailable(startDate, endDate)).andReturn(result);
+        replayAll();
 
         /********************
          *  Call of the service
          ********************/
-
         List<Resource> found = resourceService.findAvailableResources(startDate, endDate, null, null); // no filter
 
+        /********************
+         *  Check
+         ********************/
         assertThat(found, containsInAnyOrder(res2, res3));
         assertThat(found, not(contains(res1)));
-
+        verifyAll();
 
 
     }
