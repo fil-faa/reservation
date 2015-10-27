@@ -4,7 +4,9 @@ script: mvn test
 notifications:
   slack: fil2017:Ds0bIP5UpkPlNHk7zMN7azxF
 deploy:
-  provider: releases
   api_key:
     secure: lpf8BehaH/1yRKbWB0WP1yhI5jE7kAEllGP+9dWiXhxCakl9vul2vVoxDi8paj8v/U9PR020hEidBtX7YeHy9Ig/zwF4+Yl7zdAcdkQ83Xj5S9y2/HA6TVYoBwmNMP2uYTpxcxoLGJWlJFISBuz9HxqGwrqAnpF6H/FV+mH+kBPa0kj0HIdbi79JyXDgchkjfSd0HpzStO26g3zzAG+eeNLXRhcOq72Hqn2ttxI/xERPneWZQKkhPWnAbPa2o86j94i4xlaLUC63tOTZbHGVf5D+DGgavv4H46kbq+jjo6XbMpCFdYG48aLhfZVYkC/9hjbAkeJjdWLk5IpksVoeWEcN8UsNEWHHBOrfr4/DtvI0CPyDd0RRzuRFxxuwi6/xVBLVZZqd6GmefoZdXk8RuNroT8DyW39rskLzmb6IrDQjpkZyxwJrb+zBWtAf7vJ4M0iM5mefWx2eEf0VIz0xxvxEz2dlTSmlKTmVWgxBQxl60+GxnKAlJyETYJaxu/z1BDHEey7U+yYartTco21WL6T7ZA0vOR9P8QIX2ADxl5P+169aSr6Ejj6lphFYSOFzXlqKtAk6pyNHJNf0MjX3nigU0+WvMfVXm+AA85fT8zwNYXGrBKTdi7CAmulft4x19aYVci8BbeTaUYGih3Bi35lfVEdcNSc7jRgmNHhZAM4=
   file: target/reservation.war
+  skip_cleanup: true
+  on:
+    tags: true
