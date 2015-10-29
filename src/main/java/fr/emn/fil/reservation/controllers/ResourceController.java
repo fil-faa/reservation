@@ -227,7 +227,7 @@ public class ResourceController extends Controller {
                 userId = Long.parseLong(request.getParameter("userId"));
                 typeId = Long.parseLong(request.getParameter("typeId"));
             } catch (NumberFormatException e) {
-                throw new ValidationError("Erreur de rÃ©cupÃ©ration des ids");
+                throw new ValidationError("Erreur de récupération des ids");
             }
 
             String name = request.getParameter("name");
