@@ -3,7 +3,7 @@
         <h3 class="panel-title"><i class="glyphicon glyphicon-search"></i> Recherche</h3>
     </div>
     <div class="panel-body">
-        <form method="get" action="${appPath}/users/">
+        <form method="post" action="${appPath}/users/">
             <div class="form-group">
                 <label for="search_lastname">Nom</label>
                 <input type="text" class="form-control" id="search_lastname" name="searchedLastName" placeholder="Dupont" value="${param.searchedLastName}">

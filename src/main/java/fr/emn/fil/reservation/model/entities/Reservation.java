@@ -33,12 +33,12 @@ public class Reservation {
     private Long id;
 
     @Basic
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "START")
     private Date start;
 
     @Basic
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "END")
     private Date end;
 
