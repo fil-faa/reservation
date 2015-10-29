@@ -32,7 +32,7 @@ public class UserService {
     public User connect(String mail, String password) throws ModelError {
         User user = userDAO.byMail(mail);
         if (user == null || !hash(password).equals(user.getPassword()))
-            throw new ModelError("Utilisateur non trouv√©");
+            throw new ModelError("Utilisateur non trouvÈ");
 
         return user;
     }
@@ -51,7 +51,7 @@ public class UserService {
         String hashed = CryptUtils.hash(password);
 
         if (userDAO.byMail(mail) != null)
-            throw new ModelError("Cette adresse email a d√©j√† √©t√© prise");
+            throw new ModelError("Cette adresse email a dÈj‡ ÈtÈ prise");
 
         // We create the new user. It's not an admin (the admins are directly created in the database)
         User toCreate = new User(firstName, lastName, mail, hashed, phone, false);
@@ -70,7 +70,7 @@ public class UserService {
 
     public User byId(Long id) throws ModelError {
         User user = userDAO.byId(id);
-        if (user == null) throw new ModelError("Utilisateur non trouv√© pour l'identifiant donn√©");
+        if (user == null) throw new ModelError("Utilisateur non trouvÈ pour l'identifiant donnÈ");
         return user;
     }
 

@@ -98,31 +98,29 @@ public class UserController extends Controller {
 
         try {
             User user = userService.byId(id);
+            String mail = request.getParameter("mail");
+            new StringValidator(mail, "E-mail").notEmpty().mustContain("@");
+            user.setMail(mail);
+
+            String password = request.getParameter("password");
+            if(!password.isEmpty())
+                user.setPassword(hash(password));
+
+            String phone = request.getParameter("phone");
+            new StringValidator(phone, "téléphone").mustBeNumeric();
+            user.setTelephone(phone);
+
+            String firstName = request.getParameter("firstName");
+            new StringValidator(firstName, "prénom").notEmpty();
+            user.setFirstName(firstName);
 
             String lastName = request.getParameter("lastName");
-            if (!lastName.equals(user.getLastName()) && !lastName.isEmpty()) {
-                user.setLastName(lastName);
-            }
-            String firstName = request.getParameter("firstName");
-            if (!firstName.equals(user.getFirstName()) && !firstName.isEmpty()) {
-                user.setFirstName(firstName);
-            }
-            String mail = request.getParameter("mail");
-            if (!mail.equals(user.getMail()) && !mail.isEmpty()) {
-                user.setMail(mail);
-            }
-            String phone = request.getParameter("phone");
-            if (!phone.equals(user.getTelephone()) && !phone.isEmpty()) {
-                user.setTelephone(phone);
-            }
-            String password = request.getParameter("password");
-            if (!hash(password).equals(user.getPassword()) && !password.isEmpty()) {
-                user.setPassword(hash(password));
-            }
+            new StringValidator(firstName, "nom").notEmpty();
+            user.setLastName(lastName);
 
             userService.save(user);
-        } catch (ModelError modelError) {
-            request.setAttribute("error", new ModelError("Utilisateur inexistant"));
+        } catch (GenericError modelError) {
+            request.setAttribute("error", modelError);
         }
         return this.getUsers();
     }
@@ -139,6 +137,7 @@ public class UserController extends Controller {
             request.setAttribute("error", new ModelError("Utilisateur inexistant"));
             return this.getUsers();
         }
+
     }
 
 
