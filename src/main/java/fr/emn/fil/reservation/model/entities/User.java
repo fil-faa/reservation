@@ -5,6 +5,11 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Stores the user of booking web app.
+ * Different types of users exists : the admin can administrate the resources, while
+ * the average user can book a specific resource during a given period
+ */
 @Entity
 @Table(name = "USER")
 @NamedQueries({
@@ -12,6 +17,11 @@ import java.util.List;
         @NamedQuery(name = "user.byMail", query = "SELECT u FROM User u WHERE u.mail = :mail")
 })
 public class User {
+
+
+    /**----------------------------------------------
+     *               ENTITY FIELDS
+     *---------------------------------------------*/
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,6 +40,9 @@ public class User {
     @Column(name = "MAIL", unique = true)
     private @NotNull String mail;
 
+    /**
+     * Password, hashed in SHA-256
+     */
     @Basic(optional = false)
     @Column(name = "PASSWORD")
     private @NotNull String password;
@@ -44,6 +57,12 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Reservation> reservations;
+
+
+
+    /**----------------------------------------------
+     *                CONSTRUCTORS
+     *---------------------------------------------*/
 
     public User() {
     }
@@ -62,6 +81,12 @@ public class User {
         this(firstName, lastName, mail, password, phone, admin);
         this.id = id;
     }
+
+
+
+    /**----------------------------------------------
+     *             GETTERS AND SETTERS
+     *---------------------------------------------*/
 
     public Long getId() {
         return id;
@@ -126,6 +151,12 @@ public class User {
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
     }
+
+
+
+    /**----------------------------------------------
+     *              EQUALS AND HASHCODE
+     *---------------------------------------------*/
 
     @Override
     public boolean equals(Object o) {

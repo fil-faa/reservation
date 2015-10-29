@@ -13,6 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Controller handling the resources' types
+ * URL: <code>/resourceTypes</code>
+ */
 public class ResourceTypeController extends Controller {
 
     private ResourceTypeService typeService;

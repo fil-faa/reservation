@@ -7,6 +7,8 @@ import javax.servlet.*;
 import java.io.IOException;
 
 /**
+ * Retrieve and create the entityManager before each request
+ * Drop it after the request execution
  * Created by alexa on 24/10/2015.
  */
 public class EntityManagerFilter implements Filter {
@@ -41,6 +43,9 @@ public class EntityManagerFilter implements Filter {
         }
     }
 
+    /**
+     * We ensure that the entityManager is closed after each request
+     */
     public void destroy() {
         if(entityManagerFactory != null)
             entityManagerFactory.close();

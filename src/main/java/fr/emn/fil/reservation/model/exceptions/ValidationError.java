@@ -1,7 +1,10 @@
 package fr.emn.fil.reservation.model.exceptions;
 
 /**
- * Created by Alexandre on 22/10/2015.
+ * This exception is thrown when a field given by the user does not match
+ * requirements (length, nullability, pattern)
+ * @see GenericError
+ * * Created by Alexandre on 22/10/2015.
  */
 public class ValidationError extends GenericError {
 

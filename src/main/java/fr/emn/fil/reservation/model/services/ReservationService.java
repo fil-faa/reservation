@@ -30,6 +30,15 @@ public class ReservationService {
         return reservationDAO.byUser(user);
     }
 
+    /**
+     * Search and filter the reservations over a given period
+     * @param userId the reservations' user id (nullable)
+     * @param typeId resource type of the booked products (nullable)
+     * @param resourceName reservation name (nullable)
+     * @param startDate start of the period
+     * @param endDate end of the period
+     * @return
+     */
     public List<Reservation> findAllDuring(Long userId,Long typeId,String resourceName,Date startDate, Date endDate) {
 
         List<Reservation> reservations = reservationDAO.during(startDate,endDate);
@@ -53,6 +62,15 @@ public class ReservationService {
         }
         return reservations;
     }
+
+    /**
+     * Book a resource for a specific period
+     * @param startDate beginning of the period
+     * @param endDate ending of the period
+     * @param resource the resource to book
+     * @param user the user who book
+     * @return the created <code>Reservation</code>
+     */
     public Reservation create(Date startDate, Date endDate, Resource resource, User user) throws ModelError {
         // rule : startDate < endDate
         if(startDate.after(endDate))
@@ -71,6 +89,12 @@ public class ReservationService {
         return reservation;
     }
 
+    /**
+     * A reservation can be deleted from the database
+     * @param user user who wants to remove the reservation
+     * @param id id of the reservation to delete
+     * @throws ModelError thrown if the reservations doesn't exist or if the user has not the rights
+     */
     public void cancel(User user, Long id) throws ModelError {
         Reservation reservation = reservationDAO.byId(id);
         if(reservation == null) throw new ModelError("La réservation que vous voulez supprimer n'existe plus");
@@ -89,10 +113,10 @@ public class ReservationService {
         return reservationDAO.matching(user, type, name);
     }
 
-    public List<Reservation> byResource(Resource resource) {
-        return reservationDAO.byResource(resource);
-    }
-
+    /**
+     * Set the date to the beginning of the day
+     * @param startDate date to update
+     */
     private Long beginningOfDay(Date startDate) {
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(startDate);

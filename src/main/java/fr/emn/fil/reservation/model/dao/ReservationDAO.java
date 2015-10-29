@@ -28,5 +28,4 @@ public interface ReservationDAO {
 
     List<Reservation> matching(User user, ResourceType type, String name);
 
-    List<Reservation> byResource(Resource resource);
 }

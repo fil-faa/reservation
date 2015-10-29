@@ -4,9 +4,10 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
+ * A reservation links a resource to user during a specific period
+ * When a resource is booked, it's unavailable for another booking at the same time
  * Created by arthur on 20/10/15.
  */
-
 @SuppressWarnings("ALL")
 @NamedQueries({
         @NamedQuery(name = "reservation.findAll", query = "SELECT r FROM Reservation r"),
@@ -21,13 +22,16 @@ import java.util.Date;
 @Entity
 public class Reservation {
 
+
+    /**----------------------------------------------
+     *               ENTITY FIELDS
+     *---------------------------------------------*/
+
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
-    // TODO granularity of the dates ?
     @Basic
     @Temporal(TemporalType.DATE)
     @Column(name = "START")
@@ -47,6 +51,12 @@ public class Reservation {
     @JoinColumn(name = "RESOURCE_ID")
     private Resource resource;
 
+
+
+    /**----------------------------------------------
+     *                CONSTRUCTORS
+     *---------------------------------------------*/
+
     public Reservation() {
     }
 
@@ -62,10 +72,20 @@ public class Reservation {
         this.id = id;
     }
 
+
+    /**----------------------------------------------
+     *                  METHODS
+     *---------------------------------------------*/
+
     public boolean isOngoing() {
         Date currentDate = new Date();
         return this.end.getTime() > currentDate.getTime();
     }
+
+
+    /**----------------------------------------------
+     *             GETTERS AND SETTERS
+     *---------------------------------------------*/
 
     public Long getId() {
         return id;
@@ -106,6 +126,11 @@ public class Reservation {
     public void setUser(User type) {
         this.user = user;
     }
+
+
+    /**----------------------------------------------
+     *              EQUALS AND HASHCODE
+     *---------------------------------------------*/
 
     @Override
     public boolean equals(Object o) {

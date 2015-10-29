@@ -173,4 +173,5 @@ public class ReservationServiceTest extends EasyMockSupport {
         assertNotNull(error);
         verifyAll();
     }
+
 }

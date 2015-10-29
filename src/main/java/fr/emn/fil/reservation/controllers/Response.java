@@ -1,6 +1,8 @@
 package fr.emn.fil.reservation.controllers;
 
 /**
+ * Generic response.
+ * It can be either a forward to a JSP or a redirect
  * Created by Alexandre on 21/10/2015.
  */
 public class Response {

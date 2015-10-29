@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A resource an object that can be booked.
+ * It has a name, a description, and a place
  * Created by arthur on 20/10/15.
  */
 @Entity
@@ -16,6 +18,12 @@ import java.util.List;
                 "WHERE NOT r IN (SELECT res.resource FROM Reservation res WHERE res.resource = r AND res.start < :endDate AND res.end > :startDate)")
 })
 public class Resource {
+
+
+    /**----------------------------------------------
+     *               ENTITY FIELDS
+     *---------------------------------------------*/
+
 
     @Id
     @Column(name = "ID")
@@ -45,6 +53,12 @@ public class Resource {
     @JoinColumn(name = "TYPE_ID")
     private ResourceType type;
 
+
+
+    /**----------------------------------------------
+     *                CONSTRUCTORS
+     *---------------------------------------------*/
+
     public Resource() {
         this.reservations = new ArrayList<Reservation>();
     }
@@ -63,6 +77,11 @@ public class Resource {
         this.id = id;
     }
 
+
+    /**----------------------------------------------
+     *                  METHODS
+     *---------------------------------------------*/
+
     public boolean hasReservationsOngoing() {
         for(Reservation r : this.reservations) {
             if(r.isOngoing())
@@ -70,6 +89,12 @@ public class Resource {
         }
         return false;
     }
+
+
+
+    /**----------------------------------------------
+     *             GETTERS AND SETTERS
+     *---------------------------------------------*/
 
     public User getOwner() {
         return owner;
@@ -126,4 +151,42 @@ public class Resource {
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
     }
+
+
+
+    /**----------------------------------------------
+     *              EQUALS AND HASHCODE
+     *---------------------------------------------*/
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Resource resource = (Resource) o;
+
+        if (id != null ? !id.equals(resource.id) : resource.id != null) return false;
+        if (name != null ? !name.equals(resource.name) : resource.name != null) return false;
+        if (description != null ? !description.equals(resource.description) : resource.description != null)
+            return false;
+        if (place != null ? !place.equals(resource.place) : resource.place != null) return false;
+        if (reservations != null ? !reservations.equals(resource.reservations) : resource.reservations != null)
+            return false;
+        if (owner != null ? !owner.equals(resource.owner) : resource.owner != null) return false;
+        return !(type != null ? !type.equals(resource.type) : resource.type != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (place != null ? place.hashCode() : 0);
+        result = 31 * result + (reservations != null ? reservations.hashCode() : 0);
+        result = 31 * result + (owner != null ? owner.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        return result;
+    }
+
 }
