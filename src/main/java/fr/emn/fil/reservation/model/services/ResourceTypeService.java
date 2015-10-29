@@ -43,9 +43,9 @@ public class ResourceTypeService {
         // If there is a reservation which is not finished yet, we refuse to delete the type
         for(Resource resource : type.getResources()) {
             for(Reservation reservation : resource.getReservations())
-                if(new Date().compareTo(reservation.getEnd()) > 0)
+                if(new Date().compareTo(reservation.getEnd()) < 0)
                     throw new ModelError("Suppression impossible : une réservation " +
-                            "liée au type que vous voulez supprimée n'est pas encore terminée");
+                            "liée au type que vous voulez supprimer n'est pas encore terminée");
         }
         resourceTypeDAO.delete(type);
     }
@@ -58,16 +58,5 @@ public class ResourceTypeService {
 
     public void save(ResourceType type) {
         resourceTypeDAO.save(type);
-    }
-
-    public boolean hasResources(Long typeId) {
-        try {
-            ResourceType type = byId(typeId);
-            List<Resource> resources = new ResourceService().findByType(type);
-            return !resources.isEmpty();
-        } catch (ModelError modelError) {
-            modelError.printStackTrace();
-        }
-        return false;
     }
 }
